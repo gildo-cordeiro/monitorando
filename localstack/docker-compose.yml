@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgres:
+    build: db/primary
+    environment:
+      - POSTGRES_USER=monitorando
+      - POSTGRES_PASSWORD=monitorando
+      - POSTGRES_DB=monitorando
+      - PG_REP_USER=replication_user
+      - PG_REP_PASSWORD=123456
+    ports:
+      - '5432:5432'
+    networks:
+      default:
+        aliases:
+          - pg_cluster
+
+  pgbouncer:
+    image: pgbouncer/pgbouncer
+    ports:
+      - '5435:5435'
+    depends_on:
+      - postgres
+    environment:
+      DATABASES_HOST: postgres
+      DATABASES_PORT: 5432
+      DATABASES_USER: monitorando
+      DATABASES_PASSWORD: monitorando
+      DATABASES_DBNAME: monitorando
+      PGBOUNCER_LISTEN_PORT: 5435
+      DATABASES_POOL_MODE: transaction
+      DATABASES_MAX_DB_CONNECTIONS: 100
+      DATABASES_POOL_SIZE: 50
+    networks:
+      default:
+        aliases:
+          - pg_cluster
