@@ -3,6 +3,7 @@ package br.com.imd.pdse.monitorando.controller;
 import br.com.imd.pdse.monitorando.domain.Professor;
 import br.com.imd.pdse.monitorando.service.ProfessorService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -20,7 +21,8 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("titulo", "Login");
         return LOGIN_PAGE;
     }
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid mt-5 py-2">
+    <div class="row">
+        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Turma #1</a>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary ms-3" href="#">Tópico #1</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="col-10">
+            <div class="container">
+                <div class="row">
+                    <div class="d-flex justify-content-end">
+                        <h1 class="mt-3 mb-3">Turma #1</h1>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Tópico #1</h3>
+                            <p style="text-align: justify;">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est justo, finibus eu
+                                porttitor nec, eleifend vel erat. Vestibulum vehicula vestibulum ultrices. Nunc faucibus
+                                finibus lorem ut venenatis. Aliquam erat volutpat. Quisque vitae tristique augue, vel
+                                vehicula libero. Curabitur pretium, justo a iaculis scelerisque, nulla ligula faucibus
+                                dui, id blandit purus purus id lorem. Vivamus sed porta enim. Nullam consequat molestie
+                                vehicula. Nunc sagittis, quam a porta malesuada, mi ex semper elit, ac sodales nisl erat
+                                ut risus. Suspendisse sit amet ligula non quam ornare feugiat. In nec viverra leo, vitae
+                                eleifend urna. Quisque molestie lectus ut nulla imperdiet laoreet vitae non leo. Integer
+                                vel dui maximus, ornare risus interdum, euismod risus. Etiam elit lacus, elementum sed
+                                massa ac, faucibus gravida augue.
+                            </p>
+                            <label for="exampleFormControlTextarea1" class="form-label">Resposta</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <a class="icon-link" href="#">
+                                        Icon link
+                                        <svg class="bi" aria-hidden="true">
+                                            <use xlink:href="#arrow-right"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary" href="forum">Responder</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

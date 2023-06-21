@@ -1,0 +1,64 @@
+<html>
+<body>
+<div th:fragment="header">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+        .dark-theme {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+
+    </style>
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="home">Monitorando</a>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link link-primary" href="forum">Fórum</a>
+                        </li>
+                    </ul>
+                    <!-- Form Switch para mudar o tema -->
+                    <div class="form-check form-switch">
+                        <input class="form-check-input bg-body-tertiary shadow-none" type="checkbox" id="themeSwitch"
+                               onchange="toggleTheme(this)">
+                        <label class="form-check-label" for="themeSwitch"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function toggleTheme() {
+            var htmlElement = document.getElementsByTagName('html')[0];
+
+            if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
+                htmlElement.setAttribute('data-bs-theme', 'light');
+            } else {
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+</div>
+
+</body>
+
+</html>
