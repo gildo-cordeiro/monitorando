@@ -16,7 +16,7 @@ public class LoginController {
 
     private static final String LOGIN_PAGE = "login";
 
-    private static final String CADASTRO_PAGE = "cadastro";
+    private static final String REGISTER_PAGE = "register";
 
     private final UsuarioService service;
 
@@ -30,10 +30,10 @@ public class LoginController {
         return LOGIN_PAGE;
     }
 
-    @GetMapping("/cadastrar")
-    public String cadastrarPage(Model model){
+    @GetMapping("/register")
+    public String registerPage(Model model){
         model.addAttribute("user", new UsuarioDto());
-        return CADASTRO_PAGE;
+        return REGISTER_PAGE;
     }
 
     @PostMapping("/login")
@@ -50,7 +50,7 @@ public class LoginController {
     }
 
     @PostMapping("/save")
-    public String cadastrar(@ModelAttribute("user") UsuarioDto user, Model model) {
+    public String register(@ModelAttribute("user") UsuarioDto user, Model model) {
         var savedUser = service.save(user);
 
         if (savedUser.isPresent()) {
@@ -59,6 +59,6 @@ public class LoginController {
         }
 
         model.addAttribute("user", new UsuarioDto());
-        return CADASTRO_PAGE;
+        return REGISTER_PAGE;
     }
 }

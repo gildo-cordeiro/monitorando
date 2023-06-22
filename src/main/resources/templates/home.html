@@ -30,8 +30,13 @@
         <div class="col-10">
             <div class="container">
                 <div class="row">
-                    <div class="d-flex justify-content-end">
-                        <h1 class="mt-3 mb-3">Turma #1</h1>
+                    <div class="col">
+                        <h5 class="mt-3 mb-3" th:text="'Bem vindo(a), ' + ${#strings.substring(username, 39, 58)}"></h5>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-end">
+                            <h1 class="mt-3 mb-3">Turma #1</h1>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
