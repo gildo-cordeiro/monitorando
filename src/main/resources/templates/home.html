@@ -15,25 +15,24 @@
 
 <div class="container-fluid mt-5 py-2">
     <div class="row">
-        <div class="col-2">
-            <nav class=" menu-vertical d-flex flex-column vh-100 overflow-auto" th:if="${user != null}">
-                <ul class="nav flex-column" th:if="${!user.getMonitor().getClassroom().isEmpty()}">
-                    <li class="nav-item" th:each="class: ${user.getMonitor().getClassroom()}">
-                        <span class="nav-link" href="#" th:text="${class.getClassName()}"></span>
-                        <ul class="nav flex-column">
-                            <li class="nav-item" th:each="exercise: ${class.getExercise()}">
-                                <a class="nav-link link-secondary ms-3" href="#" th:text="${class.getClassName()}"></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="row mt-3" th:if="${user.getMonitor().getClassroom().isEmpty()}">
-                    <div class="col">
-                        <div class="alert alert-primary" role="alert">No Class</div>
-                    </div>
+        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto" th:if="${user != null}">
+            <ul class="nav flex-column" th:if="${!user.getMonitor().getClassroom().isEmpty()}">
+                <li class="nav-item" th:each="class: ${user.getMonitor().getClassroom()}">
+                    <span class="nav-link" href="#" th:text="${class.getClassName()}"></span>
+                    <ul class="nav flex-column">
+                        <li class="nav-item" th:each="exercise: ${class.getExercise()}">
+                            <a class="nav-link link-secondary ms-3" href="#" th:text="${class.getClassName()}"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="row mt-3" th:if="${user.getMonitor().getClassroom().isEmpty()}">
+                <div class="col">
+                    <div class="alert alert-secondary" role="alert">No Class</div>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
+
         <div class="col-10">
             <div class="container">
                 <div class="row mt-3 mb-3">
