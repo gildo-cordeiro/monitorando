@@ -19,8 +19,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link link-primary dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button"
-                               aria-expanded="false">Menu</a>
+                               role="button" data-bs-auto-close="inside" aria-expanded="false">Menu</a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><h6 class="dropdown-header">Controle</h6></li>
                                 <li><a class="dropdown-item" href="#">Relatório</a></li>
@@ -34,7 +33,9 @@
                                         <div class="form-check form-switch">
                                             <div class="row align-items-center">
                                                 <div class="col">
-                                                    <input class="form-check-input bg-body-tertiary shadow-none" type="checkbox" id="themeSwitch" onchange="toggleTheme(this)">
+                                                    <input class="form-check-input bg-body-tertiary shadow-none"
+                                                           type="checkbox" id="themeSwitch"
+                                                           onchange="toggleTheme(this)">
                                                     <label class="form-check-label" for="themeSwitch"></label>
                                                 </div>
                                                 <div class="col-auto">
@@ -43,9 +44,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </a>
                                 </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Sair</a></li>
                             </ul>
                         </li>
                     </ul>
