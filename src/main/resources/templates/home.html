@@ -15,23 +15,24 @@
 
 <div class="container-fluid mt-5 py-2">
     <div class="row">
-        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto">
-            <ul class="nav flex-column ">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Turma #1</a>
+        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto" th:if="${user != null}">
+            <ul class="nav flex-column" th:if="${!user.getMonitor().getClassroom().isEmpty()}">
+                <li class="nav-item" th:each="class: ${user.getMonitor().getClassroom()}">
+                    <span class="nav-link" href="#" th:text="${class.getClassName()}"></span>
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link link-secondary ms-3" href="#">Exercício #1</a>
+                        <li class="nav-item" th:each="exercise: ${class.getExercise()}">
+                            <a class="nav-link link-secondary ms-3" href="#" th:text="${class.getClassName()}"></a>
                         </li>
                     </ul>
                 </li>
             </ul>
+            <ul class="nav flex-column" th:if="${user.getMonitor().getClassroom().isEmpty()}">No Class</ul>
         </nav>
         <div class="col-10">
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h5 class="mt-3 mb-3" th:text="'Bem vindo(a), ' + ${#strings.substring(username, 39, 58)}"></h5>
+                        <h5 class="mt-3 mb-3" th:text="'Bem vindo(a), ' + ${user.getName()}"></h5>
                     </div>
                     <div class="col">
                         <div class="d-flex justify-content-end">

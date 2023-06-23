@@ -1,13 +1,12 @@
-package br.com.imd.pdse.monitorando.domain;
+package br.com.imd.pdse.monitorando.domain.enums;
 
-public enum TipoUsuario {
+public enum UserType {
 
     PROFESSOR("P"), ALUNO("A"), MONITOR("M");
 
     private String code;
 
-
-    TipoUsuario(String code) {
+    UserType(String code) {
         this.code = code;
     }
 

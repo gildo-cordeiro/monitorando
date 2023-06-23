@@ -1,6 +1,6 @@
 package br.com.imd.pdse.monitorando.repository;
 
-import br.com.imd.pdse.monitorando.domain.Usuario;
+import br.com.imd.pdse.monitorando.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,10 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
+public interface UserRepository extends JpaRepository<User, UUID> {
 
-
-    @Query(value = "SELECT * FROM Usuario u WHERE u.login = :login and u.senha = :senha", nativeQuery = true)
-    Optional<Usuario> findByUser(@Param("login") String login, @Param("senha") String senha);
+    @Query(value = "FROM User u WHERE u.login = :login and u.pass = :pass")
+    Optional<User> findByUser(@Param("login") String login, @Param("pass") String pass);
 
 }

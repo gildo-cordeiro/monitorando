@@ -27,9 +27,9 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control shadow-none" id="floatingPassword"
-                                   placeholder="Senha" name="senha" th:field="*{senha}" required>
+                                   placeholder="Senha" name="pass" th:field="*{pass}" required>
                             <label for="floatingPassword">Senha</label>
-                            <p th:errors="*{senha}" class="text-danger" th:if="${#fields.hasErrors('senha')}"></p>
+                            <p th:errors="*{pass}" class="text-danger" th:if="${#fields.hasErrors('pass')}"></p>
                         </div>
                         <div class="row">
                             <div class="col d-grid gap-2">

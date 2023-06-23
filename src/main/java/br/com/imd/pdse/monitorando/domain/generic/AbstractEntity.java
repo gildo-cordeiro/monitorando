@@ -1,6 +1,7 @@
-package br.com.imd.pdse.monitorando.domain;
+package br.com.imd.pdse.monitorando.domain.generic;
 
 import jakarta.persistence.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;

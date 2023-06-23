@@ -20,28 +20,25 @@
                     <h1 class="h5 mb-3 fw-normal">Entre com sua conta</h1>
                     <form th:action="@{/save}" th:object="${user}" method="post">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control shadow-none" id="nome" placeholder="nome" name="nome"
-                                   th:field="*{nome}" required>
-                            <label for="nome">Nome</label>
-                            <p th:errors="*{nome}" class="text-danger" th:if="${#fields.hasErrors('login')}"></p>
+                            <input type="text" class="form-control shadow-none" id="name" placeholder="nome" name="nome"
+                                   th:field="*{name}" required>
+                            <label for="name">name</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control shadow-none" id="login" placeholder="Usuário"
                                    name="login" th:field="*{login}" required>
                             <label for="login">Usuário</label>
-                            <p th:errors="*{login}" class="text-danger" th:if="${#fields.hasErrors('login')}"></p>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control shadow-none" id="senha" placeholder="Senha"
-                                   name="senha" th:field="*{senha}" required>
-                            <label for="senha">Senha</label>
-                            <p th:errors="*{senha}" class="text-danger" th:if="${#fields.hasErrors('senha')}"></p>
+                            <input type="password" class="form-control shadow-none" id="pass" placeholder="Senha"
+                                   name="pass" th:field="*{pass}" required>
+                            <label for="pass">Senha</label>
                         </div>
                         <div class="form-floating mb-3">
                             <div class="form-check form-check-inline"
-                                 th:each="tipo : ${T(br.com.imd.pdse.monitorando.domain.TipoUsuario).values()}">
+                                 th:each="tipo : ${T(br.com.imd.pdse.monitorando.domain.enums.UserType).values()}">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                       th:value="${tipo}" th:text="${#strings.toLowerCase(tipo)}" th:field="*{tipoUsuario}">
+                                       th:value="${tipo}" th:text="${#strings.toLowerCase(tipo)}" th:field="*{userType}">
                                 <label class="form-check-label" for="inlineRadio1"></label>
                             </div>
                         </div>

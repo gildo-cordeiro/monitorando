@@ -1,4 +1,4 @@
-package br.com.imd.pdse.monitorando.domain;
+package br.com.imd.pdse.monitorando.domain.generic;
 
 import java.time.Instant;
 import java.util.UUID;
