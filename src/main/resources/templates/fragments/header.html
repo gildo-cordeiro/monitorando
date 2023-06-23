@@ -1,4 +1,5 @@
 <div th:fragment="header">
+
     <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
@@ -7,18 +8,47 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" href="home">Monitorando</a>
-                <div class="collapse navbar-collapse justify-content-end">
+                <div class="navbar-collapse justify-content-end">
+                    <span class="navbar-text"
+                          th:text="${time} + ', '+ ${user.getName()} + ' - ' + ${user.getUserType()}"></span>
+                </div>
+                <div class="navbar-collapse justify-content-end">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link link-primary" href="forum">Fórum</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link link-primary dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                               role="button"
+                               aria-expanded="false">Menu</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><h6 class="dropdown-header">Controle</h6></li>
+                                <li><a class="dropdown-item" href="#">Relatório</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><h6 class="dropdown-header">Tema</h6></li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <!-- Form Switch para mudar o tema -->
+                                        <div class="form-check form-switch">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <input class="form-check-input bg-body-tertiary shadow-none" type="checkbox" id="themeSwitch" onchange="toggleTheme(this)">
+                                                    <label class="form-check-label" for="themeSwitch"></label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <span id="themeStatus"></span>
+                                                    <!-- Elemento para exibir o status do tema -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
-                    <!-- Form Switch para mudar o tema -->
-                    <div class="form-check form-switch">
-                        <input class="form-check-input bg-body-tertiary shadow-none" type="checkbox" id="themeSwitch"
-                               onchange="toggleTheme(this)">
-                        <label class="form-check-label" for="themeSwitch"></label>
-                    </div>
                 </div>
             </div>
         </div>

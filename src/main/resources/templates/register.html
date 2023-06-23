@@ -12,7 +12,7 @@
 
 <body>
 <div class="container">
-    <div class="row justify-content-md-center align-items-center vh-100">
+    <div class="row justify-content-center align-items-center vh-100">
         <div class="col-lg-4 col-sm-8">
             <div th:if="${error}">
                 <div class="alert alert-danger" role="alert" th:text="${error}">
@@ -42,8 +42,8 @@
                         <div class="form-floating mb-3">
                             <div class="form-check form-check-inline"
                                  th:each="tipo : ${T(br.com.imd.pdse.monitorando.domain.enums.UserType).values()}">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                       th:value="${tipo}" th:text="${#strings.toLowerCase(tipo)}"
+                                <input class="form-check-input text-capitalize" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                       th:value="${tipo}" th:text="${tipo}"
                                        th:field="*{userType}">
                                 <label class="form-check-label" for="inlineRadio1"></label>
                             </div>
