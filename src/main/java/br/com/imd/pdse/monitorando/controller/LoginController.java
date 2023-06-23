@@ -52,6 +52,15 @@ public class LoginController {
 
     @PostMapping("/save")
     public String register(@ModelAttribute("user") UserDto user, Model model) {
+        String password = user.getPass();
+        int minLength = 8; // Definir o comprimento mínimo da senha aqui
+
+        if (password.length() < minLength) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", "A senha deve ter pelo menos " + minLength + " caracteres.");
+            return REGISTER_PAGE;
+        }
+
         var savedUser = service.save(user);
 
         if (savedUser.isPresent()) {

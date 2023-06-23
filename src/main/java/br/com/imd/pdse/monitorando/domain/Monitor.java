@@ -17,15 +17,17 @@ import java.util.Set;
 public class Monitor extends AbstractEntity {
 
     @ElementCollection
-    @CollectionTable(name="SCHEDULES")
+    @CollectionTable(name = "SCHEDULES")
     private Set<Instant> schedules = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "monitor", cascade = CascadeType.ALL)
     private List<Classroom> classroom;
+    //private List<Report> report;
 
-    public Monitor(){
+    public Monitor() {
         super(Instant.now());
         schedules = Collections.emptySet();
         classroom = Collections.emptyList();
+        //report = Collections.emptyList();
     }
 }
