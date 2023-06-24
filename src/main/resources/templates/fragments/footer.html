@@ -72,33 +72,24 @@
     </footer>
 
     <script>
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
+        function toggleTheme(theme) {
+            var htmlElement = document.documentElement;
+            htmlElement.dataset.bsTheme = theme;
 
-        function toggleTheme(checkbox) {
-            var htmlElement = document.getElementsByTagName('html')[0];
+            var iconElement = document.getElementById('icon');
+            iconElement.classList.remove('bi-sun-fill', 'bi-moon-stars-fill');
 
-            if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
-                htmlElement.setAttribute('data-bs-theme', 'light');
-            } else {
-                htmlElement.setAttribute('data-bs-theme', 'dark');
+            if (theme === 'light') {
+                iconElement.classList.add('bi-sun-fill');
+            } else if (theme === 'dark') {
+                iconElement.classList.add('bi-moon-stars-fill');
             }
 
-            var themeStatus = htmlElement.getAttribute('data-bs-theme');
             var themeStatusElement = document.getElementById('themeStatus');
 
             if (themeStatusElement) {
-                themeStatusElement.textContent = capitalizeFirstLetter(themeStatus);
+                themeStatusElement.textContent = theme;
             }
-        }
-
-        // Definir o tema inicial como "light"
-        var htmlElement = document.getElementsByTagName('html')[0];
-        htmlElement.setAttribute('data-bs-theme', 'light');
-        var themeStatusElement = document.getElementById('themeStatus');
-        if (themeStatusElement) {
-            themeStatusElement.textContent = "Light";
         }
 
     </script>

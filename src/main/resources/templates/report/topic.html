@@ -8,6 +8,7 @@
     <title th:text="${titulo}"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -27,6 +28,7 @@
                 </li>
             </ul>
         </nav>
+
         <div class="col-10">
             <div class="container">
                 <div class="row mt-3 mb-3">
@@ -37,31 +39,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Tópico #1</h3>
-                            <p style="text-align: justify;">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est justo, finibus eu
-                                porttitor nec, eleifend vel erat. Vestibulum vehicula vestibulum ultrices. Nunc faucibus
-                                finibus lorem ut venenatis. Aliquam erat volutpat. Quisque vitae tristique augue, vel
-                                vehicula libero. Curabitur pretium, justo a iaculis scelerisque, nulla ligula faucibus
-                                dui, id blandit purus purus id lorem. Vivamus sed porta enim. Nullam consequat molestie
-                                vehicula. Nunc sagittis, quam a porta malesuada, mi ex semper elit, ac sodales nisl erat
-                                ut risus. Suspendisse sit amet ligula non quam ornare feugiat. In nec viverra leo, vitae
-                                eleifend urna. Quisque molestie lectus ut nulla imperdiet laoreet vitae non leo. Integer
-                                vel dui maximus, ornare risus interdum, euismod risus. Etiam elit lacus, elementum sed
-                                massa ac, faucibus gravida augue.
-                            </p>
-                            <label for="exampleFormControlTextarea1" class="form-label">Resposta</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <a class="btn btn-outline-primary" href="../report/topic">Curtir</a>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex justify-content-end">
-                                        <a class="btn btn-primary" href="../report/topic">Responder</a>
-                                    </div>
+                    <div class="col">
+                        <h3>Tópico #1</h3>
+                        <p style="text-align: justify;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est justo, finibus eu
+                            porttitor nec, eleifend vel erat. Vestibulum vehicula vestibulum ultrices. Nunc faucibus
+                            finibus lorem ut venenatis. Aliquam erat volutpat. Quisque vitae tristique augue, vel
+                            vehicula libero. Curabitur pretium, justo a iaculis scelerisque, nulla ligula faucibus
+                            dui, id blandit purus purus id lorem. Vivamus sed porta enim. Nullam consequat molestie
+                            vehicula. Nunc sagittis, quam a porta malesuada, mi ex semper elit, ac sodales nisl erat
+                            ut risus. Suspendisse sit amet ligula non quam ornare feugiat. In nec viverra leo, vitae
+                            eleifend urna. Quisque molestie lectus ut nulla imperdiet laoreet vitae non leo. Integer
+                            vel dui maximus, ornare risus interdum, euismod risus. Etiam elit lacus, elementum sed
+                            massa ac, faucibus gravida augue.
+                        </p>
+                        <label for="exampleFormControlTextarea1" class="form-label">Resposta</label>
+                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1"
+                                  rows="3"></textarea>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <a href="#" class="btn btn-sm btn-outline-primary rounded-circle" role="button" data-bs-toggle="button"><i
+                                        class="bi bi-heart-fill"></i></a></div>
+                            <div class="col">
+                                <div class="d-flex justify-content-end">
+                                    <a class="btn btn-sm btn-primary">Responder</a>
                                 </div>
                             </div>
                         </div>
