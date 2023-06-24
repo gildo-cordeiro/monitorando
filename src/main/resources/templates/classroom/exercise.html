@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid mt-5 py-2">
+    <div class="row">
+        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Turma #1</a>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary ms-3" href="../classroom/exercise">Exercício #1</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="col-10">
+            <div class="container">
+                <div class="row mt-3 mb-3">
+                    <div class="col d-grid gap-2">
+                        <div class="row">
+                            <div class="col">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop">Submissões
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                     data-bs-keyboard="false"
+                                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Submissões</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="list-group">
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                       aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">Raryson Fred</h5>
+                                                            <small>3 days ago</small>
+                                                        </div>
+                                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                        <small>Editado</small>
+                                                    </a>
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                       aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">Gildo Cordeiro</h5>
+                                                            <small>3 days ago</small>
+                                                        </div>
+                                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                        <small>Original</small>
+                                                    </a>
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                       aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">Micaelli Santos</h5>
+                                                            <small>3 days ago</small>
+                                                        </div>
+                                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                        <small>Original</small>
+                                                    </a>
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                       aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">Edson Gabriel</h5>
+                                                            <small>3 days ago</small>
+                                                        </div>
+                                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                        <small>Editado</small>
+                                                    </a>
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                       aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">Renan Ribeiro</h5>
+                                                            <small>3 days ago</small>
+                                                        </div>
+                                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                        <small>Orinigal</small>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-grid gap-2">
+                        <div class="d-flex justify-content-end">
+                            <h3>Sala de Aula - Turma #1</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Exercício #1</h3>
+                            <p style="text-align: justify;">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est justo, finibus eu
+                                porttitor nec, eleifend vel erat. Vestibulum vehicula vestibulum ultrices. Nunc faucibus
+                                finibus lorem ut venenatis. Aliquam erat volutpat. Quisque vitae tristique augue, vel
+                                vehicula libero. Curabitur pretium, justo a iaculis scelerisque, nulla ligula faucibus
+                                dui, id blandit purus purus id lorem. Vivamus sed porta enim. Nullam consequat molestie
+                                vehicula. Nunc sagittis, quam a porta malesuada, mi ex semper elit, ac sodales nisl erat
+                                ut risus. Suspendisse sit amet ligula non quam ornare feugiat. In nec viverra leo, vitae
+                                eleifend urna. Quisque molestie lectus ut nulla imperdiet laoreet vitae non leo. Integer
+                                vel dui maximus, ornare risus interdum, euismod risus. Etiam elit lacus, elementum sed
+                                massa ac, faucibus gravida augue.
+                            </p>
+
+
+                            <label for="exampleFormControlTextarea1" class="form-label">Resposta</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <a class="btn btn-outline-primary" href="../classroom/exercise">Curtir</a>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary" href="../classroom/exercise">Responder</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
