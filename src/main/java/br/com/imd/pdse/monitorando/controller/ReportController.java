@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.time.LocalTime;
 
 @Controller
-public class HomeController {
+public class ReportController {
 
-    private static final String HOME_PAGE = "home";
+    private static final String REPORT_PAGE = "report/report";
 
     public String getGreeting() {
         LocalTime currentTime = LocalTime.now();
@@ -28,10 +28,10 @@ public class HomeController {
         return greeting;
     }
 
-    @GetMapping("/home")
-    public String home(@ModelAttribute("user") User user, Model model) {
+    @GetMapping("report/report")
+    public String report(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("time", getGreeting());
-        return HOME_PAGE;
+        return REPORT_PAGE;
     }
 }

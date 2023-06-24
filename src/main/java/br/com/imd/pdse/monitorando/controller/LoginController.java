@@ -45,7 +45,7 @@ public class LoginController {
 
         if (foundUser.isPresent()){
             redirectAttrs.addFlashAttribute("user", foundUser.get());
-            return new RedirectView("/home");
+            return new RedirectView("classroom/classroom");
         }
         return new RedirectView(LOGIN_PAGE);
     }
