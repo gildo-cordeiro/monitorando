@@ -31,8 +31,10 @@
                             <p th:errors="*{login}" class="text-danger" th:if="${#fields.hasErrors('login')}"></p>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control form-control-sm shadow-none" id="floatingPassword"
-                                   placeholder="Senha" name="pass" th:field="*{pass}" required>
+                            <input type="password" class="form-control form-control-sm shadow-none"
+                                   id="floatingPassword"
+                                   placeholder="Senha" name="pass" th:field="*{pass}" minlength="8" maxlength="16"
+                                   required>
                             <label for="floatingPassword">Senha</label>
                             <p th:errors="*{pass}" class="text-danger" th:if="${#fields.hasErrors('pass')}"></p>
                         </div>

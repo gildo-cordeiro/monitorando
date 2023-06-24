@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    public String registerPage(Model model){
+    public String registerPage(Model model) {
         model.addAttribute("user", new UserDto());
         return REGISTER_PAGE;
     }
@@ -43,7 +43,7 @@ public class LoginController {
     public RedirectView login(@ModelAttribute("user") UserDto user, RedirectAttributes redirectAttrs) {
         Optional<User> foundUser = service.login(user);
 
-        if (foundUser.isPresent()){
+        if (foundUser.isPresent()) {
             redirectAttrs.addFlashAttribute("user", foundUser.get());
             return new RedirectView("classroom/classroom");
         }
@@ -53,11 +53,47 @@ public class LoginController {
     @PostMapping("/save")
     public String register(@ModelAttribute("user") UserDto user, Model model) {
         String password = user.getPass();
-        int minLength = 8; // Definir o comprimento mínimo da senha aqui
+
+        int minLength = 8; // Define o limite mínimo de caracteres para a senha
+        int maxLength = 16; // Define o limite máximo de caracteres para a senha
+
+        boolean hasUpperCase = false; // Variável para verificar se a senha possui letras maiúsculas
+        boolean hasLowerCase = false; // Variável para verificar se a senha possui letras minúsculas
+        boolean hasDigit = false; // Variável para verificar se a senha possui números
+        boolean hasSpecialChar = false; // Variável para verificar se a senha possui caracteres especiais
+
+// Verifica cada caractere da senha para verificar as regras
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else {
+                // Verifique aqui quais caracteres são considerados como especiais de acordo com suas regras
+                // Exemplo: Se considerarmos caracteres especiais como !, @, #, $, %, poderíamos fazer assim:
+                if (c == '!' || c == '@' || c == '#' || c == '$' || c == '%') {
+                    hasSpecialChar = true;
+                }
+            }
+        }
 
         if (password.length() < minLength) {
             model.addAttribute("user", user);
             model.addAttribute("error", "A senha deve ter pelo menos " + minLength + " caracteres.");
+            return REGISTER_PAGE;
+        }
+
+        if (password.length() > maxLength) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", "A senha deve ter no máximo " + maxLength + " caracteres.");
+            return REGISTER_PAGE;
+        }
+
+        if (!hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", "A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.");
             return REGISTER_PAGE;
         }
 
