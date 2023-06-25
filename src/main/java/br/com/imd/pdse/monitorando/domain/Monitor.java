@@ -22,12 +22,14 @@ public class Monitor extends AbstractEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "monitor", cascade = CascadeType.ALL)
     private List<Classroom> classroom;
-    //private List<Report> report;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "monitor", cascade = CascadeType.ALL)
+    private List<Report> report;
 
     public Monitor() {
         super(Instant.now());
         schedules = Collections.emptySet();
         classroom = Collections.emptyList();
-        //report = Collections.emptyList();
+        report = Collections.emptyList();
     }
 }

@@ -16,16 +16,16 @@ import java.time.Instant;
 @Table(name = "TOPIC")
 public class Topic extends AbstractEntity {
 
-    //@Column(name = "TITLE", nullable = false)
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
-    //@Column(name = "MESSAGE", nullable = false)
+    @Column(name = "MESSAGE", nullable = false)
     private String message;
 
-    //@Column(name = "OPEN", nullable = false)
+    @Column(name = "OPEN", nullable = false)
     private boolean open;
 
-    /*@ManyToOne
+    @ManyToOne
     private Report report;
 
     public Topic(String title) {
@@ -35,5 +35,5 @@ public class Topic extends AbstractEntity {
 
     public Topic() {
         super(Instant.now());
-    }*/
+    }
 }

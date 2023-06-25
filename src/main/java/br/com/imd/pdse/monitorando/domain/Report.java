@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name = "REPORT")
 public class Report extends AbstractEntity {
 
-    /*
     @Column(name = "REPORT_NAME", nullable = false)
     private String reportName;
 
@@ -34,5 +33,5 @@ public class Report extends AbstractEntity {
     public Report() {
         super(Instant.now());
         this.topic = Collections.emptyList();
-    }*/
+    }
 }

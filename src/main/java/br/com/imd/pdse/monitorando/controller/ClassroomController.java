@@ -27,7 +27,7 @@ public class ClassroomController {
         return greeting;
     }
 
-    @GetMapping("classroom/classroom")
+    @GetMapping("/classroom")
     public String classroom(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("time", getGreeting());

@@ -23,17 +23,21 @@
             <div class="card bg-body-tertiary">
                 <div class="card-body">
                     <h1 class="h5 mb-3 fw-normal">Entre com sua conta</h1>
-                    <form th:action="@{/login}" th:object="${user}" method="post">
+                    <form th:action="@{/process-login}" th:object="${user}" method="post">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control form-control-sm shadow-none" id="floatingInput"
+                            <input type="text" class="form-control form-control-sm shadow-none" id="floatingInput"
                                    placeholder="Usuário" name="login" th:field="*{login}" required>
                             <label for="floatingInput">Usuário</label>
                             <p th:errors="*{login}" class="text-danger" th:if="${#fields.hasErrors('login')}"></p>
                         </div>
                         <div class="form-floating mb-3">
+<!--                            <input type="password" class="form-control form-control-sm shadow-none"-->
+<!--                                   id="floatingPassword"-->
+<!--                                   placeholder="Senha" name="pass" th:field="*{pass}" minlength="8" maxlength="16"-->
+<!--                                   required>-->
                             <input type="password" class="form-control form-control-sm shadow-none"
                                    id="floatingPassword"
-                                   placeholder="Senha" name="pass" th:field="*{pass}" minlength="8" maxlength="16"
+                                   placeholder="Senha" name="pass" th:field="*{pass}"
                                    required>
                             <label for="floatingPassword">Senha</label>
                             <p th:errors="*{pass}" class="text-danger" th:if="${#fields.hasErrors('pass')}"></p>
