@@ -23,7 +23,7 @@
             <div class="card bg-body-tertiary">
                 <div class="card-body">
                     <h1 class="h5 mb-3 fw-normal">Entre com sua conta</h1>
-                    <form th:action="@{/process-login}" th:object="${user}" method="post">
+                    <form th:action="@{/login}" th:object="${user}" method="post">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control form-control-sm shadow-none" id="floatingInput"
                                    placeholder="Usuário" name="login" th:field="*{login}" required>

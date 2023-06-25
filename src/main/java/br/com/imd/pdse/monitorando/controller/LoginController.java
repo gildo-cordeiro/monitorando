@@ -1,6 +1,8 @@
 package br.com.imd.pdse.monitorando.controller;
 
+import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.domain.User;
+import br.com.imd.pdse.monitorando.domain.dto.ExerciseDto;
 import br.com.imd.pdse.monitorando.domain.dto.UserDto;
 import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.validation.Valid;
@@ -39,7 +41,8 @@ public class LoginController {
     @PostMapping("/process-login")
     public String login(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
         User foundUser = service.findByEmail(user.getLogin());
-        model.addAttribute("user", foundUser);
+        model.addAttribute("foundUser", foundUser);
+        model.addAttribute("exercise", new Exercise());
         return "classroom/classroom";
     }
 
@@ -47,7 +50,7 @@ public class LoginController {
     public String register(@Valid @ModelAttribute("user") UserDto user, Model model) {
         var savedUser = service.save(user);
         if (savedUser.isPresent()) {
-            model.addAttribute("user", savedUser);
+            model.addAttribute("user", savedUser.get());
             return LOGIN_PAGE;
         }
 

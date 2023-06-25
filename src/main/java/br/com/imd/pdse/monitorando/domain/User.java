@@ -6,13 +6,14 @@ import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "USER_TABLE")
-public class User extends AbstractEntity{
+public class User extends AbstractEntity implements Serializable {
 
     @Column(name = "NAME", nullable = false)
     private String name;

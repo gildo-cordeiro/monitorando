@@ -1,5 +1,6 @@
 package br.com.imd.pdse.monitorando.configuration;
 
+import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

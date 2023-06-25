@@ -22,11 +22,20 @@ public abstract class AbstractEntity {
         this.createdDate = createdDate;
     }
 
+    protected AbstractEntity(final Instant createdDate, final UUID uuid) {
+        this.createdDate = createdDate;
+        this.uuid = uuid;
+    }
+
     protected AbstractEntity() {
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid){
+        this.uuid = uuid;
     }
 
     public Instant getCreatedDate() {

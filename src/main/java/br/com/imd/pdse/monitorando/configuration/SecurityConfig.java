@@ -1,5 +1,6 @@
 package br.com.imd.pdse.monitorando.configuration;
 
+import br.com.imd.pdse.monitorando.service.AuthenticationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +27,7 @@ public class SecurityConfig {
             "/login",
             "/register",
             "/save",
-            "/error"
+            "/process-login"
     };
     public static final String LOGIN_URL = "/login";
     public static final String LOGIN_PROCESS_URL = "/process-login";
@@ -36,6 +39,15 @@ public class SecurityConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
+
+//    @Bean
+//    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, AuthenticationService userDetailsService) {
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setPasswordEncoder(passwordEncoder);
+//        provider.setUserDetailsService(userDetailsService);
+//        return new ProviderManager(provider);
+//    }
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -52,12 +64,12 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage(LOGIN_URL)
-                        .successForwardUrl(LOGIN_PROCESS_URL)
                         .usernameParameter("login")
+                        .successForwardUrl(LOGIN_PROCESS_URL)
                         .failureUrl(LOGIN_FAIL_URL)
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                         .invalidSessionUrl(LOGIN_URL)
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
