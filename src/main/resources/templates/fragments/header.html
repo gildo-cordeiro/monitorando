@@ -6,7 +6,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="../classroom/classroom">Monitorando</a>
+                <a class="navbar-brand btn-link" href="../classroom/classroom">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 226.8 226.8">
+                        <path d="M491.8,184.3H350.1a42.5,42.5,0,0,0-42.5,42.5V368.5A42.5,42.5,0,0,0,350.1,411H491.8a42.5,42.5,0,0,0,42.5-42.5V226.8A42.5,42.5,0,0,0,491.8,184.3ZM477.6,340.2a42.6,42.6,0,0,1-42.5-42.6,14.2,14.2,0,0,0-28.3,0v42.6H378.4V297.6a14.2,14.2,0,0,0-28.3,0v42.6H321.7V297.6h0a42.6,42.6,0,0,1,42.6-42.5h0A42.1,42.1,0,0,1,392.6,266a42.1,42.1,0,0,1,28.3-10.9h0a42.7,42.7,0,0,1,42.6,42.5h0a14.2,14.2,0,1,0,14.1-14.1,13.8,13.8,0,0,0-7,1.9V255.7a40.5,40.5,0,0,1,7-.6,42.6,42.6,0,1,1,0,85.1Z"
+                              transform="translate(-307.6 -184.3)" fill="currentColor"/>
+                    </svg>
+                </a>
                 <div class="navbar-collapse justify-content-end">
                     <span class="navbar-text"
                           th:text="${time} + ', '+ ${user.getName()} + ' - ' + ${user.getUserType()}"></span>
