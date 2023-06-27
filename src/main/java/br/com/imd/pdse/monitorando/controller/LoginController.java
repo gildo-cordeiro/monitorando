@@ -2,8 +2,6 @@ package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.domain.User;
-import br.com.imd.pdse.monitorando.domain.dto.ExerciseDto;
-import br.com.imd.pdse.monitorando.domain.dto.UserDto;
 import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -28,33 +26,33 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new User());
         return LOGIN_PAGE;
     }
 
     @GetMapping("/register")
     public String registerPage(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new User());
         return REGISTER_PAGE;
     }
 
     @PostMapping("/process-login")
-    public String login(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
-        User foundUser = service.findByEmail(user.getLogin());
+    public String login(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+        User foundUser = service.findByUsername(user.getUsername());
         model.addAttribute("foundUser", foundUser);
         model.addAttribute("exercise", new Exercise());
         return "classroom/classroom";
     }
 
     @PostMapping("/save")
-    public String register(@Valid @ModelAttribute("user") UserDto user, Model model) {
+    public String register(@Valid @ModelAttribute("user") User user, Model model) {
         var savedUser = service.save(user);
         if (savedUser.isPresent()) {
             model.addAttribute("user", savedUser.get());
             return LOGIN_PAGE;
         }
 
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new User());
         return REGISTER_PAGE;
     }
 }

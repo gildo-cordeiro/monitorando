@@ -26,21 +26,17 @@
                     <form th:action="@{/login}" th:object="${user}" method="post">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control form-control-sm shadow-none" id="floatingInput"
-                                   placeholder="Usuário" name="login" th:field="*{login}" required>
+                                   placeholder="Usuário" name="username" th:field="*{username}" required>
                             <label for="floatingInput">Usuário</label>
-                            <p th:errors="*{login}" class="text-danger" th:if="${#fields.hasErrors('login')}"></p>
+                            <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
                         </div>
                         <div class="form-floating mb-3">
-<!--                            <input type="password" class="form-control form-control-sm shadow-none"-->
-<!--                                   id="floatingPassword"-->
-<!--                                   placeholder="Senha" name="pass" th:field="*{pass}" minlength="8" maxlength="16"-->
-<!--                                   required>-->
                             <input type="password" class="form-control form-control-sm shadow-none"
                                    id="floatingPassword"
-                                   placeholder="Senha" name="pass" th:field="*{pass}"
+                                   placeholder="Senha" name="password" th:field="*{password}"
                                    required>
                             <label for="floatingPassword">Senha</label>
-                            <p th:errors="*{pass}" class="text-danger" th:if="${#fields.hasErrors('pass')}"></p>
+                            <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
                         </div>
                         <div class="row">
                             <div class="col d-grid gap-2">

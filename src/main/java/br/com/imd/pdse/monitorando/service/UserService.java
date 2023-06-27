@@ -2,7 +2,6 @@ package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.Monitor;
 import br.com.imd.pdse.monitorando.domain.User;
-import br.com.imd.pdse.monitorando.domain.dto.UserDto;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.repository.MonitorRepository;
 import br.com.imd.pdse.monitorando.repository.UserRepository;
@@ -15,28 +14,26 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
-    private final MonitorRepository monitorRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserService(final UserRepository repository, final MonitorRepository monitorRepository,
                        final PasswordEncoder passwordEncoder) {
         this.repository = repository;
-        this.monitorRepository = monitorRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> login(UserDto dto){
-        return repository.findByUser(dto.getLogin(), dto.getPass());
+    public Optional<User> login(User dto){
+        return repository.findByUser(dto.getUsername(), dto.getPassword());
     }
 
-    public User findByEmail(String email){
-        return repository.findByEmail(email);
+    public User findByUsername(String username){
+        return repository.findByUsername(username);
     }
 
-    public Optional<User> save(UserDto dto){
-        var foundedUser = repository.findByUser(dto.getLogin(), dto.getPass());
-        var encryptPass = passwordEncoder.encode(dto.getPass());
-        String password = dto.getPass();
+    public Optional<User> save(User dto){
+        var foundedUser = repository.findByUser(dto.getUsername(), dto.getPassword());
+        var encryptPass = passwordEncoder.encode(dto.getPassword());
+        String password = dto.getPassword();
 
         boolean hasUpperCase = false; // Variável para verificar se a senha possui letras maiúsculas
         boolean hasLowerCase = false; // Variável para verificar se a senha possui letras minúsculas
@@ -70,17 +67,17 @@ public class UserService {
 
         if (foundedUser.isEmpty()) {
             if(dto.getUserType().equals(UserType.MONITOR)){
-                var user = new User(dto.getName(), dto.getLogin(), encryptPass, dto.getUserType(), new Monitor());
+                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Monitor());
                 var savedUser = repository.save(user);
 
                 return Optional.of(foundedUser.orElse(savedUser));
             } else if (dto.getUserType().equals(UserType.ALUNO)){
-                var user = new User(dto.getName(), dto.getLogin(), encryptPass, dto.getUserType(), new Monitor());
+                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Monitor());
                 var savedUser = repository.save(user);
 
                 return Optional.of(foundedUser.orElse(savedUser));
             }else if (dto.getUserType().equals(UserType.PROFESSOR)){
-                var user = new User(dto.getName(), dto.getLogin(), encryptPass, dto.getUserType(), new Monitor());
+                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Monitor());
                 var savedUser = repository.save(user);
 
                 return Optional.of(foundedUser.orElse(savedUser));

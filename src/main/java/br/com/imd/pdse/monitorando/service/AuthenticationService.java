@@ -2,6 +2,7 @@ package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
+import br.com.imd.pdse.monitorando.repository.UserRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,22 +17,22 @@ import java.util.List;
 @Service
 public class AuthenticationService implements UserDetailsService {
 
-    private final UserService userServiceImpl;
+    private final UserRepository userRepository;
 
-    public AuthenticationService(UserService userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public AuthenticationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         List<GrantedAuthority> listGrantAuthority = new ArrayList<>();
-        var user = userServiceImpl.findByEmail(login);
+        var user = userRepository.findByUsername(username);
         checkGrantAuthorities(user, listGrantAuthority);
-        return new org.springframework.security.core.userdetails.User(login, user.getPass(), listGrantAuthority);
+        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), listGrantAuthority);
     }
 
     private void checkGrantAuthorities(User user, List<GrantedAuthority> listGrantAuthority) {
-        if(user != null && user.getUserType() != null) {
+        if(user != null && user.getAuthorities() != null) {
             for (UserType userType : UserType.values()) {
                 if (user.getUserType().equals(userType))
                     listGrantAuthority.add(new SimpleGrantedAuthority(user.getUserType().getCode()));

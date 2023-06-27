@@ -1,7 +1,6 @@
 package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.Exercise;
-import br.com.imd.pdse.monitorando.domain.dto.UserDto;
 import br.com.imd.pdse.monitorando.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
 
