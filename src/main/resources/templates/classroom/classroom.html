@@ -12,28 +12,17 @@
 </head>
 
 <body>
+
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container-fluid mt-5 py-2">
     <div class="row">
-        <div class="col-lg-2 bg-body-secondary border-end">
-            <nav class="nav flex-column vh-100 overflow-auto">
-                <ul class="navbar-nav m-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-house"></i> Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../report/report">
-                            <i class="bi bi-chat-left-text"></i> Fórum</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+
+        <div th:replace="fragments/nav :: nav"></div>
 
         <div class="col-lg-10 col-sm-12 px-5">
             <div class="container">
-                <div class="row mt-3 mb-3">
+                <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
                         <h3>Sala Virtual</h3>
                     </div>
@@ -41,34 +30,8 @@
 
                 <div class="row">
                     <div class="col">
-                        <!--<div class="card">
-                            <div class="card-body">
-                                <div class="list-group list-group-flush">
-                                    <a href="/" class="list-group-item list-group-item-action">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">Turma 1</div>
-                                            Alguma info complementar
-                                        </div>
-                                    </a>
-                                    <a href="/" class="list-group-item list-group-item-action">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">Turma 2</div>
-                                            Alguma info complementar
-                                        </div>
-                                    </a>
-                                    <a href="/" class="list-group-item list-group-item-action">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">Turma 3</div>
-                                            Alguma info complementar
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>-->
-
                         <div class="card">
                             <div class="card-body">
-
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-hover align-middle">
                                         <thead>
@@ -113,8 +76,8 @@
         </div>
     </div>
 </div>
+
 <div th:replace="fragments/footer :: footer"></div>
 
 </body>
-
 </html>
