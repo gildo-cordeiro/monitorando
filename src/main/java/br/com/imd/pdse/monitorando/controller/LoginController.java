@@ -24,7 +24,7 @@ public class LoginController {
         this.service = service;
     }
 
-    @GetMapping("/login")
+    @GetMapping({"/login", "/"})
     public String loginPage(Model model) {
         model.addAttribute("user", new User());
         return LOGIN_PAGE;

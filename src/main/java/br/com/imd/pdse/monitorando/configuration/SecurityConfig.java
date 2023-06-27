@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,10 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    private final CustomAuthenticationProvider customAuthenticationProvider;
-
-    private final AuthenticationService user;
-
     public static final String[] ENDPOINTS_WHITELIST = {
             "/css/**",
             "/js/**",
@@ -31,17 +26,9 @@ public class SecurityConfig {
             "/save",
             "/process-login"
     };
-    public static final String LOGIN_URL = "/login";
-    public static final String LOGIN_FAIL_URL = LOGIN_URL;
-    public static final String DEFAULT_SUCCESS_URL = "/classroom";
 
-    public SecurityConfig( AuthenticationService user) {
-
-        this.user = user;
-    }
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
-
 
     @Bean
     public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, AuthenticationService userDetailsService) {
@@ -50,13 +37,6 @@ public class SecurityConfig {
         provider.setUserDetailsService(userDetailsService);
         return new ProviderManager(provider);
     }
-
-//    @Bean
-//    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-//        authenticationManagerBuilder.authenticationProvider(authProvider);
-//        return authenticationManagerBuilder.build();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,14 +52,14 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                        .invalidSessionUrl(LOGIN_URL)
+                        .invalidSessionUrl("/login")
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 )
                 .logout(logout -> logout
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl(LOGIN_URL + "?logout"))
+                        .logoutSuccessUrl("/login?logout"))
                 .build();
     }
 }
