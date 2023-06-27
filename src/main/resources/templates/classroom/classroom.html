@@ -16,152 +16,100 @@
 
 <div class="container-fluid mt-5 py-2">
     <div class="row">
-        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto" th:if="${user != null}">
-            <ul class="nav flex-column" sec:authorize="isAuthenticated()">
-                <li class="nav-item" th:each="class: ${foundUser.getMonitor().getClassroom()}">
-                    <span class="nav-link" href="#3cvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvdfASAS" th:text="${class.getClassName()}"></span>
-                    <ul class="nav flex-column">
-                        <li class="nav-item" th:each="exercise: ${class.getExercise()}">
-                            <a class="nav-link link-secondary ms-3" href="#" th:text="${exercise.getTitle()}"></a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="row mt-3" th:if="${foundUser.getMonitor().getClassroom().isEmpty()}">
-                <div class="col">
-                    <div class="alert alert-secondary" role="alert">No Class</div>
+        <div class="col-lg-2 bg-body-secondary">
+            <nav class="nav flex-column vh-100 overflow-auto">
+                <ul class="navbar-nav m-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-house"></i> Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../report/report">
+                            <i class="bi bi-chat-left-text"></i> Fórum</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-lg-10 col-sm-12 px-5">
+            <div class="container">
+                <div class="row mt-3 mb-3">
+                    <div class="d-flex justify-content-end">
+                        <h3>Sala Virtual</h3>
+                    </div>
                 </div>
-            </div>
-        </nav>
 
-            <div class="col-10">
-                <div class="container">
-                    <div class="row mt-3 mb-3">
-                        <div class="col d-grid gap-2">
-                            <div class="row">
-                                <div class="col">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop">Adicionar
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                                         data-bs-keyboard="false"
-                                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar
-                                                        Exercício</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form th:action="@{/exercise}" method="post" th:object="${exercise}">
-                                                        <div class="row">
-                                                            <div class="col-12 mb-3">
-                                                                <label for="inputDescricao" class="form-label">Descrição</label>
-                                                                <input type="text" id="inputDescricao"
-                                                                       class="form-control form-control-sm"
-                                                                       aria-labelledby="descricaoHelpBlock" th:field="*{title}">
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="inputDescricao"
-                                                                       class="form-label">Enunciado</label>
-                                                                <label for="exampleFormControlTextarea1"></label>
-                                                                <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1"
-                                                                          rows="3" th:field="*{description}">
-                                                                </textarea>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label>
-                                                                    <select th:field="*{classroom.uuid}">
-                                                                        <option th:each="class: ${foundUser.getMonitor().getClassroom()}" th:value="${class.uuid}" th:text="${class.className}">
-                                                                        </option>
-                                                                    </select>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-sm btn-secondary"
-                                                                    data-bs-dismiss="modal">
-                                                                Fechar
-                                                            </button>
-                                                            <button type="submit" class="btn btn-sm btn-primary">Cadastrar</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+                <div class="row">
+                    <div class="col">
+                        <!--<div class="card">
+                            <div class="card-body">
+                                <div class="list-group list-group-flush">
+                                    <a href="/" class="list-group-item list-group-item-action">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Turma 1</div>
+                                            Alguma info complementar
                                         </div>
-                                    </div>
+                                    </a>
+                                    <a href="/" class="list-group-item list-group-item-action">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Turma 2</div>
+                                            Alguma info complementar
+                                        </div>
+                                    </a>
+                                    <a href="/" class="list-group-item list-group-item-action">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Turma 3</div>
+                                            Alguma info complementar
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-hover align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="col-lg-8 col-sm-4"></th>
+                                            <th scope="col" class="col-lg-4 col-sm-8"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                        <tr>
+                                            <td class="fw-bold">Turma 1</td>
+                                            <td class="text-end">
+                                                <a href="" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
+                                                <a href="" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-pencil-square"></i>
+                                                    Editar</a>
+                                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>
+                                                    Remover</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Turma 2</td>
+                                            <td class="text-end">
+                                                <a href="" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
+                                                <a href="" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-pencil-square"></i>
+                                                    Editar</a>
+                                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>
+                                                    Remover</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="col d-grid gap-2">
-                            <div class="d-flex justify-content-end">
-                                <h3>Sala Virtual - Turma #1</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover table-sm">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Enunciado</th>
-                                    <th scope="col">Autor</th>
-                                    <th scope="col">Data de Cadastro</th>
-                                    <th scope="co1" class="col-1">Ações</th>
-                                </tr>
-                                </thead>
-                                <tbody class="table-group-divider">
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><a href="../classroom/exercise">Exercício #1</a></td>
-                                    <td>Lorem ipsum dolor sit amet...</td>
-                                    <td>@raryson.fred</td>
-                                    <td></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="nav-link btn-link dropdown-toggle" data-bs-toggle="dropdown"
-                                               href="#"
-                                               role="button" data-bs-auto-close="outside"
-                                               aria-expanded="false">Ações</a>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a class="dropdown-item" href="#">Fixar</a></li>
-                                                <li><a class="dropdown-item" href="#">Fechar</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination pagination-sm justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
