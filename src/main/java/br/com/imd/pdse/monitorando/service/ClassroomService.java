@@ -30,6 +30,10 @@ public class ClassroomService {
 
     }
 
+    public void remove(UUID id){
+        classroomRepository.deleteById(id);
+    }
+
     public Classroom save(Classroom classroom){
         return classroomRepository.save(classroom);
     }

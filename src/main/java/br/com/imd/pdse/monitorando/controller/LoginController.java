@@ -1,6 +1,5 @@
 package br.com.imd.pdse.monitorando.controller;
 
-import br.com.imd.pdse.monitorando.Util;
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,17 +38,7 @@ public class LoginController {
     @PostMapping("/process-login")
     public String login(@Valid @ModelAttribute("user") User user, HttpServletRequest request, Model model) {
         var foundUser = service.findByUsername(user.getUsername());
-        var classrooms = Util.getByUserType(foundUser);
-
-//        request.getSession().setAttribute("foundUser", UserDto.builder()
-//                        .username(foundUser.getUsername())
-//                        .teacher(foundUser.getTeacher())
-//                        .monitor(foundUser.getMonitor())
-//                        .student(foundUser.getStudent())
-//                        .name(foundUser.getName())
-//                        .password(foundUser.getPassword())
-//                        .userType(foundUser.getUserType())
-//                .build());
+        var classrooms = service.getClassroomList(foundUser.getUserType(), foundUser.getUuid());
 
         request.getSession().setAttribute("foundUser", foundUser);
 

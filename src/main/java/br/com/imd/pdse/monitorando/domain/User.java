@@ -31,43 +31,13 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MONITOR_UUID", referencedColumnName = "UUID")
-    private Monitor monitor;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TEACHER_UUID", referencedColumnName = "UUID")
-    private Teacher teacher;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "STUDENT_UUID", referencedColumnName = "UUID")
-    private Student student;
-
-    public User(final String name, final String username, final String password, final UserType userType, final Monitor monitor) {
+    public User(final String name, final String username, final String password, final UserType userType) {
         super(Instant.now());
         this.name = name;
         this.username = username;
         this.password = password;
         this.userType = userType;
-        this.monitor = monitor;
-    }
-
-    public User(final String name, final String username, final String password, final UserType userType, final Teacher teacher) {
-        super(Instant.now());
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.userType = userType;
-        this.teacher = teacher;
-    }
-
-    public User(final String name, final String username, final String password, final UserType userType, final Student student) {
-        super(Instant.now());
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.userType = userType;
-        this.student = student;
     }
 
     public User(){

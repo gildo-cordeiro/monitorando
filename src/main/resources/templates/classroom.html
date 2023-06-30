@@ -61,7 +61,17 @@
                                                                                aria-labelledby="descricaoHelpBlock" th:field="*{className}">
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="teacher" th:value="${foundUser.getTeacher().getUuid()}" th:field="*{teacher.uuid}">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <label>
+                                                                            <select th:field="*{monitor.uuid}">
+                                                                                <option th:each="m: ${monitors}" th:value="${m.uuid}" th:text="${m.user.name}">
+                                                                                </option>
+                                                                            </select>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" name="teacher" th:value="${teacher.uuid}" th:field="*{teacher.uuid}">
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-sm btn-secondary"
                                                                             data-bs-dismiss="modal">
@@ -98,13 +108,15 @@
                                     <table class="table table-borderless table-hover align-middle">
                                         <thead>
                                         <tr>
-                                            <th scope="col" class="col-lg-8 col-sm-4"></th>
+                                            <th scope="col" class="col-lg-4 col-sm-4"></th>
                                             <th scope="col" class="col-lg-4 col-sm-8"></th>
+                                            <th scope="col" class="col-lg-4 col-sm-4"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                         <tr th:each="class: ${classrooms}" th:if="${!classrooms.isEmpty()}">
                                             <td class="fw-bold" th:text="${class.className}"></td>
+                                            <td th:text="${class.monitor.user.name}"></td>
                                             <td class="text-end">
                                                 <a th:href="@{/classroom/access(id=${class.getUuid()})}"
                                                    sec:authorize="hasAnyRole('M', 'T', 'S')"

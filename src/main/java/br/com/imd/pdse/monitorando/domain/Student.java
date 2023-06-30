@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
+import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -17,8 +19,19 @@ public class Student extends AbstractEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_UUID", referencedColumnName = "UUID")
+    private User user;
+
     @ManyToMany
     @JoinTable(name = "student_classroom", joinColumns = @JoinColumn(name = "classroom_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Classroom> classrooms;
+
+    public Student(User user) {
+        super(Instant.now());
+        classrooms = Collections.emptyList();
+        this.user = user;
+    }
 
 }

@@ -2,57 +2,71 @@ package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.*;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
-import br.com.imd.pdse.monitorando.repository.MonitorRepository;
 import br.com.imd.pdse.monitorando.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MonitorService monitorService;
+    private final StudentService studentService;
+    private final TeacherService teacherService;
 
-    public UserService(final UserRepository repository, final MonitorRepository monitorRepository,
-                       final PasswordEncoder passwordEncoder) {
-        this.repository = repository;
+    public UserService(final UserRepository userRepository, final PasswordEncoder passwordEncoder, MonitorService monitorService, StudentService studentService, TeacherService teacherService) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.monitorService = monitorService;
+        this.studentService = studentService;
+        this.teacherService = teacherService;
     }
 
-    public Optional<User> login(User dto){
-        return repository.findByUser(dto.getUsername(), dto.getPassword());
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    public User findByUsername(String username){
-        return repository.findByUsername(username);
-    }
-
-    public Optional<User> save(User dto){
-        var foundedUser = repository.findByUser(dto.getUsername(), dto.getPassword());
+    public Optional<User> save(User dto) {
+        var foundedUser = userRepository.findByUser(dto.getUsername(), dto.getPassword());
         var encryptPass = passwordEncoder.encode(dto.getPassword());
+        var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType());
+        User savedUser = null;
 
         if (foundedUser.isEmpty()) {
-            if(dto.getUserType().equals(UserType.MONITOR)){
-                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Monitor());
-                var savedUser = repository.save(user);
+            if (dto.getUserType().equals(UserType.MONITOR)) {
+                savedUser = userRepository.save(user);
+                monitorService.save(new Monitor(savedUser));
 
-                return Optional.of(foundedUser.orElse(savedUser));
-            } else if (dto.getUserType().equals(UserType.STUDENT)){
-                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Student());
-                var savedUser = repository.save(user);
+            } else if (dto.getUserType().equals(UserType.STUDENT)) {
+                savedUser = userRepository.save(user);
+                studentService.save(new Student(savedUser));
 
-                return Optional.of(foundedUser.orElse(savedUser));
-            }else if (dto.getUserType().equals(UserType.TEACHER)){
-                var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), new Teacher());
-                var savedUser = repository.save(user);
-
-                return Optional.of(foundedUser.orElse(savedUser));
+            } else if (dto.getUserType().equals(UserType.TEACHER)) {
+                savedUser = userRepository.save(user);
+                teacherService.save(new Teacher(savedUser));
             }
         }
-        return Optional.empty();
+        return Optional.of(foundedUser.orElse(savedUser));
+    }
+
+    public List<Classroom> getClassroomList(UserType userType, UUID userId){
+        List<Classroom> classrooms = new ArrayList<>();
+
+        if (userType.equals(UserType.MONITOR))
+            classrooms.addAll(monitorService.getClassroomList(userId));
+
+        if (userType.equals(UserType.TEACHER))
+            classrooms.addAll(teacherService.getClassroomList(userId));
+
+//        if (userType.equals(UserType.TEACHER))
+//            classrooms.addAll(studentService.getClassroomList(userId));
+
+        return classrooms;
     }
 }
