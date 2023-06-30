@@ -38,10 +38,15 @@ public class LoginController {
 
     @PostMapping("/process-login")
     public String login(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
-        User foundUser = service.findByUsername(user.getUsername());
+        var foundUser = service.findByUsername(user.getUsername());
+        var classrooms = foundUser.getMonitor().getClassroom();
+
+        if (!foundUser.getMonitor().getClassroom().isEmpty())
+            model.addAttribute("classroom", classrooms);
+
         model.addAttribute("foundUser", foundUser);
-        model.addAttribute("exercise", new Exercise());
-        return "classroom/classroom";
+//        model.addAttribute("exercise", new Exercise());
+        return "classroom";
     }
 
     @PostMapping("/save")

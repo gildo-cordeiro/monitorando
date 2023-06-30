@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
-                        <h3>Sala Virtual - Turma 1</h3>
+                        <h3 th:text="${classroom.getClassName()}"></h3>
                     </div>
                 </div>
 
@@ -41,17 +41,13 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr>
-                                            <td class="fw-bold">Exercício 1</td>
-                                            <td>Conteúdo do exercício 1.</td>
+                                        <tr th:each="exercise: ${classroom.getExercise()}">
+                                            <td class="fw-bold" th:text="${exercise.getTitle()}"></td>
+                                            <td th:text="${exercise.getDescription()}"></td>
                                             <td class="text-end">
-                                                <a href="" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
-                                                <a href="exercise" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square"></i>
-                                                    Editar</a>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>
-                                                    Remover</a>
+                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
+                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
                                             </td>
                                         </tr>
                                         </tbody>

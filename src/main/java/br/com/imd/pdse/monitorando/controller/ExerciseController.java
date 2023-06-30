@@ -1,7 +1,12 @@
 package br.com.imd.pdse.monitorando.controller;
 
+import br.com.imd.pdse.monitorando.domain.Classroom;
+import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.ExerciseService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -13,21 +18,15 @@ public class ExerciseController {
         this.exerciseService = exerciseService;
     }
 
-//    @PostMapping("/exercise")
-//    public String save(@Valid @ModelAttribute("exercise") ExerciseDto exerciseDto,
-//                       @Valid @ModelAttribute("user") User user,
-//                       BindingResult result, Model model){
-//        var saved = exerciseService.save(new Exercise(exerciseDto.getTitle(), exerciseDto.getDescription(), exerciseDto.getClassroomId()));
-//        if (saved.isPresent()) {
-//            model.addAttribute("exercise", saved.get());
-//            model.addAttribute("foundUser", user);
-//            return "classroom/classroom";
-//        }
-//        return "classroom/classroom";
-//    }
 
-    @PostMapping("/exercise")
+    @PostMapping("exercise/save")
     public String save(){
-        return "classroom/classroom";
+        return "exercise";
+    }
+
+    @GetMapping("exercise")
+    public String load(@ModelAttribute("classroom") Classroom classroom, Model model){
+        model.addAttribute("classroom", classroom);
+        return "exercise";
     }
 }

@@ -41,28 +41,12 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr>
-                                            <td class="fw-bold">Turma 1</td>
+                                        <tr th:each="class: ${classroom}">
+                                            <td class="fw-bold" th:text="${class.className}"></td>
                                             <td class="text-end">
-                                                <a href="exercise" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
-                                                <a href="" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square"></i>
-                                                    Editar</a>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>
-                                                    Remover</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fw-bold">Turma 2</td>
-                                            <td class="text-end">
-                                                <a href="exercise" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
-                                                <a href="" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square"></i>
-                                                    Editar</a>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>
-                                                    Remover</a>
+                                                <a th:href="@{/classroom/access(id=${class.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i>Abrir</a>
+                                                <a th:href="@{/classroom/update(id=${class.getUuid()})}" sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}" sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
                                             </td>
                                         </tr>
                                         </tbody>
