@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -13,6 +14,9 @@ import java.util.UUID;
 @Setter
 @Table(name = "EXERCISE")
 public class Exercise extends AbstractEntity {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "TITLE", nullable = false)
     private String title;

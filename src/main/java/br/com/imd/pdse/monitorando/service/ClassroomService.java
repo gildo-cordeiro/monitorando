@@ -1,26 +1,48 @@
 package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.Classroom;
+import br.com.imd.pdse.monitorando.domain.Monitor;
 import br.com.imd.pdse.monitorando.repository.ClassroomRepository;
+import br.com.imd.pdse.monitorando.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClassroomService {
 
     private final ClassroomRepository classroomRepository;
 
-    public ClassroomService(final ClassroomRepository classroomRepository) {
+    private final TeacherRepository teacherRepository;
+
+    public ClassroomService(final ClassroomRepository classroomRepository, TeacherRepository teacherRepository) {
         this.classroomRepository = classroomRepository;
+        this.teacherRepository = teacherRepository;
     }
 
-    public Optional<Classroom> findById(UUID id) throws Exception {
+    public Classroom findById(UUID id) {
         if (Objects.isNull(id))
-            return Optional.empty();
+            return null;
 
-        return Optional.ofNullable(classroomRepository.findById(id).orElseThrow(() -> new Exception("")));
+        var classroom = classroomRepository.findById(id);
+
+        return classroom.orElse(null);
+
+    }
+
+    public Classroom save(Classroom classroom){
+        return classroomRepository.save(classroom);
+    }
+
+    public List<Classroom> findAllByTeacherOrMonitor(UUID id){
+        if (Objects.isNull(id))
+            return Collections.emptyList();
+
+        var classrooms = classroomRepository.findAllByTeacherOrMonitor(id);
+
+        if (classrooms.isEmpty())
+            return Collections.emptyList();
+
+        return classroomRepository.findAllByTeacherOrMonitor(id);
     }
 }

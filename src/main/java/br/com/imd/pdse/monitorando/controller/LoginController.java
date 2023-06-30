@@ -1,12 +1,12 @@
 package br.com.imd.pdse.monitorando.controller;
 
-import br.com.imd.pdse.monitorando.domain.Exercise;
+import br.com.imd.pdse.monitorando.Util;
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,16 +37,25 @@ public class LoginController {
     }
 
     @PostMapping("/process-login")
-    public String login(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+    public String login(@Valid @ModelAttribute("user") User user, HttpServletRequest request, Model model) {
         var foundUser = service.findByUsername(user.getUsername());
-        var classrooms = foundUser.getMonitor().getClassroom();
+        var classrooms = Util.getByUserType(foundUser);
 
-        if (!foundUser.getMonitor().getClassroom().isEmpty())
-            model.addAttribute("classroom", classrooms);
+//        request.getSession().setAttribute("foundUser", UserDto.builder()
+//                        .username(foundUser.getUsername())
+//                        .teacher(foundUser.getTeacher())
+//                        .monitor(foundUser.getMonitor())
+//                        .student(foundUser.getStudent())
+//                        .name(foundUser.getName())
+//                        .password(foundUser.getPassword())
+//                        .userType(foundUser.getUserType())
+//                .build());
 
+        request.getSession().setAttribute("foundUser", foundUser);
+
+        model.addAttribute("classrooms", classrooms);
         model.addAttribute("foundUser", foundUser);
-//        model.addAttribute("exercise", new Exercise());
-        return "classroom";
+        return "redirect:/classroom";
     }
 
     @PostMapping("/save")

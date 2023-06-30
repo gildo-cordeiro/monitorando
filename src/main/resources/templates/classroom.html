@@ -27,10 +27,63 @@
                         <h3>Sala Virtual</h3>
                     </div>
                 </div>
+                <div class="row" sec:authorize="hasRole('T')">
+                    <div class="col-10">
+                        <div class="container">
+                            <div class="row mt-3 mb-3">
+                                <div class="col d-grid gap-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop">Adicionar
+                                            </button>
 
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                                 data-bs-keyboard="false"
+                                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar
+                                                                Turma</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form th:action="@{/classroom/save}" method="post" th:object="${classroom}">
+                                                                <div class="row">
+                                                                    <div class="col-12 mb-3">
+                                                                        <label for="inputDescricao" class="form-label">Nome da Turma</label>
+                                                                        <input type="text" id="inputDescricao"
+                                                                               class="form-control form-control-sm"
+                                                                               aria-labelledby="descricaoHelpBlock" th:field="*{className}">
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" name="teacher" th:value="${foundUser.getTeacher().getUuid()}" th:field="*{teacher.uuid}">
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-sm btn-secondary"
+                                                                            data-bs-dismiss="modal">
+                                                                        Fechar
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-sm btn-primary">Cadastrar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
-                        <div class="card" sec:authorize="hasRole('A')">
+                        <div class="card" sec:authorize="hasRole('S')">
                             <div class="card-body">
                                 <h5 class="card-title">Card title</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the
@@ -39,7 +92,7 @@
                             </div>
                         </div>
 
-                        <div class="card" sec:authorize="hasAnyRole('M', 'P')">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-hover align-middle">
@@ -50,20 +103,23 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr th:each="class: ${classroom}">
+                                        <tr th:each="class: ${classrooms}" th:if="${!classrooms.isEmpty()}">
                                             <td class="fw-bold" th:text="${class.className}"></td>
                                             <td class="text-end">
                                                 <a th:href="@{/classroom/access(id=${class.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'P')"
+                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"
                                                    class="btn btn-sm btn-primary"><i
                                                         class="bi bi-box-arrow-in-up-right"></i>Abrir</a>
                                                 <a th:href="@{/classroom/update(id=${class.getUuid()})}"
-                                                   sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i
+                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
                                                         class="bi bi-pencil-square"></i>Editar</a>
                                                 <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
-                                                   sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i
+                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
                                                         class="bi bi-trash"></i>Remover</a>
                                             </td>
+                                        </tr>
+                                        <tr th:if="${classrooms.isEmpty()}">
+                                            <td class="fw-bold">Nenhuma turma cadastrada</td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -45,9 +45,9 @@
                                             <td class="fw-bold" th:text="${exercise.getTitle()}"></td>
                                             <td th:text="${exercise.getDescription()}"></td>
                                             <td class="text-end">
-                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
-                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
-                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
+                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
+                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
                                             </td>
                                         </tr>
                                         </tbody>

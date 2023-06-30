@@ -2,9 +2,9 @@ package br.com.imd.pdse.monitorando.domain.enums;
 
 public enum UserType {
 
-    PROFESSOR("ROLE_P"), ALUNO("ROLE_A"), MONITOR("ROLE_M");
+    TEACHER("ROLE_T"), STUDENT("ROLE_S"), MONITOR("ROLE_M");
 
-    private String code;
+    private final String code;
 
     UserType(String code) {
         this.code = code;

@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.time.Instant;
 
 @Entity
@@ -15,6 +16,9 @@ import java.time.Instant;
 @Setter
 @Table(name = "TOPIC")
 public class Topic extends AbstractEntity {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
