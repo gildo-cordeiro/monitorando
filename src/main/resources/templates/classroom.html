@@ -30,7 +30,16 @@
 
                 <div class="row">
                     <div class="col">
-                        <div class="card">
+                        <div class="card" sec:authorize="hasRole('A')">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+
+                        <div class="card" sec:authorize="hasAnyRole('M', 'P')">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-hover align-middle">
@@ -44,9 +53,16 @@
                                         <tr th:each="class: ${classroom}">
                                             <td class="fw-bold" th:text="${class.className}"></td>
                                             <td class="text-end">
-                                                <a th:href="@{/classroom/access(id=${class.getUuid()})}" sec:authorize="hasAnyRole('M', 'P')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i>Abrir</a>
-                                                <a th:href="@{/classroom/update(id=${class.getUuid()})}" sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
-                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}" sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
+                                                <a th:href="@{/classroom/access(id=${class.getUuid()})}"
+                                                   sec:authorize="hasAnyRole('M', 'P')"
+                                                   class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-box-arrow-in-up-right"></i>Abrir</a>
+                                                <a th:href="@{/classroom/update(id=${class.getUuid()})}"
+                                                   sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-pencil-square"></i>Editar</a>
+                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
+                                                   sec:authorize="hasRole('P')" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-trash"></i>Remover</a>
                                             </td>
                                         </tr>
                                         </tbody>

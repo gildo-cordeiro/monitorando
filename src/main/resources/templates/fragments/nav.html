@@ -6,10 +6,10 @@
                     <i class="bi bi-house"></i> Início</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../report/report">
+                <a class="nav-link" href="#">
                     <i class="bi bi-chat-left-text"></i> Fórum</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('P')">
                 <a class="nav-link" href="#">
                     <i class="bi bi-file-earmark-text"></i> Relatório</a>
             </li>
