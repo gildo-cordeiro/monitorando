@@ -36,7 +36,7 @@
                                         <div class="col">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop">Adicionar
+                                                    data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> Adicionar
                                             </button>
 
                                             <!-- Modal -->
@@ -46,38 +46,51 @@
                                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                                Adicionar
                                                                 Turma</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form th:action="@{/classroom/save}" method="post" th:object="${classroom}">
+                                                            <form th:action="@{/classroom/save}" method="post"
+                                                                  th:object="${classroom}">
                                                                 <div class="row">
                                                                     <div class="col-12 mb-3">
-                                                                        <label for="inputDescricao" class="form-label">Nome da Turma</label>
+                                                                        <label for="inputDescricao" class="form-label">Nome
+                                                                            da Turma</label>
                                                                         <input type="text" id="inputDescricao"
                                                                                class="form-control form-control-sm"
-                                                                               aria-labelledby="descricaoHelpBlock" th:field="*{className}">
+                                                                               aria-labelledby="descricaoHelpBlock"
+                                                                               th:field="*{className}">
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row mb-3">
                                                                     <div class="col-12">
-                                                                        <label>
-                                                                            <select th:field="*{monitor.uuid}">
-                                                                                <option th:each="m: ${monitors}" th:value="${m.uuid}" th:text="${m.user.name}">
-                                                                                </option>
-                                                                            </select>
-                                                                        </label>
+                                                                        <label for="inputDescricao" class="form-label">Monitor</label>
+                                                                        <select
+                                                                                th:field="*{monitor.uuid}"
+                                                                                class="form-select">
+                                                                            <option th:each="m: ${monitors}"
+                                                                                    th:value="${m.uuid}"
+                                                                                    th:text="${m.user.name}">
+                                                                            </option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="teacher" th:value="${teacher.uuid}" th:field="*{teacher.uuid}">
+                                                                <input type="hidden" name="teacher"
+                                                                       th:value="${teacher.uuid}"
+                                                                       th:field="*{teacher.uuid}">
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-sm btn-secondary"
+                                                                    <button type="button"
+                                                                            class="btn btn-sm btn-secondary"
                                                                             data-bs-dismiss="modal">
                                                                         Fechar
                                                                     </button>
-                                                                    <button type="submit" class="btn btn-sm btn-primary">Cadastrar</button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-sm btn-primary">Cadastrar
+                                                                    </button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -121,13 +134,14 @@
                                                 <a th:href="@{/classroom/access(id=${class.getUuid()})}"
                                                    sec:authorize="hasAnyRole('M', 'T', 'S')"
                                                    class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right"></i>Abrir</a>
+                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
                                                 <a th:href="@{/classroom/update(id=${class.getUuid()})}"
                                                    sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square"></i>Editar</a>
-                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
-                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-trash"></i>Remover</a>
+                                                        class="bi bi-pencil-square"></i> Editar</a>
+                                                <a th:href="@{/classroom/remove(id=${classroom.getUuid()})}"
+                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary">
+                                                    <i class="bi bi-trash"></i> Remover
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr th:if="${classrooms.isEmpty()}">
