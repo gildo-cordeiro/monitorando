@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.Classroom;
+import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.ClassroomService;
 import br.com.imd.pdse.monitorando.service.MonitorService;
@@ -53,9 +54,13 @@ public class ClassroomController {
     }
 
     @GetMapping("classroom/access")
-    public String access(@RequestParam(name = "id") String id, Model model) {
-        var classroom = classroomService.findById(UUID.fromString(id));
-        model.addAttribute("classroom", classroom);
+    public String access(@RequestParam(name = "id") String id,
+                         @ModelAttribute("exercise") Exercise exercise,
+                         Model model) {
+        var classroomFound = classroomService.findById(UUID.fromString(id));
+        exercise.setClassroom(classroomFound);
+
+        model.addAttribute("classroomFound", classroomFound);
         return "exercise";
     }
 

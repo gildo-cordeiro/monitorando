@@ -24,6 +24,9 @@ public class Exercise extends AbstractEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
+    @Column(name = "ACTIVE", columnDefinition = "boolean default true")
+    private boolean active;
+
     @ManyToOne
     private Classroom classroom;
 

@@ -3,7 +3,6 @@ package br.com.imd.pdse.monitorando.service;
 import br.com.imd.pdse.monitorando.domain.*;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

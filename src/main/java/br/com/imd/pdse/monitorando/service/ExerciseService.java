@@ -1,10 +1,13 @@
 package br.com.imd.pdse.monitorando.service;
 
+import br.com.imd.pdse.monitorando.domain.Classroom;
 import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ExerciseService {
@@ -13,6 +16,21 @@ public class ExerciseService {
 
     public ExerciseService(ExerciseRepository repository) {
         this.repository = repository;
+    }
+
+    public Exercise findById(UUID id) {
+        if (Objects.isNull(id))
+            return null;
+
+        var classroom = repository.findById(id);
+
+        return classroom.orElse(null);
+
+    }
+
+    public void softDelete(Exercise exercise){
+        exercise.setActive(false);
+        repository.save(exercise);
     }
 
 
