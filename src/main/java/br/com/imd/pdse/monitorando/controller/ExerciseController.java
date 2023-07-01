@@ -1,10 +1,11 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.Exercise;
+import br.com.imd.pdse.monitorando.domain.Submission;
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.ClassroomService;
 import br.com.imd.pdse.monitorando.service.ExerciseService;
-import br.com.imd.pdse.monitorando.service.UserService;
+import br.com.imd.pdse.monitorando.service.SubmissionService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,19 +20,34 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     private final ClassroomService classroomService;
+    
+    private final SubmissionService submissionService;
 
-    public ExerciseController(ExerciseService exerciseService, ClassroomService classroomService) {
+    public ExerciseController(ExerciseService exerciseService, ClassroomService classroomService, SubmissionService submissionService) {
         this.exerciseService = exerciseService;
         this.classroomService = classroomService;
+        this.submissionService = submissionService;
     }
 
-    @GetMapping("exercise/access/")
+    @GetMapping("exercise/access")
     public String access(@RequestParam(name = "id") String id,
-                         @ModelAttribute("exercise") Exercise exercise, Model model,
-                         BindingResult bindingResult) {
+                         @ModelAttribute("exercise") Exercise exercise,
+                         Model model,
+                         HttpServletRequest request) {
         var foundExercise = exerciseService.findById(UUID.fromString(id));
+        var foundUser = (User) request.getSession().getAttribute("foundUser");
+
+        Submission submission = new Submission();
+        submission.setExercise(foundExercise);
+        submission.setUser(foundUser);
+
+        var activeAccess = submissionService.submissionAccess(submission, request);
+
+        model.addAttribute("activeAccess", activeAccess);
         model.addAttribute("exercise", foundExercise);
-        return "exercise";
+        model.addAttribute("user", foundUser);
+        model.addAttribute("submission", submission);
+        return "submission";
     }
 
     @GetMapping("exercise/remove")

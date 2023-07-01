@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,9 @@ public class Exercise extends AbstractEntity {
 
     @ManyToOne
     private Classroom classroom;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "exercise", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
 
     public Exercise(String title, String description, Classroom classroom) {
         super(Instant.now());

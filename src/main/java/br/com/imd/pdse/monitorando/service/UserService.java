@@ -6,10 +6,7 @@ import br.com.imd.pdse.monitorando.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -68,5 +65,15 @@ public class UserService {
 //            classrooms.addAll(studentService.getClassroomList(userId));
 
         return classrooms;
+    }
+
+    public User findById(UUID id) {
+        if (Objects.isNull(id))
+            return null;
+
+        var classroom = userRepository.findById(id);
+
+        return classroom.orElse(null);
+
     }
 }

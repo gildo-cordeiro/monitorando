@@ -23,32 +23,41 @@
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
-                        <h3 th:text="${classroom.getClassName()}"></h3>
+                        <h3 th:text="${exercise.classroom.className}"></h3>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Título do exercício</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <div class="form-floating my-3">
-                                    <textarea class="form-control" placeholder="Leave a comment here"
-                                              id="floatingTextarea1" style="height: 100px"></textarea>
-                            <label for="floatingTextarea1">Resposta</label>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-reply"></i> Responder</a>
-                        </div>
+                        <h5 class="card-title" th:text="${exercise.title}"></h5>
+                        <p class="card-text" th:text="${exercise.description}"></p>
+                        <form th:action="@{/submission/save}" method="post" th:object="${submission}">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="privacy"
+                                       th:field="*{privacy}">
+                                <label class="form-check-label" for="privacy">Privado</label>
+                            </div>
+                            <div class="form-floating my-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
+                                          th:field="*{comment}" style="height: 100px"></textarea>
+                                <label for="floatingTextarea1">Resposta</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-sm btn-primary">Responder</button>
+                            </div>
+                            <input type="hidden" th:value="${exercise.uuid}" th:field="*{exercise.uuid}">
+                            <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
+                        </form>
                         <hr>
                         <h5 class="card-title">Submissões</h5>
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="list-group list-group-flush" th:if="${!submission.exercise.submissions.isEmpty()}">
+                            <div class="list-group-item list-group-item-action" aria-current="true"
+                                 th:each="sub: ${submission.exercise.submissions}" th:if="${activeAccess}">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">@usuário</h5>
-                                    <small>3 days ago</small>
+                                    <h5 class="mb-1" th:text="${sub.user.name}"></h5>
+                                    <small th:text="${#dates.format(sub.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
                                 </div>
-                                <p class="mb-1">Submissão do @usuário.</p>
+                                <p class="mb-1" th:text="${sub.comment}"></p>
 
                                 <!-- Button trigger modal -->
                                 <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
@@ -100,7 +109,9 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="list-group list-group-flush" th:if="${submission.exercise.submissions.isEmpty()}">
+                            <p class="fw-bold">Nenhum exercicio cadastrado</p>
+                        </div>
                     </div>
                 </div>
 
