@@ -14,10 +14,7 @@ import java.util.UUID;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 
-    @Query(value = "SELECT t FROM Teacher t INNER JOIN t.user u WHERE u.uuid = :id")
-    Teacher findTeacherByUserId(@Param("id") UUID id);
-
-    @Query(value = "SELECT t.classrooms FROM Teacher t INNER JOIN t.user u WHERE u.userType = :userType AND u.uuid = :id")
-    List<Classroom> findByIdAndUserTypeTeacher(@Param("userType") UserType userType, @Param("id") UUID id);
+    @Query(value = "SELECT t FROM Teacher t INNER JOIN t.user u WHERE u.uuid = :id" )
+    Teacher findTeacherByUserId(@Param("id" ) UUID id);
 
 }

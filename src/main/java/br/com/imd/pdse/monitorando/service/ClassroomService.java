@@ -30,8 +30,9 @@ public class ClassroomService {
 
     }
 
-    public void remove(UUID id){
-        classroomRepository.deleteById(id);
+    public void softDelete(Classroom classroom){
+        classroom.setActive(false);
+        classroomRepository.save(classroom);
     }
 
     public Classroom save(Classroom classroom){

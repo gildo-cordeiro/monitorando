@@ -34,15 +34,24 @@ public class Monitor extends AbstractEntity {
     @ManyToOne
     private Teacher teacher;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "USER_UUID", referencedColumnName = "UUID")
     private User user;
 
+    public Monitor(UUID uuid, User user) {
+        super(Instant.now(), uuid);
+        this.user = user;
+    }
+
+    public Monitor(Teacher teacher, User user) {
+        super(Instant.now());
+        this.teacher = teacher;
+        this.user = user;
+    }
+
     public Monitor(User user) {
         super(Instant.now());
-        schedules = Collections.emptySet();
-        classroom = Collections.emptyList();
-        report = Collections.emptyList();
+        this.teacher = teacher;
         this.user = user;
     }
 

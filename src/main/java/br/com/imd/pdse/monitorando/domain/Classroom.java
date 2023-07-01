@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -21,6 +22,9 @@ public class Classroom extends AbstractEntity {
 
     @Column(name = "CLASS_NAME", nullable = false)
     private String className;
+
+    @Column(name = "ACTIVE", columnDefinition = "boolean default true")
+    private boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "classroom", cascade = CascadeType.ALL)
     private List<Exercise> exercise;
@@ -34,15 +38,11 @@ public class Classroom extends AbstractEntity {
     @ManyToMany(mappedBy = "classrooms")
     private List<Student> students;
 
-    public Classroom(String className, Monitor monitor) {
+    public Classroom(String className, boolean active, Monitor monitor, Teacher teacher) {
         super(Instant.now());
         this.className = className;
+        this.active = active;
         this.monitor = monitor;
-    }
-
-    public Classroom(String className, Teacher teacher) {
-        super(Instant.now());
-        this.className = className;
         this.teacher = teacher;
     }
 

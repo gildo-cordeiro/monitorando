@@ -53,7 +53,7 @@ public class ClassroomController {
     }
 
     @GetMapping("classroom/access")
-    public String access(@RequestParam(name = "id") String id, Model model) throws Exception {
+    public String access(@RequestParam(name = "id") String id, Model model) {
         var classroom = classroomService.findById(UUID.fromString(id));
         model.addAttribute("classroom", classroom);
         return "exercise";
@@ -72,19 +72,21 @@ public class ClassroomController {
                          @ModelAttribute("classroom") Classroom classroom,
                          Model model, HttpServletRequest request,
                          BindingResult bindingResult) {
-        classroomService.remove(UUID.fromString(id));
+        var classFound = classroomService.findById(UUID.fromString(id));
+        classroomService.softDelete(classFound);
 
         var foundUser = (User) request.getSession().getAttribute("foundUser");
         var classrooms = service.getClassroomList(foundUser.getUserType(), foundUser.getUuid());
 
         model.addAttribute("classrooms", classrooms);
-        return "classroom";
+        return "redirect:/classroom";
     }
 
 
     @PostMapping("classroom/save")
     public String save(@ModelAttribute("classroom") Classroom classroom, Model model) throws Exception {
         var savedMonitor = monitorService.findById(classroom.getMonitor().getUuid());
+        classroom.setActive(true);
         classroom.setMonitor(savedMonitor);
 
         classroomService.save(classroom);

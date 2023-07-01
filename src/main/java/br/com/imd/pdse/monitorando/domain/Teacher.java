@@ -31,7 +31,7 @@ public class Teacher extends AbstractEntity {
     @JoinTable(name = "teacher_report", joinColumns = @JoinColumn(name = "report_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Report> reports;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "USER_UUID", referencedColumnName = "UUID")
     private User user;
 
@@ -49,11 +49,13 @@ public class Teacher extends AbstractEntity {
         this.reports = Collections.emptySet();
     }
 
+    public Teacher(UUID uuid, User user) {
+        super(Instant.now(), uuid);
+        this.user = user;
+    }
+
     public Teacher(User user) {
         super(Instant.now());
-        this.classrooms = Collections.emptyList();
-        this.monitors = Collections.emptyList();
-        this.reports = Collections.emptySet();
         this.user = user;
     }
 }

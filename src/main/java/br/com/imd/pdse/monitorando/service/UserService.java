@@ -3,6 +3,7 @@ package br.com.imd.pdse.monitorando.service;
 import br.com.imd.pdse.monitorando.domain.*;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,10 +60,10 @@ public class UserService {
         List<Classroom> classrooms = new ArrayList<>();
 
         if (userType.equals(UserType.MONITOR))
-            classrooms.addAll(monitorService.getClassroomList(userId));
+            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
 
         if (userType.equals(UserType.TEACHER))
-            classrooms.addAll(teacherService.getClassroomList(userId));
+            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
 
 //        if (userType.equals(UserType.TEACHER))
 //            classrooms.addAll(studentService.getClassroomList(userId));

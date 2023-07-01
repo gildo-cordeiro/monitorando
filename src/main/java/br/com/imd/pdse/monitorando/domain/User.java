@@ -13,6 +13,7 @@ import java.io.Serial;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -31,6 +32,14 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    public User(final UUID uuid, final String name, final String username, final String password, final UserType userType) {
+        super(Instant.now(), uuid);
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+    }
 
     public User(final String name, final String username, final String password, final UserType userType) {
         super(Instant.now());
