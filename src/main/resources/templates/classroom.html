@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titulo}"></title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -13,14 +13,15 @@
 
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div class="container-fluid mt-5">
 
-<div class="container-fluid mt-5 py-2">
+    <div th:replace="fragments/header :: header"></div>
+
     <div class="row">
 
         <div th:replace="fragments/nav :: nav"></div>
 
-        <div class="col-lg-10 col-sm-12 px-5">
+        <div class="col-lg-10 col-sm-12 px-5 my-2">
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
@@ -37,7 +38,7 @@
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop"><i
-                                                    class="bi bi-plus me-2"></i>Adicionar
+                                                    class="bi bi-plus-lg me-2"></i>Adicionar
                                             </button>
 
                                             <!-- Modal -->
@@ -59,25 +60,31 @@
                                                                   th:object="${classroom}">
                                                                 <div class="row">
                                                                     <div class="col-12 mb-3">
-                                                                        <label for="inputDescricao" class="form-label">Nome
-                                                                            da Turma</label>
-                                                                        <input type="text" id="inputDescricao"
-                                                                               class="form-control form-control-sm"
-                                                                               aria-labelledby="descricaoHelpBlock"
-                                                                               th:field="*{className}">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control"
+                                                                                   id="floatingInput"
+                                                                                   placeholder="name@example.com"
+                                                                                   th:field="*{className}">
+                                                                            <label for="floatingInput">Nome da
+                                                                                Turma</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col-12">
-                                                                        <label for="inputDescricao" class="form-label">Monitor</label>
-                                                                        <select
-                                                                                th:field="*{monitor.uuid}"
-                                                                                class="form-select">
-                                                                            <option th:each="m: ${monitors}"
-                                                                                    th:value="${m.uuid}"
-                                                                                    th:text="${m.user.name}">
-                                                                            </option>
-                                                                        </select>
+                                                                        <div class="form-floating">
+                                                                            <select class="form-select"
+                                                                                    th:field="*{monitor.uuid}"
+                                                                                    id="floatingSelect"
+                                                                                    aria-label="Floating label select example">
+                                                                                <option th:each="m: ${monitors}"
+                                                                                        th:value="${m.uuid}"
+                                                                                        th:text="${m.user.name}">
+                                                                                </option>
+                                                                            </select>
+                                                                            <label for="floatingSelect">Nome do
+                                                                                monitor</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <input type="hidden" name="teacher"
@@ -86,11 +93,12 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button"
                                                                             class="btn btn-sm btn-secondary"
-                                                                            data-bs-dismiss="modal">
-                                                                        Fechar
+                                                                            data-bs-dismiss="modal"><i
+                                                                            class="bi bi-x-lg me-2"></i>Fechar
                                                                     </button>
                                                                     <button type="submit"
-                                                                            class="btn btn-sm btn-primary">Cadastrar
+                                                                            class="btn btn-sm btn-primary"><i
+                                                                            class="bi bi-check-lg me-2"></i>Cadastrar
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -119,34 +127,69 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-borderless table-hover align-middle">
+                                    <table class="table table-sm table-borderless table-hover align-middle">
                                         <thead>
                                         <tr>
-                                            <th scope="col" class="col-lg-4 col-sm-4"></th>
+                                            <th scope="col" class="col-lg-6 col-sm-4"></th>
                                             <th scope="col" class="col-lg-4 col-sm-8"></th>
-                                            <th scope="col" class="col-lg-4 col-sm-4"></th>
+                                            <th scope="col" class="col-lg-2 col-sm-4"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                         <tr th:each="class: ${classrooms}" th:if="${!classrooms.isEmpty()}">
-                                            <td class="fw-bold" th:text="${class.className}"></td>
-                                            <td th:text="${class.monitor.user.name}"></td>
-                                            <td class="text-end">
-                                                <a th:href="@{/classroom/access(id=${class.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"
-                                                   class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
-                                                <a th:href="@{/classroom/update(id=${class.getUuid()})}"
-                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square me-2"></i>Editar</a>
-                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
-                                                   sec:authorize="hasRole('T')" class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-trash me-2"></i>Remover
-                                                </a>
+                                            <td class="fw-bold">
+                                                <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                                                   th:text="${class.className}"
+                                                   th:href="@{/classroom/access(id=${class.getUuid()})}"
+                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"></a>
+                                            </td>
+                                            <td class="text-muted" th:text="${class.monitor.user.name}"></td>
+                                            <td>
+                                                <ul class="nav d-flex justify-content-end">
+                                                    <li class="nav-item dropdown dropstart">
+                                                        <a class="nav-link link-body-emphasis px-2"
+                                                           data-bs-toggle="dropdown" href="#"
+                                                           role="button" data-bs-auto-close="outside"
+                                                           aria-expanded="false"><i
+                                                                class="bi bi-three-dots-vertical"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu dropdown-menu-end"
+                                                            aria-labelledby="themeDropdown">
+                                                            <li><h6 class="dropdown-header">Ações</h6></li>
+                                                            <li>
+                                                                <a th:href="@{/classroom/update(id=${class.getUuid()})}"
+                                                                   sec:authorize="hasRole('T')"
+                                                                   class="dropdown-item"><i
+                                                                        class="bi bi-pencil-square me-2"></i>Editar</a>
+                                                            </li>
+                                                            <li>
+                                                                <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
+                                                                   sec:authorize="hasRole('T')"
+                                                                   class="dropdown-item">
+                                                                    <i class="bi bi-trash me-2"></i>Remover
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
                                             </td>
                                         </tr>
-                                        <tr th:if="${classrooms.isEmpty()}">
-                                            <td class="fw-bold">Nenhuma turma cadastrada</td>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="table-responsive" th:if="${classrooms.isEmpty()}">
+                                    <table class="table table-borderless table-hover align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="col-12"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                        <tr>
+                                            <td class="fw-bold d-flex justify-content-center"><i
+                                                    class="bi bi-exclamation-circle me-2"></i>Nenhuma turma cadastrada
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -156,11 +199,12 @@
                     </div>
                 </div>
             </div>
+
+            <div th:replace="fragments/footer :: footer"></div>
+
         </div>
     </div>
 </div>
-
-<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

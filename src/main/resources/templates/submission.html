@@ -12,14 +12,16 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
 
-<div class="container-fluid mt-5 py-2">
+<div class="container-fluid mt-5">
+
+    <div th:replace="fragments/header :: header"></div>
+
     <div class="row">
 
         <div th:replace="fragments/nav :: nav"></div>
 
-        <div class="col-lg-10 col-sm-12 px-5">
+        <div class="col-lg-10 col-sm-12 px-5 my-2">
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
@@ -27,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${exercise.title}"></h5>
                         <p class="card-text" th:text="${exercise.description}"></p>
@@ -43,14 +45,20 @@
                                 <label for="floatingTextarea1">Resposta</label>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-sm btn-primary">Responder</button>
+                                <button type="submit" class="btn btn-sm btn-primary"><i
+                                        class="bi bi-check-lg me-2"></i>Responder
+                                </button>
                             </div>
                             <input type="hidden" th:value="${exercise.uuid}" th:field="*{exercise.uuid}">
                             <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
                         </form>
-                        <hr>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">Submissões</h5>
-                        <div class="list-group list-group-flush" th:if="${!submission.exercise.submissions.isEmpty()}">
+                        <div class="list-group list-group-flush"
+                             th:if="${!submission.exercise.submissions.isEmpty()}">
                             <div class="list-group-item list-group-item-action" aria-current="true"
                                  th:each="sub: ${submission.exercise.submissions}" th:if="${activeAccess}">
                                 <div class="d-flex w-100 justify-content-between">
@@ -90,7 +98,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
                                                     Fechar
                                                 </button>
                                             </div>
@@ -104,28 +113,26 @@
                                     <label for="floatingTextarea2">Comentário</label>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-send"></i>
-                                        Comentar</a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                            class="bi bi-send me-2"></i>Comentar</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group list-group-flush" th:if="${submission.exercise.submissions.isEmpty()}">
-                            <p class="fw-bold">Nenhum exercicio cadastrado</p>
+                        <div class="list-group list-group-flush"
+                             th:if="${submission.exercise.submissions.isEmpty()}">
+                            <p class="fw-bold d-flex justify-content-center"><i
+                                    class="bi bi-exclamation-circle me-2"></i>Nenhuma submissão cadastrada</p>
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <div th:replace="fragments/footer :: footer"></div>
+
         </div>
     </div>
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
 
 </body>
-
 </html>

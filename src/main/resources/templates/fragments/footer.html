@@ -1,69 +1,23 @@
-<footer class="py-5 bg-body-tertiary" th:fragment="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-6 col-md-2 mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md-2 mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md-2 mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
-            <div class="col-md-5 offset-md-1 mb-3">
-                <form>
-                    <h5>Subscribe to our newsletter</h5>
-                    <p>Monthly digest of what's new and exciting from us.</p>
-                    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                        <label for="newsletter1" class="visually-hidden">Email address</label>
-                        <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                        <button class="btn btn-primary" type="button">Subscribe</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p>© 2023 Company, Inc. All rights reserved.</p>
-            <ul class="list-unstyled d-flex">
-                <li class="ms-3"><a class="link-body-emphasis" href="#">
-                    <svg class="bi" width="24" height="24">
-                        <use xlink:href="#twitter"></use>
-                    </svg>
-                </a></li>
-                <li class="ms-3"><a class="link-body-emphasis" href="#">
-                    <svg class="bi" width="24" height="24">
-                        <use xlink:href="#instagram"></use>
-                    </svg>
-                </a></li>
-                <li class="ms-3"><a class="link-body-emphasis" href="#">
-                    <svg class="bi" width="24" height="24">
-                        <use xlink:href="#facebook"></use>
-                    </svg>
-                </a></li>
-            </ul>
-        </div>
-    </div>
+<div class="container" th:fragment="footer">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-body-secondary">© 2023 Company, Inc</p>
+
+        <a href="../classroom/classroom"
+           class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 226.8 226.8">
+                <path d="M491.8,184.3H350.1a42.5,42.5,0,0,0-42.5,42.5V368.5A42.5,42.5,0,0,0,350.1,411H491.8a42.5,42.5,0,0,0,42.5-42.5V226.8A42.5,42.5,0,0,0,491.8,184.3ZM477.6,340.2a42.6,42.6,0,0,1-42.5-42.6,14.2,14.2,0,0,0-28.3,0v42.6H378.4V297.6a14.2,14.2,0,0,0-28.3,0v42.6H321.7V297.6h0a42.6,42.6,0,0,1,42.6-42.5h0A42.1,42.1,0,0,1,392.6,266a42.1,42.1,0,0,1,28.3-10.9h0a42.7,42.7,0,0,1,42.6,42.5h0a14.2,14.2,0,1,0,14.1-14.1,13.8,13.8,0,0,0-7,1.9V255.7a40.5,40.5,0,0,1,7-.6,42.6,42.6,0,1,1,0,85.1Z"
+                      transform="translate(-307.6 -184.3)" fill="currentColor"/>
+            </svg>
+        </a>
+
+        <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+    </footer>
 
     <script>
         function toggleTheme(theme) {
@@ -92,4 +46,4 @@
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>
 
-</footer>
+</div>
