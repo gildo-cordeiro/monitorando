@@ -36,7 +36,8 @@
                                         <div class="col">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> Adicionar
+                                                    data-bs-target="#staticBackdrop"><i
+                                                    class="bi bi-plus me-2"></i>Adicionar
                                             </button>
 
                                             <!-- Modal -->
@@ -134,13 +135,13 @@
                                                 <a th:href="@{/classroom/access(id=${class.getUuid()})}"
                                                    sec:authorize="hasAnyRole('M', 'T', 'S')"
                                                    class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
+                                                        class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
                                                 <a th:href="@{/classroom/update(id=${class.getUuid()})}"
                                                    sec:authorize="hasRole('T')" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square"></i> Editar</a>
+                                                        class="bi bi-pencil-square me-2"></i>Editar</a>
                                                 <a th:href="@{/classroom/remove(id=${class.getUuid()})}"
                                                    sec:authorize="hasRole('T')" class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-trash"></i> Remover
+                                                    <i class="bi bi-trash me-2"></i>Remover
                                                 </a>
                                             </td>
                                         </tr>

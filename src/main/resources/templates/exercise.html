@@ -35,7 +35,8 @@
                                         <div class="col">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> Adicionar
+                                                    data-bs-target="#staticBackdrop"><i
+                                                    class="bi bi-plus me-2"></i>Adicionar
                                             </button>
 
                                             <!-- Modal -->
@@ -52,10 +53,12 @@
                                                                     aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form th:action="@{/exercise/save}" method="post" th:object="${exercise}">
+                                                            <form th:action="@{/exercise/save}" method="post"
+                                                                  th:object="${exercise}">
                                                                 <div class="row">
                                                                     <div class="col-12 mb-3">
-                                                                        <label for="titulo" class="form-label">Titulo do Exercicio</label>
+                                                                        <label for="titulo" class="form-label">Titulo do
+                                                                            Exercicio</label>
                                                                         <input type="text" id="titulo"
                                                                                class="form-control form-control-sm"
                                                                                aria-labelledby="descricaoHelpBlock"
@@ -111,13 +114,21 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr th:each="exercise: ${classroomFound.getExercise()}" th:if="${!classroomFound.getExercise().isEmpty()}">
+                                        <tr th:each="exercise: ${classroomFound.getExercise()}"
+                                            th:if="${!classroomFound.getExercise().isEmpty()}">
                                             <td class="fw-bold" th:text="${exercise.title}"></td>
                                             <td th:text="${exercise.description}"></td>
                                             <td class="text-end">
-                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-box-arrow-in-up-right"></i> Abrir</a>
-                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
-                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}" sec:authorize="hasAnyRole('M', 'T')" class="btn btn-sm btn-primary"><i class="bi bi-trash"></i>Remover</a>
+                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}"
+                                                   sec:authorize="hasAnyRole('M', 'T')"
+                                                   class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
+                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}"
+                                                   sec:authorize="hasAnyRole('M', 'T')"
+                                                   class="btn btn-sm btn-primary"><i class="bi bi-pencil-square me-2"></i>Editar</a>
+                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}"
+                                                   sec:authorize="hasAnyRole('M', 'T')"
+                                                   class="btn btn-sm btn-primary"><i class="bi bi-trash me-2"></i>Remover</a>
                                             </td>
                                         </tr>
 
