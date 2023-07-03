@@ -1,7 +1,8 @@
 package br.com.imd.pdse.monitorando.service;
 
-import br.com.imd.pdse.monitorando.domain.Exercise;
+import br.com.imd.pdse.monitorando.domain.Contribution;
 import br.com.imd.pdse.monitorando.domain.Topic;
+import br.com.imd.pdse.monitorando.repository.ContributionRepository;
 import br.com.imd.pdse.monitorando.repository.TopicRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,11 @@ public class TopicService {
 
     private final TopicRepository topicRepository;
 
-    public TopicService(TopicRepository topicRepository) {
+    private final ContributionRepository contributionRepository;
+
+    public TopicService(TopicRepository topicRepository, ContributionRepository contributionRepository) {
         this.topicRepository = topicRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     public List<Topic> findAll(){
@@ -26,6 +30,10 @@ public class TopicService {
     public Optional<Topic> save(Topic topic){
         return Optional.of(topicRepository.save(topic));
     }
+    public Optional<Contribution> save(Contribution contribution){
+        return Optional.of(contributionRepository.save(contribution));
+    }
+
 
     public Topic findById(UUID id) {
         if (Objects.isNull(id))
@@ -35,5 +43,9 @@ public class TopicService {
 
         return classroom.orElse(null);
 
+    }
+
+    public List<Contribution> findAllContributions(){
+        return contributionRepository.findAll();
     }
 }

@@ -45,20 +45,20 @@
                                         aria-labelledby="themeDropdown">
                                         <li><h6 class="dropdown-header">Ações</h6></li>
                                         <li>
-                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                            <a th:href="@{/topic/remove(id=${topic.uuid})}"
                                                sec:authorize="hasAnyRole('M', 'T')"
                                                class="dropdown-item"><i
                                                     class="bi bi-star me-2"></i>Fixar</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                            <a th:href="@{/topic/remove(id=${topic.uuid})}"
                                                sec:authorize="hasAnyRole('M', 'T')"
                                                class="dropdown-item"><i
                                                     class="bi bi-hand-thumbs-up me-2"></i>Curtir</a>
                                         </li>
 
                                         <li>
-                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                            <a th:href="@{/topic/remove(id=${topic.uuid})}"
                                                sec:authorize="hasAnyRole('M', 'T')"
                                                class="dropdown-item"><i
                                                     class="bi bi-check-lg me-2"></i>Fechar</a>
@@ -89,11 +89,12 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/topic/save}" method="post" th:object="${topic}">
+                                        <form th:action="@{/topic/contribution/save}" method="post"
+                                              th:object="${contribution}">
                                             <div class="form-floating my-3">
                                                 <textarea class="form-control" placeholder="Leave a comment here"
                                                           id="floatingTextarea1"
-                                                          th:field="*{comment}" style="height: 100px"></textarea>
+                                                          th:field="*{answer}" style="height: 100px"></textarea>
                                                 <label for="floatingTextarea1">Resposta</label>
                                             </div>
                                             <div class="d-flex justify-content-end">
@@ -101,8 +102,8 @@
                                                         class="bi bi-check-lg me-2"></i>Responder
                                                 </button>
                                             </div>
-                                            <input type="hidden" th:value="${topic.uuid}" th:field="*{topic.uuid}">
                                             <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
+                                            <input type="hidden" th:value="${topic.uuid}" th:field="*{topic.uuid}">
                                         </form>
                                     </div>
                                 </div>
@@ -127,22 +128,24 @@
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel1">Contribuições -
-                                            @usuário_que_abriu_topico</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel1" th:text="'Contribuições - ' + ${topic.user.username}"></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="list-group list-group-flush">
+                                    <div class="modal-body" th:if="${!contributions.isEmpty()}">
+                                        <div class="list-group list-group-flush" th:each="c : ${contributions}">
                                             <a href="#" class="list-group-item list-group-item-action"
                                                aria-current="true">
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    <h5 class="mb-1">@usuário_que_contribuiu</h5>
-                                                    <small>3 days ago</small>
-                                                </div>
-                                                <p class="mb-1">Resposta do @usuário_que_contribuiu.</p>
+                                                    <h5 class="mb-1" th:text="'Contribuinte: ' + ${c.user.name}"></h5>
+                                                    <small th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy HH:mm')}"></small>                                                </div>
+                                                <p class="mb-1" th:text="${c.answer}"></p>
                                             </a>
                                         </div>
+                                    </div>
+                                    <div class="modal-body" th:if="${contributions.isEmpty()}">
+                                        <p class="fw-bold d-flex justify-content-center"><i
+                                                class="bi bi-exclamation-circle me-2"></i>Nenhuma contribuição encontrada</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -152,33 +155,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="list-group list-group-flush"
-                             th:if="${!submission.exercise.submissions.isEmpty()}">
-                            <div class="list-group-item list-group-item-action" aria-current="true"
-                                 th:each="sub: ${submission.exercise.submissions}" th:if="${activeAccess}">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1" th:text="${sub.user.name}"></h5>
-                                    <small th:text="${#dates.format(sub.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
-                                </div>
-                                <p class="mb-1" th:text="${sub.comment}"></p>
-
-                                <div class="form-floating my-3">
-                                    <textarea class="form-control" placeholder="Leave a comment here"
-                                              id="floatingTextarea2"></textarea>
-                                    <label for="floatingTextarea2">Contribuição</label>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href="#" class="btn btn-sm btn-outline-primary"><i
-                                            class="bi bi-send me-2"></i>Contribuir</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group list-group-flush"
-                             th:if="${submission.exercise.submissions.isEmpty()}">
-                            <p class="fw-bold d-flex justify-content-center"><i
-                                    class="bi bi-exclamation-circle me-2"></i>Nenhuma contribuição cadastrada</p>
                         </div>
                     </div>
                 </div>

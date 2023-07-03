@@ -33,12 +33,12 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Submission> submissions;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Topic> topics;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Contribution> contributions;
 
 
 
