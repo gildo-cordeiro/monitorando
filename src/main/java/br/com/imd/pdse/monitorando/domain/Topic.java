@@ -22,15 +22,19 @@ public class Topic extends AbstractEntity {
 
     @Column(name = "TITLE", nullable = false)
     private String title;
-
     @Column(name = "MESSAGE", nullable = false)
     private String message;
-
-    @Column(name = "OPEN", nullable = false)
+    @Column(name = "OPEN", columnDefinition = "boolean default true")
     private boolean open;
-
+    @Column(name = "ACTIVE", columnDefinition = "boolean default true")
+    private boolean active;
+    @Column(name = "LIKES")
+    private  int likes;
+    @ManyToOne
+    private User user;
     @ManyToOne
     private Report report;
+    private int count;
 
     public Topic(String title) {
         super(Instant.now());

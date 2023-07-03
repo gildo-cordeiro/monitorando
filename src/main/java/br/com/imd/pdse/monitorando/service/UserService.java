@@ -61,8 +61,8 @@ public class UserService {
         if (userType.equals(UserType.TEACHER))
             classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
 
-//        if (userType.equals(UserType.TEACHER))
-//            classrooms.addAll(studentService.getClassroomList(userId));
+        if (userType.equals(UserType.STUDENT ))
+            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
 
         return classrooms;
     }

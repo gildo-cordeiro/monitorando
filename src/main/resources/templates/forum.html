@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
-                        <h3 th:text="${classroomFound.getClassName()}">Fórum</h3>
+                        <h3>Fórum</h3>
                     </div>
                 </div>
                 <div class="row" sec:authorize="hasAnyRole('T', 'M')">
@@ -38,7 +38,7 @@
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop"><i
-                                                    class="bi bi-plus me-2"></i>Adicionar
+                                                    class="bi bi-plus-lg me-2"></i>Adicionar
                                             </button>
 
                                             <!-- Modal -->
@@ -55,38 +55,42 @@
                                                                     aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form th:action="@{/exercise/save}" method="post"
-                                                                  th:object="${exercise}">
+                                                            <form th:action="@{/topic/save}" method="post"
+                                                                  th:object="${topic}">
                                                                 <div class="row">
                                                                     <div class="col-12 mb-3">
-                                                                        <label for="titulo" class="form-label">Titulo do
-                                                                            Exercicio</label>
-                                                                        <input type="text" id="titulo"
-                                                                               class="form-control form-control-sm"
-                                                                               aria-labelledby="descricaoHelpBlock"
-                                                                               th:field="*{title}">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control"
+                                                                                   id="title"
+                                                                                   placeholder="name@example.com"
+                                                                                   th:field="*{title}">
+                                                                            <label for="title">Título do
+                                                                                Exercício</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-12 mb-3">
-                                                                        <label for="descricao" class="form-label">Descricao</label>
-                                                                        <input type="text" id="descricao"
-                                                                               class="form-control form-control-sm"
-                                                                               aria-labelledby="descricaoHelpBlock"
-                                                                               th:field="*{description}">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control"
+                                                                                   id="description"
+                                                                                   placeholder="name@example.com"
+                                                                                   th:field="*{message}">
+                                                                            <label for="description">Descrição</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="classroom"
-                                                                       th:value="${classroomFound.uuid}"
-                                                                       th:field="*{classroom.uuid}">
+                                                                <input type="hidden" th:value="${topic.user.uuid}" th:field="*{user.uuid}">
+                                                                <div class="modal-footer">
                                                                 <div class="modal-footer">
                                                                     <button type="button"
                                                                             class="btn btn-sm btn-secondary"
-                                                                            data-bs-dismiss="modal">
-                                                                        Fechar
+                                                                            data-bs-dismiss="modal"><i
+                                                                            class="bi bi-x-lg me-2"></i>Fechar
                                                                     </button>
                                                                     <button type="submit"
-                                                                            class="btn btn-sm btn-primary">Cadastrar
+                                                                            class="btn btn-sm btn-primary"><i
+                                                                            class="bi bi-check-lg me-2"></i>Cadastrar
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -118,15 +122,14 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr th:each="exercise: ${classroomFound.getExercise()}"
-                                            th:if="${!classroomFound.getExercise().isEmpty()}">
-                                            <td class="fw-bold" th:text="${exercise.title}">Relações de Recorrência</td>
-                                            <td th:text="${exercise.description}">@usuario</td>
-                                            <td th:text="${exercise.description}">7</td>
-                                            <td th:text="${exercise.description}">5</td>
+                                        <tr th:each="t : ${topics}">
+                                            <td class="fw-bold" th:text="${t.title}"></td>
+                                            <td th:text="${t.user.name}"></td>
+                                            <td>7</td>
+                                            <td th:text="${t.likes}"></td>
                                             <td class="d-flex justify-content-end">
                                                 <ul class="nav">
-                                                    <li class="nav-item dropdown">
+                                                    <li class="nav-item dropdown dropstart">
                                                         <a class="nav-link link-body-emphasis px-2"
                                                            data-bs-toggle="dropdown" href="#"
                                                            role="button" data-bs-auto-close="outside"
@@ -137,19 +140,19 @@
                                                             aria-labelledby="themeDropdown">
                                                             <li><h6 class="dropdown-header">Ações</h6></li>
                                                             <li>
-                                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}"
+                                                                <a th:href="@{/topic/access(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
                                                             </li>
                                                             <li>
-                                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}"
+                                                                <a th:href="@{/topic/update(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-pencil-square me-2"></i>Editar</a>
                                                             </li>
                                                             <li>
-                                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}"
+                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-trash me-2"></i>Remover</a>
@@ -158,20 +161,20 @@
                                                                 <hr class="dropdown-divider">
                                                             </li>
                                                             <li>
-                                                                <a th:href=""
+                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-star me-2"></i>Fixar</a>
                                                             </li>
                                                             <li>
-                                                                <a th:href=""
+                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-hand-thumbs-up me-2"></i>Curtir</a>
                                                             </li>
 
                                                             <li>
-                                                                <a th:href=""
+                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
                                                                         class="bi bi-check-lg me-2"></i>Fechar</a>
@@ -181,31 +184,6 @@
                                                 </ul>
                                             </td>
                                         </tr>
-
-                                        <!--<tr th:each="exercise: ${classroomFound.getExercise()}"
-                                            th:if="${!classroomFound.getExercise().isEmpty()}">
-                                            <td class="fw-bold" th:text="${exercise.title}">Relações de Recorrência</td>
-                                            <td th:text="${exercise.description}">7</td>
-                                            <td th:text="${exercise.description}">5</td>
-                                            <td class="text-end">
-                                                <a th:href="@{/exercise/access(id=${exercise.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"
-                                                   class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
-                                                <a th:href="@{/exercise/update(id=${exercise.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"
-                                                   class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-pencil-square me-2"></i>Editar</a>
-                                                <a th:href="@{/exercise/remove(id=${exercise.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"
-                                                   class="btn btn-sm btn-primary"><i class="bi bi-trash me-2"></i>Remover</a>
-                                            </td>
-                                        </tr>
-
-                                        <tr th:if="${classroomFound.getExercise().isEmpty()}">
-                                            <td class="fw-bold">Nenhum tópico cadastrado</td>
-                                        </tr>-->
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -219,11 +197,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-
 </body>
 
 </html>

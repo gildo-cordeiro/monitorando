@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -12,69 +12,187 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
 
-<div class="container-fluid mt-5 py-2">
+<div class="container-fluid mt-5">
+
+    <div th:replace="fragments/header :: header"></div>
+
     <div class="row">
-        <nav class="col-2 menu-vertical d-flex flex-column vh-100 overflow-auto">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Turma #1</a>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link link-secondary ms-3" href="../report/topic">Tópico #1</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
 
-        <div class="col-10">
+        <div th:replace="fragments/nav :: nav"></div>
+
+        <div class="col-lg-10 col-sm-12 px-5 my-2">
             <div class="container">
-                <div class="row mt-3 mb-3">
-                    <div class="col d-grid gap-2">
-                        <div class="d-flex justify-content-end">
-                            <h3>Fórum - Turma #1</h3>
-                        </div>
+                <div class="row mt-5 mb-3">
+                    <div class="d-flex justify-content-end">
+                        <h3 th:text="${topic.title}"></h3>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <h3>Tópico #1</h3>
-                        <p style="text-align: justify;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est justo, finibus eu
-                            porttitor nec, eleifend vel erat. Vestibulum vehicula vestibulum ultrices. Nunc faucibus
-                            finibus lorem ut venenatis. Aliquam erat volutpat. Quisque vitae tristique augue, vel
-                            vehicula libero. Curabitur pretium, justo a iaculis scelerisque, nulla ligula faucibus
-                            dui, id blandit purus purus id lorem. Vivamus sed porta enim. Nullam consequat molestie
-                            vehicula. Nunc sagittis, quam a porta malesuada, mi ex semper elit, ac sodales nisl erat
-                            ut risus. Suspendisse sit amet ligula non quam ornare feugiat. In nec viverra leo, vitae
-                            eleifend urna. Quisque molestie lectus ut nulla imperdiet laoreet vitae non leo. Integer
-                            vel dui maximus, ornare risus interdum, euismod risus. Etiam elit lacus, elementum sed
-                            massa ac, faucibus gravida augue.
-                        </p>
-                        <label for="exampleFormControlTextarea1" class="form-label">Resposta</label>
-                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1"
-                                  rows="3"></textarea>
-                        <div class="row mt-3">
-                            <div class="col">
-                                <a href="#" class="btn btn-sm btn-outline-primary rounded-circle" role="button" data-bs-toggle="button"><i
-                                        class="bi bi-heart-fill"></i></a></div>
-                            <div class="col">
-                                <div class="d-flex justify-content-end">
-                                    <a class="btn btn-sm btn-primary">Responder</a>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="card-title" th:text="${topic.title}">Título do tópico</h5>
+                            <ul class="nav">
+                                <li class="nav-item dropdown dropstart">
+                                    <a class="nav-link link-body-emphasis px-2"
+                                       data-bs-toggle="dropdown" href="#"
+                                       role="button" data-bs-auto-close="outside"
+                                       aria-expanded="false"><i
+                                            class="bi bi-three-dots-vertical"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="themeDropdown">
+                                        <li><h6 class="dropdown-header">Ações</h6></li>
+                                        <li>
+                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                               sec:authorize="hasAnyRole('M', 'T')"
+                                               class="dropdown-item"><i
+                                                    class="bi bi-star me-2"></i>Fixar</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                               sec:authorize="hasAnyRole('M', 'T')"
+                                               class="dropdown-item"><i
+                                                    class="bi bi-hand-thumbs-up me-2"></i>Curtir</a>
+                                        </li>
+
+                                        <li>
+                                            <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                               sec:authorize="hasAnyRole('M', 'T')"
+                                               class="dropdown-item"><i
+                                                    class="bi bi-check-lg me-2"></i>Fechar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="card-text" th:text="${topic.message}">Mensagem do criador do tópico</p>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"><i
+                                class="bi bi-send me-2"></i>Responder
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                             data-bs-keyboard="false"
+                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                            Adicionar Exercicio</h1>
+                                        <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/topic/save}" method="post" th:object="${topic}">
+                                            <div class="form-floating my-3">
+                                                <textarea class="form-control" placeholder="Leave a comment here"
+                                                          id="floatingTextarea1"
+                                                          th:field="*{comment}" style="height: 100px"></textarea>
+                                                <label for="floatingTextarea1">Resposta</label>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-sm btn-primary"><i
+                                                        class="bi bi-check-lg me-2"></i>Responder
+                                                </button>
+                                            </div>
+                                            <input type="hidden" th:value="${topic.uuid}" th:field="*{topic.uuid}">
+                                            <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Contribuições</h5>
+
+                        <!-- Button trigger modal -->
+                        <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                           data-bs-toggle="modal" data-bs-target="#staticBackdrop1" role="button"><small>
+                            Contribuições</small>
+                        </a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static"
+                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel1">Contribuições -
+                                            @usuário_que_abriu_topico</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="list-group list-group-flush">
+                                            <a href="#" class="list-group-item list-group-item-action"
+                                               aria-current="true">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">@usuário_que_contribuiu</h5>
+                                                    <small>3 days ago</small>
+                                                </div>
+                                                <p class="mb-1">Resposta do @usuário_que_contribuiu.</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+                                            Fechar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group list-group-flush"
+                             th:if="${!submission.exercise.submissions.isEmpty()}">
+                            <div class="list-group-item list-group-item-action" aria-current="true"
+                                 th:each="sub: ${submission.exercise.submissions}" th:if="${activeAccess}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" th:text="${sub.user.name}"></h5>
+                                    <small th:text="${#dates.format(sub.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
+                                </div>
+                                <p class="mb-1" th:text="${sub.comment}"></p>
+
+                                <div class="form-floating my-3">
+                                    <textarea class="form-control" placeholder="Leave a comment here"
+                                              id="floatingTextarea2"></textarea>
+                                    <label for="floatingTextarea2">Contribuição</label>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                            class="bi bi-send me-2"></i>Contribuir</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group list-group-flush"
+                             th:if="${submission.exercise.submissions.isEmpty()}">
+                            <p class="fw-bold d-flex justify-content-center"><i
+                                    class="bi bi-exclamation-circle me-2"></i>Nenhuma contribuição cadastrada</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div th:replace="fragments/footer :: footer"></div>
+
         </div>
     </div>
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
 </body>
-
 </html>

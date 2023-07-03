@@ -37,6 +37,10 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Submission> submissions;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Topic> topics;
+
+
 
     public User(final UUID uuid, final String name, final String username, final String password, final UserType userType) {
         super(Instant.now(), uuid);
