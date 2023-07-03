@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titulo}"></title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Fórum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -57,43 +57,36 @@
                                                         <div class="modal-body">
                                                             <form th:action="@{/topic/save}" method="post"
                                                                   th:object="${topic}">
-                                                                <div class="row">
-                                                                    <div class="col-12 mb-3">
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="text" class="form-control"
-                                                                                   id="title"
-                                                                                   placeholder="name@example.com"
-                                                                                   th:field="*{title}">
-                                                                            <label for="title">Título do
-                                                                                Exercício</label>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                           id="title"
+                                                                           placeholder="name@example.com"
+                                                                           th:field="*{title}">
+                                                                    <label for="title">Título do
+                                                                        Exercício</label>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-12 mb-3">
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="text" class="form-control"
-                                                                                   id="description"
-                                                                                   placeholder="name@example.com"
-                                                                                   th:field="*{message}">
-                                                                            <label for="description">Descrição</label>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control"
+                                                                           id="description"
+                                                                           placeholder="name@example.com"
+                                                                           th:field="*{message}">
+                                                                    <label for="description">Descrição</label>
                                                                 </div>
-                                                                <input type="hidden" th:value="${topic.user.uuid}" th:field="*{user.uuid}">
-                                                                <div class="modal-footer">
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                            class="btn btn-sm btn-secondary"
-                                                                            data-bs-dismiss="modal"><i
-                                                                            class="bi bi-x-lg me-2"></i>Fechar
-                                                                    </button>
-                                                                    <button type="submit"
-                                                                            class="btn btn-sm btn-primary"><i
-                                                                            class="bi bi-check-lg me-2"></i>Cadastrar
-                                                                    </button>
-                                                                </div>
+
+                                                                <input type="hidden" th:value="${topic.user.uuid}"
+                                                                       th:field="*{user.uuid}">
                                                             </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                    class="btn btn-sm btn-secondary"
+                                                                    data-bs-dismiss="modal"><i
+                                                                    class="bi bi-x-lg me-2"></i>Fechar
+                                                            </button>
+                                                            <button type="submit"
+                                                                    class="btn btn-sm btn-primary"><i
+                                                                    class="bi bi-check-lg me-2"></i>Cadastrar
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,16 +107,20 @@
                                     <table class="table table-borderless table-hover align-middle">
                                         <thead>
                                         <tr>
-                                            <th scope="col" class="col-lg-4 col-sm-4">TÓPICO</th>
-                                            <th scope="col" class="col-lg-2 col-sm-4">USUÁRIO</th>
-                                            <th scope="col" class="col-lg-2 col-sm-4">RESPOSTAS</th>
-                                            <th scope="col" class="col-lg-2 col-sm-4">CURTIDAS</th>
-                                            <th scope="col" class="col-lg-2 col-sm-8"></th>
+                                            <th scope="col" class="col-lg-6 col-sm-6">Tópico</th>
+                                            <th scope="col" class="col-lg-3 col-sm-3">Usuário</th>
+                                            <th scope="col" class="col-lg-1 col-sm-1">Contribuições</th>
+                                            <th scope="col" class="col-lg-1 col-sm-1">Curtidas</th>
+                                            <th scope="col" class="col-lg-1 col-sm-1"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                         <tr th:each="t : ${topics}">
-                                            <td class="fw-bold" th:text="${t.title}"></td>
+                                            <td class="fw-bold">
+                                                <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                                                   th:text="${t.title}" th:href="@{/topic/access(id=${t.uuid})}"
+                                                   sec:authorize="hasAnyRole('M', 'T')"></a>
+                                            </td>
                                             <td th:text="${t.user.name}"></td>
                                             <td>7</td>
                                             <td th:text="${t.likes}"></td>
@@ -139,12 +136,6 @@
                                                         <ul class="dropdown-menu dropdown-menu-end"
                                                             aria-labelledby="themeDropdown">
                                                             <li><h6 class="dropdown-header">Ações</h6></li>
-                                                            <li>
-                                                                <a th:href="@{/topic/access(id=${t.uuid})}"
-                                                                   sec:authorize="hasAnyRole('M', 'T')"
-                                                                   class="dropdown-item"><i
-                                                                        class="bi bi-box-arrow-in-up-right me-2"></i>Acessar</a>
-                                                            </li>
                                                             <li>
                                                                 <a th:href="@{/topic/update(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
@@ -198,5 +189,4 @@
     </div>
 </div>
 </body>
-
 </html>
