@@ -15,13 +15,19 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    @Query(value = "FROM User u WHERE u.username = :login and u.password = :password" )
-    Optional<User> findByUser(@Param("login" ) String login, @Param("password" ) String pass);
+    @Query(value = "FROM User u WHERE u.username = :login and u.password = :password")
+    Optional<User> findByUser(@Param("login") String login, @Param("password") String pass);
 
-    @Query(value = "FROM User u WHERE u.username = :email" )
+    @Query(value = "FROM User u WHERE u.username = :email")
     User findByUsername(String email);
 
-    @Query(value = "SELECT c FROM Teacher t INNER JOIN t.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true" )
-    List<Classroom> findByIdAndUserType(@Param("userType" ) UserType userType, @Param("id" ) UUID id);
+    @Query(value = "SELECT c FROM Teacher t INNER JOIN t.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
+    List<Classroom> findByIdAndUserTypeTeacher(@Param("userType") UserType userType, @Param("id") UUID id);
+
+    @Query(value = "SELECT c FROM Monitor m INNER JOIN m.teacher t INNER JOIN m.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
+    List<Classroom> findByIdAndUserTypeMonitor(@Param("userType") UserType userType, @Param("id") UUID id);
+
+    @Query(value = "SELECT c FROM StudentTeacher st INNER JOIN st.teacher t INNER JOIN st.student s INNER JOIN s.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
+    List<Classroom> findByIdAndUserTypeStudent(@Param("userType") UserType userType, @Param("id") UUID id);
 
 }

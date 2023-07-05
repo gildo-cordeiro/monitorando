@@ -1,32 +1,29 @@
 package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.Classroom;
-import br.com.imd.pdse.monitorando.domain.Monitor;
 import br.com.imd.pdse.monitorando.repository.ClassroomRepository;
 import br.com.imd.pdse.monitorando.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ClassroomService {
 
     private final ClassroomRepository classroomRepository;
 
-    private final TeacherRepository teacherRepository;
-
     public ClassroomService(final ClassroomRepository classroomRepository, TeacherRepository teacherRepository) {
         this.classroomRepository = classroomRepository;
-        this.teacherRepository = teacherRepository;
     }
 
     public Classroom findById(UUID id) {
         if (Objects.isNull(id))
             return null;
 
-        var classroom = classroomRepository.findById(id);
-
-        return classroom.orElse(null);
+        return classroomRepository.findById(id).get();
 
     }
 
@@ -39,15 +36,4 @@ public class ClassroomService {
         return classroomRepository.save(classroom);
     }
 
-    public List<Classroom> findAllByTeacherOrMonitor(UUID id){
-        if (Objects.isNull(id))
-            return Collections.emptyList();
-
-        var classrooms = classroomRepository.findAllByTeacherOrMonitor(id);
-
-        if (classrooms.isEmpty())
-            return Collections.emptyList();
-
-        return classroomRepository.findAllByTeacherOrMonitor(id);
-    }
 }

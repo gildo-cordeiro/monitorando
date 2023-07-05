@@ -15,5 +15,4 @@ public interface ClassroomRepository extends JpaRepository<Classroom, UUID> {
     @Query("FROM Classroom c WHERE c.monitor.uuid = :uuid OR c.teacher.uuid = :uuid")
     List<Classroom> findAllByTeacherOrMonitor(@Param("uuid") UUID uuid);
 
-
 }

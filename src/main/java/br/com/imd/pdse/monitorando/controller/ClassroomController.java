@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -59,6 +61,14 @@ public class ClassroomController {
                          Model model) {
         var classroomFound = classroomService.findById(UUID.fromString(id));
         exercise.setClassroom(classroomFound);
+        List<Exercise> exerciseList = new ArrayList<>();
+
+        classroomFound.getExercise().forEach(exercise1 -> {
+            if (!exercise1.isActive())
+                exerciseList.add(exercise1);
+        });
+
+        classroomFound.getExercise().removeAll(exerciseList);
 
         model.addAttribute("classroomFound", classroomFound);
         return "exercise";
@@ -75,8 +85,7 @@ public class ClassroomController {
     @GetMapping("classroom/remove")
     public String remove(@RequestParam(name = "id") String id,
                          @ModelAttribute("classroom") Classroom classroom,
-                         Model model, HttpServletRequest request,
-                         BindingResult bindingResult) {
+                         Model model, HttpServletRequest request) {
         var classFound = classroomService.findById(UUID.fromString(id));
         classroomService.softDelete(classFound);
 

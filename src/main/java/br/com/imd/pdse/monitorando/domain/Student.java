@@ -28,10 +28,16 @@ public class Student extends AbstractEntity {
     @JoinTable(name = "student_classroom", joinColumns = @JoinColumn(name = "classroom_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Classroom> classrooms;
 
+    @OneToMany(mappedBy = "student")
+    private Set<StudentTeacher> students;
+
     public Student(User user) {
         super(Instant.now());
         classrooms = Collections.emptyList();
         this.user = user;
     }
 
+    public Student() {
+        super(Instant.now());
+    }
 }

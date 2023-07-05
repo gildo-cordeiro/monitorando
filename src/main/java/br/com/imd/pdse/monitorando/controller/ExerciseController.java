@@ -52,10 +52,11 @@ public class ExerciseController {
 
     @GetMapping("exercise/remove")
     public String remove(@RequestParam(name = "id") String id,
-                         @ModelAttribute("exercise") Exercise exercise,
-                         BindingResult bindingResult) {
+                         @ModelAttribute("exercise") Exercise exercise) {
         var exerciseFound = exerciseService.findById(UUID.fromString(id));
-        var foundClass = classroomService.findById(exercise.getClassroom().getUuid());
+        var foundClass = classroomService.findById(exerciseFound.getClassroom().getUuid());
+        exerciseFound.setClassroom(foundClass);
+
         exerciseService.softDelete(exerciseFound);
 
         return "redirect:/classroom/access?id=" + foundClass.getUuid();

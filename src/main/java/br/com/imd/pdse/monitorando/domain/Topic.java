@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,8 @@ public class Topic extends AbstractEntity {
     private boolean open;
     @Column(name = "ACTIVE", columnDefinition = "boolean default true")
     private boolean active;
+    @Column(name = "CLOSED_DATE")
+    private LocalDate closedDate;
     @Column(name = "LIKES")
     private  int likes;
     @ManyToOne
@@ -36,11 +39,6 @@ public class Topic extends AbstractEntity {
     private List<Contribution> contributions;
 
     private int count;
-
-    public Topic(String title) {
-        super(Instant.now());
-        this.title = title;
-    }
 
     public Topic() {
         super(Instant.now());

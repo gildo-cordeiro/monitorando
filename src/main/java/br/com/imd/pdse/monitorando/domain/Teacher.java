@@ -24,12 +24,18 @@ public class Teacher extends AbstractEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Classroom> classrooms;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade  = CascadeType.ALL)
     private List<Monitor> monitors;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "teacher_report", joinColumns = @JoinColumn(name = "report_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Report> reports;
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<StudentTeacher> teachers;
 
     @OneToOne
     @JoinColumn(name = "USER_UUID", referencedColumnName = "UUID")
@@ -40,18 +46,6 @@ public class Teacher extends AbstractEntity {
         this.classrooms = Collections.emptyList();
         this.monitors = Collections.emptyList();
         this.reports = Collections.emptySet();
-    }
-
-    public Teacher(UUID uuid) {
-        super(Instant.now(), uuid);
-        this.classrooms = Collections.emptyList();
-        this.monitors = Collections.emptyList();
-        this.reports = Collections.emptySet();
-    }
-
-    public Teacher(UUID uuid, User user) {
-        super(Instant.now(), uuid);
-        this.user = user;
     }
 
     public Teacher(User user) {

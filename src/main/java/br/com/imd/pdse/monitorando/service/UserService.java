@@ -56,13 +56,13 @@ public class UserService {
         List<Classroom> classrooms = new ArrayList<>();
 
         if (userType.equals(UserType.MONITOR))
-            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
+            classrooms.addAll(userRepository.findByIdAndUserTypeMonitor(userType, userId));
 
         if (userType.equals(UserType.TEACHER))
-            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
+            classrooms.addAll(userRepository.findByIdAndUserTypeTeacher(userType, userId));
 
         if (userType.equals(UserType.STUDENT ))
-            classrooms.addAll(userRepository.findByIdAndUserType(userType, userId));
+            classrooms.addAll(userRepository.findByIdAndUserTypeStudent(userType, userId));
 
         return classrooms;
     }
