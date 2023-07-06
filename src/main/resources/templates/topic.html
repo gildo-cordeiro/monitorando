@@ -75,49 +75,45 @@
                                 class="bi bi-send me-2"></i>Responder
                         </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                             data-bs-keyboard="false"
-                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                                            Adicionar Exercicio</h1>
-                                        <button type="button" class="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form th:action="@{/topic/contribution/save}" method="post"
-                                              th:object="${contribution}">
+                        <form th:action="@{/topic/contribution/save}" method="post"
+                              th:object="${contribution}">
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                 data-bs-keyboard="false"
+                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                Adicionar Exercicio</h1>
+                                            <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
                                             <div class="form-floating">
                                                 <textarea class="form-control" placeholder="Leave a comment here"
                                                           id="floatingTextarea1"
-                                                          th:field="*{answer}" style="height: 100px"></textarea>
+                                                          th:field="*{answer}" style="height: 300px"></textarea>
                                                 <label for="floatingTextarea1">Resposta</label>
-                                            </div>
-                                            <div class="d-flex justify-content-end">
-
                                             </div>
                                             <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
                                             <input type="hidden" th:value="${topic.uuid}" th:field="*{topic.uuid}">
-                                            <div class="modal-footer">
-                                                <button type="button"
-                                                        class="btn btn-sm btn-secondary"
-                                                        data-bs-dismiss="modal"><i
-                                                        class="bi bi-x-lg me-2"></i>Fechar
-                                                </button>
-                                                <button type="submit" class="btn btn-sm btn-primary"><i
-                                                        class="bi bi-check-lg me-2"></i>Responder
-                                                </button>
-                                            </div>
-
-                                        </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-secondary"
+                                                    data-bs-dismiss="modal"><i
+                                                    class="bi bi-x-lg me-2"></i>Fechar
+                                            </button>
+                                            <button type="submit" class="btn btn-sm btn-primary"><i
+                                                    class="bi bi-check-lg me-2"></i>Responder
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="card">
@@ -147,7 +143,7 @@
                                             <a href="#" class="list-group-item list-group-item-action"
                                                aria-current="true">
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    <h5 class="mb-1" th:text="'Contribuinte: ' + ${c.user.name}"></h5>
+                                                    <h5 class="mb-1" th:text="${c.user.name}"></h5>
                                                     <small th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
                                                 </div>
                                                 <p class="mb-1" th:text="${c.answer}"></p>
@@ -178,5 +174,8 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

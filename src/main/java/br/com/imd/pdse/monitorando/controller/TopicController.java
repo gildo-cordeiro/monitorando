@@ -52,7 +52,7 @@ public class TopicController {
     @GetMapping("topic/fixed")
     public String fixed(@RequestParam(name = "id") String id){
         var topic = topicService.findById(UUID.fromString(id));
-        topic.setFixed(true);
+        topic.setFixed(!topic.isFixed());
 
         topicService.save(topic);
         return "redirect:/forum";
