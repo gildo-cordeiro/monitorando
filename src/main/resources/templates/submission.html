@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Submissão</title>
+    <title>Submissão</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-floating my-3">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
-                                          th:field="*{comment}" style="height: 100px"></textarea>
+                                          th:field="*{answer}" style="height: 100px"></textarea>
                                 <label for="floatingTextarea1">Resposta</label>
                             </div>
                             <div class="d-flex justify-content-end">
@@ -71,20 +71,19 @@
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Comentários -
-                                            @usuário</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Comentários</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="list-group list-group-flush">
+                                        <div class="list-group list-group-flush" th:each="c : ${submission.comment}">
                                             <a href="#" class="list-group-item list-group-item-action"
                                                aria-current="true">
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    <h5 class="mb-1">@usuário_comentarista</h5>
-                                                    <small>3 days ago</small>
+                                                    <h5 class="mb-1" th:text="${c.user.name}"></h5>
+                                                    <small th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
                                                 </div>
-                                                <p class="mb-1">Comentário do @usuário_comentarista.</p>
+                                                <p class="mb-1" th:text="${c.comment}"></p>
                                             </a>
                                         </div>
                                     </div>
@@ -106,17 +105,21 @@
                                     <h5 class="mb-1" th:text="${sub.user.name}"></h5>
                                     <small th:text="${#dates.format(sub.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
                                 </div>
-                                <p class="mb-1" th:text="${sub.comment}"></p>
-
-                                <div class="form-floating my-3">
-                                    <textarea class="form-control" placeholder="Leave a comment here"
-                                              id="floatingTextarea2"></textarea>
-                                    <label for="floatingTextarea2">Comentário</label>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href="#" class="btn btn-sm btn-outline-primary"><i
-                                            class="bi bi-send me-2"></i>Comentar</a>
-                                </div>
+                                <p class="mb-1" th:text="${sub.answer}"></p>
+                                <form th:action="@{/submission/comment/save}" method="post" th:object="${comments}">
+                                    <div class="form-floating my-3">
+                                        <textarea class="form-control" placeholder="Leave a comment here"
+                                                  id="floatingTextarea2" th:field="*{comment}"></textarea>
+                                        <label for="floatingTextarea2">Comentário</label>
+                                    </div>
+                                    <input type="hidden" th:value="${submission.uuid}" th:field="*{submission.uuid}">
+                                    <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary"><i
+                                                class="bi bi-send me-2"></i>Comentar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="list-group list-group-flush"

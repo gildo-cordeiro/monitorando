@@ -1,5 +1,6 @@
 package br.com.imd.pdse.monitorando.controller;
 
+import br.com.imd.pdse.monitorando.domain.Comment;
 import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.domain.Submission;
 import br.com.imd.pdse.monitorando.domain.User;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -36,10 +38,20 @@ public class ExerciseController {
                          HttpServletRequest request) {
         var foundExercise = exerciseService.findById(UUID.fromString(id));
         var foundUser = (User) request.getSession().getAttribute("foundUser");
+        var foundSub = submissionService.findByExerciseId(foundExercise.getUuid());
 
         Submission submission = new Submission();
-        submission.setExercise(foundExercise);
-        submission.setUser(foundUser);
+
+        if (foundSub.isPresent())
+            submission = foundSub.get();
+        else {
+            submission.setExercise(foundExercise);
+            submission.setUser(foundUser);
+        }
+
+        Comment comments = new Comment();
+        comments.setSubmission(submission);
+        comments.setUser(foundUser);
 
         var activeAccess = submissionService.submissionAccess(submission, request);
 
@@ -47,6 +59,7 @@ public class ExerciseController {
         model.addAttribute("exercise", foundExercise);
         model.addAttribute("user", foundUser);
         model.addAttribute("submission", submission);
+        model.addAttribute("comments", comments);
         return "submission";
     }
 
