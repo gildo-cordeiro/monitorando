@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Controller
@@ -27,7 +29,7 @@ public class TopicController {
 
     @GetMapping("/forum")
     public String forum(Model model, HttpServletRequest request) {
-        var topics = topicService.findAll();
+        var topics = topicService.getAllTopicsOrderedByLikes();
         var user = (User) request.getSession().getAttribute("foundUser");
 
         Topic topic = new Topic();
@@ -36,6 +38,43 @@ public class TopicController {
         model.addAttribute("topic", topic);
         model.addAttribute("topics", topics);
         return "forum";
+    }
+
+    @GetMapping("topic/like")
+    public String updateLikes(@RequestParam(name = "id") String id){
+        var topic = topicService.findById(UUID.fromString(id));
+        topic.setLikes(topic.getLikes() + 1);
+
+        topicService.save(topic);
+        return "redirect:/forum";
+    }
+
+    @GetMapping("topic/fixed")
+    public String fixed(@RequestParam(name = "id") String id){
+        var topic = topicService.findById(UUID.fromString(id));
+        topic.setFixed(true);
+
+        topicService.save(topic);
+        return "redirect:/forum";
+    }
+
+    @GetMapping("topic/remove")
+    public String remove(@RequestParam(name = "id") String id){
+        var topic = topicService.findById(UUID.fromString(id));
+        topic.setActive(false);
+
+        topicService.save(topic);
+        return "redirect:/forum";
+    }
+
+    @GetMapping("topic/close")
+    public String close(@RequestParam(name = "id") String id){
+        var topic = topicService.findById(UUID.fromString(id));
+        topic.setOpen(!topic.isOpen());
+        topic.setClosedDate(topic.getClosedDate() == null ? LocalDate.now() : null);
+
+        topicService.save(topic);
+        return "redirect:/forum";
     }
 
     @GetMapping("topic/access")

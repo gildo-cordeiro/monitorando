@@ -27,6 +27,8 @@ public class Topic extends AbstractEntity {
     private boolean open;
     @Column(name = "ACTIVE", columnDefinition = "boolean default true")
     private boolean active;
+    @Column(name = "FIXED", columnDefinition = "boolean default false")
+    private boolean fixed;
     @Column(name = "CLOSED_DATE")
     private LocalDate closedDate;
     @Column(name = "LIKES")

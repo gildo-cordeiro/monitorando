@@ -26,8 +26,8 @@ public class TopicService {
         this.contributionRepository = contributionRepository;
     }
 
-    public List<Topic> findAll(){
-        return topicRepository.findAll();
+    public List<Topic> getAllTopicsOrderedByLikes(){
+        return topicRepository.getAllTopicsOrderedByLikes();
     }
 
     public Optional<Topic> save(Topic topic){

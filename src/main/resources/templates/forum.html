@@ -9,6 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        .td-disabled {
+            background-color: rgba(236, 240, 241, 0.5);
+            pointer-events: none;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -116,7 +123,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <tr th:each="t : ${topics}">
+                                        <tr th:each="t : ${topics}" th:class="${t.fixed ? 'table-primary' : ''}">
                                             <td class="fw-bold">
                                                 <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                                                    th:text="${t.title}" th:href="@{/topic/access(id=${t.uuid})}"
@@ -124,7 +131,7 @@
                                             </td>
                                             <td th:text="${t.user.name}"></td>
                                             <td>7</td>
-                                            <td th:text="${t.likes}"></td>
+                                            <td th:text="${t.likes}" class="like"></td>
                                             <td class="d-flex justify-content-end">
                                                 <ul class="nav">
                                                     <li class="nav-item dropdown dropstart">
@@ -140,36 +147,36 @@
                                                             <li>
                                                                 <a th:href="@{/topic/update(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
-                                                                   class="dropdown-item"><i
+                                                                   th:class="${!t.open ? 'dropdown-item disabled' : 'dropdown-item'}"><i
                                                                         class="bi bi-pencil-square me-2"></i>Editar</a>
                                                             </li>
                                                             <li>
                                                                 <a th:href="@{/topic/remove(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
-                                                                   class="dropdown-item"><i
+                                                                   th:class="${!t.open ? 'dropdown-item disabled' : 'dropdown-item'}"><i
                                                                         class="bi bi-trash me-2"></i>Remover</a>
                                                             </li>
                                                             <li>
                                                                 <hr class="dropdown-divider">
                                                             </li>
                                                             <li>
-                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                                                <a th:href="@{/topic/fixed(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
-                                                                   class="dropdown-item"><i
+                                                                   th:class="${!t.open ? 'dropdown-item disabled' : 'dropdown-item'}"><i
                                                                         class="bi bi-star me-2"></i>Fixar</a>
                                                             </li>
                                                             <li>
-                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                                                <a th:href="@{/topic/like(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
-                                                                   class="dropdown-item"><i
-                                                                        class="bi bi-hand-thumbs-up me-2"></i>Curtir</a>
+                                                                   th:class="${!t.open ? 'dropdown-item disabled' : 'dropdown-item'}"><i
+                                                                        class="bi bi-hand-thumbs-up me-2 like-button"></i>Curtir</a>
                                                             </li>
 
                                                             <li>
-                                                                <a th:href="@{/topic/remove(id=${t.uuid})}"
+                                                                <a th:href="@{/topic/close(id=${t.uuid})}"
                                                                    sec:authorize="hasAnyRole('M', 'T')"
                                                                    class="dropdown-item"><i
-                                                                        class="bi bi-check-lg me-2"></i>Fechar</a>
+                                                                        th:class="${t.open ? 'bi bi-x-lg me-2' : 'bi bi-check-lg me-2'}"></i><span th:text="${t.open ? 'Fechar': 'Abrir'}"></span></a>
                                                             </li>
                                                         </ul>
                                                     </li>
