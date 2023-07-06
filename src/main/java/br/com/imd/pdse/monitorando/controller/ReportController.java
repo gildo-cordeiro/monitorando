@@ -40,6 +40,9 @@ public class ReportController {
         generator.setHeaders(headers);
         generator.setRows(studentList.stream().collect(Collectors.toList()));
 
+        // Add the header
+        generator.setHeader("MONITORANDO");
+
         generator.generate(responseWithHeaders, ReportType.QTT_CLOSED_TOPICS);
     }
 

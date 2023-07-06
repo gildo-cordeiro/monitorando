@@ -3,15 +3,34 @@
         <ul class="navbar-nav my-2 vh-100">
             <li class="nav-item">
                 <a class="nav-link" href="/classroom">
-                    <i class="bi bi-house me-2"></i>Início</a>
+                    <i class="bi bi-house me-2"></i>Sala Virtual</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/forum">
                     <i class="bi bi-chat-left-text me-2"></i>Fórum</a>
             </li>
+            <!--            <li class="nav-item" sec:authorize="hasRole('T')">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                               role="button" data-bs-auto-close="outside" aria-expanded="false">
+                                <i class="bi bi-file-earmark-text me-2"></i>Relatório</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="/pdf/topics-closed">
+                                        <i class="bi bi-chat-left-text me-2"></i>Tópicos Fechados</a>
+                                </li>
+                            </ul>
+                        </li>-->
             <li class="nav-item" sec:authorize="hasRole('T')">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-file-earmark-text me-2"></i>Relatório</a>
+                <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    <i class="bi bi-file-earmark-text me-2"></i>Relatório
+                </a>
+                <ul class="collapse list-unstyled" id="collapseExample">
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/pdf/topics-closed">
+                            <i class="bi bi-chat-left-text me-2"></i>Tópicos Fechados</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </nav>

@@ -13,7 +13,7 @@
         </ul>
         <ul class="nav">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle link-body-emphasis px-2"
+                <a class="nav-link dropdown-toggle link-body-emphasis"
                    data-bs-toggle="dropdown" href="#"
                    role="button" data-bs-auto-close="outside" aria-expanded="false">
                     <i id="icon" class="bi bi-sun-fill"></i>
@@ -22,16 +22,16 @@
                     <li><h6 class="dropdown-header">Tema</h6></li>
                     <li>
                         <a class="dropdown-item" href="#" onclick="toggleTheme('light')"><i
-                                class="bi bi-sun-fill me-3"></i>Light</a>
+                                class="bi bi-sun-fill me-"></i>Light</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#" onclick="toggleTheme('dark')"><i
-                                class="bi bi-moon-stars-fill me-3"></i>Dark</a>
+                                class="bi bi-moon-stars-fill me-2"></i>Dark</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle link-body-emphasis px-2"
+                <a class="nav-link dropdown-toggle link-body-emphasis"
                    data-bs-toggle="dropdown" href="#"
                    role="button" data-bs-auto-close="outside" aria-expanded="false" th:text="${session.foundUser.username}">@usuario
                 </a>
@@ -39,12 +39,12 @@
                     <li><h6 class="dropdown-header">Conta</h6></li>
                     <li>
                         <a class="dropdown-item" href="#">
-                            <i class="bi bi-person"></i> Perfil</a>
+                            <i class="bi bi-person me-2"></i>Perfil</a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <a class="dropdown-item" th:href="@{/logout}">
-                            <i class="bi bi-box-arrow-right"></i> Sair</a>
+                            <i class="bi bi-box-arrow-right me-2"></i>Sair</a>
                     </li>
                 </ul>
             </li>

@@ -28,6 +28,7 @@ public class PDFGenerator {
     private int fontSize;
     private int numberOfColumns;
     private long quantity;
+    private String header;
 
     public void generate(HttpServletResponse response, ReportType reportType) throws DocumentException, IOException {
 
@@ -36,7 +37,16 @@ public class PDFGenerator {
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
 
-        Font fontTitle = FontFactory.getFont(FontFactory.TIMES_ROMAN);
+        // Add the header
+        Font fontHeader = FontFactory.getFont(FontFactory.COURIER_BOLD);
+        fontHeader.setSize(18);
+        fontHeader.setColor(CMYKColor.BLACK);
+
+        Paragraph headerParagraph = new Paragraph(header, fontHeader);
+        headerParagraph.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(headerParagraph);
+
+        Font fontTitle = FontFactory.getFont(FontFactory.COURIER);
         fontTitle.setSize(fontSize);
 
         // Creating paragraph
@@ -48,18 +58,19 @@ public class PDFGenerator {
         table.setWidthPercentage(100f);
         table.setWidths(getWidths());
         table.setSpacingBefore(5);
-
+        table.flushContent();
         // Create Table Cells for table header
         PdfPCell cell = new PdfPCell();
 
         // Setting the background color and padding
-        cell.setBackgroundColor(CMYKColor.MAGENTA);
+        cell.setBackgroundColor(CMYKColor.WHITE);
+        cell.setBorderWidthBottom(2);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-
+        cell.setVerticalAlignment(Element.ALIGN_TOP);
         // Creating font
         // Setting font style and size
-        Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN);
-        font.setColor(CMYKColor.WHITE);
+        Font font = FontFactory.getFont(FontFactory.COURIER);
+        font.setColor(CMYKColor.BLACK);
 
         // Adding headings in the created table cell/ header
         // Adding Cell to table
@@ -85,11 +96,11 @@ public class PDFGenerator {
                     table.addCell(classroom.getClassName());
                     table.addCell(classroom.getMonitor().getUser().getName());
                 });
+                // Restante do código omitido por questões de espaço
             }else {
                 table.addCell("");
             }
         });
-
 
         document.add(table);
         document.close();
@@ -117,6 +128,10 @@ public class PDFGenerator {
 
     public void setQuantity(long quantity) {
         this.quantity = quantity;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     private int[] getWidths() {
