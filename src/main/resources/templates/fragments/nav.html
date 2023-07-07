@@ -1,6 +1,6 @@
-<div class="col-lg-2 bg-body-tertiary border-end shadow" th:fragment="nav">
-    <nav class="nav flex-column px-3 pt-3">
-        <ul class="navbar-nav my-2 vh-100">
+<div class="col-lg-2 bg-body-tertiary border-end" th:fragment="nav">
+    <nav class="nav flex-column px-3 pt-4 mt-5">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="/classroom">
                     <i class="bi bi-house me-2"></i>Sala Virtual</a>
@@ -9,17 +9,6 @@
                 <a class="nav-link" href="/forum">
                     <i class="bi bi-chat-left-text me-2"></i>Fórum</a>
             </li>
-            <!--            <li class="nav-item" sec:authorize="hasRole('T')">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                               role="button" data-bs-auto-close="outside" aria-expanded="false">
-                                <i class="bi bi-file-earmark-text me-2"></i>Relatório</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="/pdf/topics-closed">
-                                        <i class="bi bi-chat-left-text me-2"></i>Tópicos Fechados</a>
-                                </li>
-                            </ul>
-                        </li>-->
             <li class="nav-item" sec:authorize="hasRole('T')">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -31,6 +20,10 @@
                             <i class="bi bi-chat-left-text me-2"></i>Tópicos Fechados</a>
                     </li>
                 </ul>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('T')">
+                <a class="nav-link" href="/calendar">
+                    <i class="bi bi-calendar-check me-2"></i>Calendário</a>
             </li>
         </ul>
     </nav>
