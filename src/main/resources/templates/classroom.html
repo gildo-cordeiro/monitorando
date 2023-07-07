@@ -151,12 +151,10 @@
                                                             aria-labelledby="themeDropdown">
                                                             <li><h6 class="dropdown-header">Ações</h6></li>
                                                             <li>
-                                                                <button class="dropdown-item" type="button"
-                                                                        data-bs-toggle="offcanvas"
-                                                                        data-bs-target="#offcanvasRight"
-                                                                        aria-controls="offcanvasRight"><i
-                                                                        class="bi bi-person-plus me-2"></i>Adicionar
-                                                                </button>
+                                                                <a th:href="@{/classroom/insert(id=${class.getUuid()})}"
+                                                                   sec:authorize="hasRole('T')"
+                                                                   class="dropdown-item"><i
+                                                                        class="bi bi-person-plus me-2"></i>Adicionar</a>
                                                             </li>
                                                             <li>
                                                                 <a th:href="@{/classroom/update(id=${class.getUuid()})}"
@@ -172,54 +170,6 @@
                                                                 </a>
                                                             </li>
                                                         </ul>
-                                                        <div class="offcanvas offcanvas-end" data-bs-backdrop="static"
-                                                             data-bs-scroll="true" tabindex="-1"
-                                                             id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                                            <div class="offcanvas-header">
-                                                                <h5 class="offcanvas-title" id="offcanvasRightLabel"
-                                                                    th:text="${class.getClassName()}"></h5>
-                                                                <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="offcanvas"
-                                                                        aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="offcanvas-body">
-                                                                <form action="" method="post">
-                                                                    <h5 class="mb-1">Lista de Alunos</h5>
-                                                                    <ul class="list-group list-group-flush mb-3">
-                                                                        <li class="list-group-item">
-                                                                            <input class="form-check-input me-1"
-                                                                                   type="checkbox" value=""
-                                                                                   id="firstCheckboxStretched">
-                                                                            <label class="form-check-label stretched-link"
-                                                                                   for="firstCheckboxStretched">First
-                                                                                checkbox</label>
-                                                                        </li>
-                                                                        <li class="list-group-item">
-                                                                            <input class="form-check-input me-1"
-                                                                                   type="checkbox" value=""
-                                                                                   id="secondCheckboxStretched">
-                                                                            <label class="form-check-label stretched-link"
-                                                                                   for="secondCheckboxStretched">Second
-                                                                                checkbox</label>
-                                                                        </li>
-                                                                        <li class="list-group-item">
-                                                                            <input class="form-check-input me-1"
-                                                                                   type="checkbox" value=""
-                                                                                   id="thirdCheckboxStretched">
-                                                                            <label class="form-check-label stretched-link"
-                                                                                   for="thirdCheckboxStretched">Third
-                                                                                checkbox</label>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <div class="d-flex justify-content-end">
-                                                                        <button type="submit"
-                                                                                class="btn btn-sm btn-primary"><i
-                                                                                class="bi bi-check-lg me-2"></i>Cadastrar
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                    </li>
                                                 </ul>
                                             </td>
                                         </tr>
