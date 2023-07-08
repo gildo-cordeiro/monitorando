@@ -90,11 +90,11 @@ public class PDFGenerator {
 
             }else if (Objects.requireNonNull(reportType) == ReportType.QTT_ASSISTED_STUDENTS){
                 var student = (Student) object;
-                student.getClassrooms().forEach(classroom -> {
+                student.getStudents().forEach(classroom -> {
                     table.addCell(String.valueOf(student.getUuid()));
                     table.addCell(student.getUser().getName());
-                    table.addCell(classroom.getClassName());
-                    table.addCell(classroom.getMonitor().getUser().getName());
+                    table.addCell(classroom.getClassroom().getClassName());
+                    table.addCell(classroom.getClassroom().getMonitor().getUser().getName());
                 });
                 // Restante do código omitido por questões de espaço
             }else {

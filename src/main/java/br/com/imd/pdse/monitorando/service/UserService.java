@@ -32,7 +32,7 @@ public class UserService {
     public Optional<User> save(User dto) {
         var foundedUser = userRepository.findByUser(dto.getUsername(), dto.getPassword());
         var encryptPass = passwordEncoder.encode(dto.getPassword());
-        var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType());
+        var user = new User(dto.getName(), dto.getUsername(), encryptPass, dto.getUserType(), true);
         User savedUser = null;
 
         if (foundedUser.isEmpty()) {

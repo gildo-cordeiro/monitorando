@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query(value = "SELECT c FROM Monitor m INNER JOIN m.teacher t INNER JOIN m.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
     List<Classroom> findByIdAndUserTypeMonitor(@Param("userType") UserType userType, @Param("id") UUID id);
 
-    @Query(value = "SELECT c FROM StudentTeacher st INNER JOIN st.teacher t INNER JOIN st.student s INNER JOIN s.user u INNER JOIN t.classrooms c WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
+    @Query(value = "SELECT c FROM StudentClassroom sc INNER JOIN sc.classroom c INNER JOIN sc.student s INNER JOIN s.user u WHERE u.userType = :userType AND u.uuid = :id AND c.active = true")
     List<Classroom> findByIdAndUserTypeStudent(@Param("userType") UserType userType, @Param("id") UUID id);
 
 }

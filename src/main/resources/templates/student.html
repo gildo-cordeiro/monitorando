@@ -24,7 +24,7 @@
             <div class="container">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
-                        <h3>Sala Virtual</h3>
+                        <h3 th:text="${classFound.className}"></h3>
                     </div>
                 </div>
 
@@ -32,32 +32,71 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <form action="" method="post">
+                                <form th:action="@{/classroom/student-classroom/save}" th:object="${studentClassroom}"
+                                      method="post">
                                     <h5>Lista de Alunos</h5>
-                                    <ul class="list-group list-group-flush mb-3">
-                                        <li class="list-group-item">
-                                            <input class="form-check-input me-1"
-                                                   type="checkbox" value=""
-                                                   id="firstCheckboxStretched">
-                                            <label class="form-check-label stretched-link"
-                                                   for="firstCheckboxStretched">First
-                                                checkbox</label>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <input class="form-check-input me-1"
-                                                   type="checkbox" value=""
-                                                   id="secondCheckboxStretched">
-                                            <label class="form-check-label stretched-link"
-                                                   for="secondCheckboxStretched">Second
-                                                checkbox</label>
-                                        </li>
-                                    </ul>
+                                    <div th:if="${pageStudent.size() > 0}">
+                                        <table class="table table-hover table-responsive-xl">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Nome</th>
+                                                <th scope="col">Nome de Usuario</th>
+                                                <th scope="col">Ativo</th>
+                                                <th scope="col">Check</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="student : ${pageStudent}">
+                                                <th th:text="${student.user.name}"></th>
+                                                <td th:text="${student.user.username}"></td>
+                                                <td th:text="${student.user.isEnabled() ? 'SIM' : 'NÃO'}"></td>
+                                                <td>
+                                                    <input class="form-check-input"
+                                                           type="checkbox" th:value="${student.uuid}"
+                                                           th:field="*{student.uuid}">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" name="teacher"
+                                           th:value="${classFound.uuid}"
+                                           th:field="*{classroom.uuid}">
                                     <div class="d-flex justify-content-end">
                                         <button type="submit"
                                                 class="btn btn-sm btn-primary"><i
                                                 class="bi bi-check-lg me-2"></i>Adicionar
                                         </button>
                                     </div>
+                                    <nav aria-label="Pagination" th:if="${totalPages > 0}">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                                                <a th:replace="fragments/paging :: paging(${classFound.getUuid()}, 1, '<<', 'First Page', ${pageSize})"></a>
+                                            </li>
+                                            <li class="page-item font-weight-bold"
+                                                th:classappend="${currentPage == 1} ? 'disabled'">
+                                                <a th:replace="fragments/paging :: paging(${classFound.getUuid()}, ${currentPage - 1}, 'Prev', 'Previous Page', ${pageSize})"></a>
+                                            </li>
+                                            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                                                <a class="page-link" href="#">...</a>
+                                            </li>
+                                            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                                                th:each="page : ${#numbers.sequence((currentPage > 2 ? currentPage - 2 : 1), (currentPage + 2 < totalPages ? currentPage + 2 : totalPages))}">
+                                                <a th:replace="fragments/paging :: paging(${classFound.getUuid()}, ${page}, ${page}, 'Page ' + ${page}, ${pageSize})"></a>
+                                            </li>
+                                            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                                                <a class="page-link" href="#">...</a>
+                                            </li>
+                                            <li class="page-item font-weight-bold"
+                                                th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                                <a th:replace="fragments/paging :: paging(${classFound.getUuid()}, ${currentPage + 1},'Next', 'Next Page', ${pageSize})"></a>
+                                            </li>
+                                            <li class="page-item"
+                                                th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                                <a th:replace="fragments/paging :: paging(${classFound.getUuid()}, ${totalPages}, '>>', 'Last Page', ${pageSize})"></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </form>
                             </div>
                         </div>

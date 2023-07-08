@@ -1,9 +1,6 @@
 package br.com.imd.pdse.monitorando;
 
-import br.com.imd.pdse.monitorando.domain.Classroom;
-import br.com.imd.pdse.monitorando.domain.Monitor;
-import br.com.imd.pdse.monitorando.domain.Teacher;
-import br.com.imd.pdse.monitorando.domain.User;
+import br.com.imd.pdse.monitorando.domain.*;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -18,17 +15,17 @@ public class Util {
     private final MonitorRepository monitorRepository;
     private final ClassroomRepository classroomRepository;
     private final StudentRepository studentRepository;
-    private final StudentTeacherRepository studentTeacherRepository;
+    private final StudentClassroomRepository studentClassroomRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public Util(UserRepository userRepository, TeacherRepository teacherRepository, MonitorRepository monitorRepository, ClassroomRepository classroomRepository, StudentRepository studentRepository, StudentTeacherRepository studentTeacherRepository, PasswordEncoder passwordEncoder) {
+    public Util(UserRepository userRepository, TeacherRepository teacherRepository, MonitorRepository monitorRepository, ClassroomRepository classroomRepository, StudentRepository studentRepository, StudentClassroomRepository studentClassroomRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.teacherRepository = teacherRepository;
         this.monitorRepository = monitorRepository;
         this.classroomRepository = classroomRepository;
         this.studentRepository = studentRepository;
-        this.studentTeacherRepository = studentTeacherRepository;
+        this.studentClassroomRepository = studentClassroomRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -38,17 +35,17 @@ public class Util {
 
         if (found.isEmpty()) {
             // Teacher
-            User ut1 = userRepository.save(new User("Professor Teste 1", "professor1.teste", passwordEncoder.encode("12345"), UserType.TEACHER));
-            User ut2 = userRepository.save(new User("Professor Teste 2", "professor2.teste", passwordEncoder.encode("12345"), UserType.TEACHER));
+            User ut1 = userRepository.save(new User("Professor Teste 1", "professor1.teste", passwordEncoder.encode("12345"), UserType.TEACHER, true));
+            User ut2 = userRepository.save(new User("Professor Teste 2", "professor2.teste", passwordEncoder.encode("12345"), UserType.TEACHER, true));
 
             Teacher t1 = teacherRepository.save(new Teacher(ut1));
             Teacher t2 = teacherRepository.save(new Teacher(ut2));
 
 
             // Monitor
-            User um1 = userRepository.save(new User("Monitor Teste 1", "monitor1.teste", passwordEncoder.encode("12345"), UserType.MONITOR));
-            User um2 = userRepository.save(new User("Monitor Teste 2", "monitor2.teste", passwordEncoder.encode("12345"), UserType.MONITOR));
-            User um3 = userRepository.save(new User("Monitor Teste 3", "monitor3.teste", passwordEncoder.encode("12345"), UserType.MONITOR));
+            User um1 = userRepository.save(new User("Monitor Teste 1", "monitor1.teste", passwordEncoder.encode("12345"), UserType.MONITOR, true));
+            User um2 = userRepository.save(new User("Monitor Teste 2", "monitor2.teste", passwordEncoder.encode("12345"), UserType.MONITOR, true));
+            User um3 = userRepository.save(new User("Monitor Teste 3", "monitor3.teste", passwordEncoder.encode("12345"), UserType.MONITOR, true));
 
             Monitor m1 = monitorRepository.save(new Monitor(t1, um1));
             Monitor m2 = monitorRepository.save(new Monitor(t1, um2));
@@ -59,6 +56,12 @@ public class Util {
             Classroom c3 = classroomRepository.save(new Classroom("CALCULO", true, m3, t1));
             Classroom c4 = classroomRepository.save(new Classroom("GE - GEOMETRICA EUCLIDIANA", true, m1, t2));
 
+
+            for (int i = 1; i <= 10; i++){
+                Student s = new Student();
+                s.setUser(new User("Student Teste " + i, "student"+i+".teste", passwordEncoder.encode("12345"), UserType.STUDENT, true));
+                studentRepository.save(s);
+            }
 //            /*--------------------------------------------------------------------------------*/
 //
 //            Student s1 = new Student();
@@ -78,22 +81,22 @@ public class Util {
 //
 //            /*--------------------------------------------------------------------------------*/
 //
-//            StudentTeacher st1 = new StudentTeacher();
+//            StudentClassroom st1 = new StudentClassroom();
 //            st1.setStudent(saved1);
 //            st1.setTeacher(t1);
 //            var studentTeacher1 = studentTeacherRepository.save(st1);
 //
-//            StudentTeacher st2 = new StudentTeacher();
+//            StudentClassroom st2 = new StudentClassroom();
 //            st2.setStudent(saved2);
 //            st2.setTeacher(t2);
 //            var studentTeacher2 = studentTeacherRepository.save(st2);
 //
-//            StudentTeacher st3 = new StudentTeacher();
+//            StudentClassroom st3 = new StudentClassroom();
 //            st3.setStudent(saved1);
 //            st3.setTeacher(t2);
 //            var studentTeacher3 = studentTeacherRepository.save(st3);
 //
-//            StudentTeacher st4 = new StudentTeacher();
+//            StudentClassroom st4 = new StudentClassroom();
 //            st4.setStudent(saved3);
 //            st4.setTeacher(t1);
 //            var studentTeacher4 = studentTeacherRepository.save(st4);

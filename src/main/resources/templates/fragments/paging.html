@@ -1,0 +1,4 @@
+<a th:fragment="paging(classId, pageNum, label, tooltip, pageSize)" class="page-link"
+   th:href="@{/classroom/student-classroom/access(id=${classId}, page=${pageNum}, size=${pageSize})}"
+   th:title="${tooltip}" rel="tooltip" th:text="${label}">
+</a>

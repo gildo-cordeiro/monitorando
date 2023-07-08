@@ -33,6 +33,8 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    @Column(name = "ENABLE", columnDefinition = "boolean default true")
+    private boolean enable;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Submission> submissions;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
@@ -50,12 +52,13 @@ public class User extends AbstractEntity implements UserDetails {
         this.userType = userType;
     }
 
-    public User(final String name, final String username, final String password, final UserType userType) {
+    public User(final String name, final String username, final String password, final UserType userType, boolean enable) {
         super(Instant.now());
         this.name = name;
         this.username = username;
         this.password = password;
         this.userType = userType;
+        this.enable = enable;
     }
 
     public User(){
@@ -94,6 +97,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enable;
     }
 }

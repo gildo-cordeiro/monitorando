@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -46,8 +45,13 @@ public class TopicController {
     }
 
     @GetMapping("topic/like")
-    public String updateLikes(@RequestParam(name = "id") String id){
+    public String updateLikes(@RequestParam(name = "id") String id, HttpServletRequest request){
         var topic = topicService.findById(UUID.fromString(id));
+        var user = (User) request.getSession().getAttribute("foundUser");
+
+        if (topic.getUser().getUuid() == user.getUuid())
+            topic.setLikes(topic.getLikes() - 1);
+
         topic.setLikes(topic.getLikes() + 1);
 
         topicService.save(topic);

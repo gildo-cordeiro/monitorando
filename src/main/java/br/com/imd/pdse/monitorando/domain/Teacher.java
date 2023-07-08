@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -33,9 +32,6 @@ public class Teacher extends AbstractEntity {
     })
     @JoinTable(name = "teacher_report", joinColumns = @JoinColumn(name = "report_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Report> reports;
-
-    @OneToMany(mappedBy = "teacher")
-    private Set<StudentTeacher> teachers;
 
     @OneToOne
     @JoinColumn(name = "USER_UUID", referencedColumnName = "UUID")

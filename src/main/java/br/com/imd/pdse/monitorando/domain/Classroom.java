@@ -35,8 +35,8 @@ public class Classroom extends AbstractEntity {
     @ManyToOne
     private Teacher teacher;
 
-    @ManyToMany(mappedBy = "classrooms")
-    private List<Student> students;
+    @OneToMany(mappedBy = "classroom")
+    private Set<StudentClassroom> classrooms;
 
     public Classroom(String className, boolean active, Monitor monitor, Teacher teacher) {
         super(Instant.now());
