@@ -51,7 +51,7 @@ public class ClassroomController {
         Classroom classroom = new Classroom();
         classroom.setTeacher(teacher);
 
-        request.getSession().setAttribute("theme", foundUser.getTheme().getCode());
+        request.getSession().setAttribute("theme", foundUser.getTheme() == null ? Theme.LIGHT.getCode() : foundUser.getTheme().getCode());
 
         model.addAttribute("classroom", classroom);
         model.addAttribute("monitors", monitors);
@@ -62,7 +62,7 @@ public class ClassroomController {
     }
 
     @GetMapping("classroom/theme")
-    public String updateTheme(@RequestParam(name = "theme") String theme, HttpServletRequest request){
+    public String updateTheme(@RequestParam(name = "theme") String theme, HttpServletRequest request) {
         var user = (User) request.getSession().getAttribute("foundUser");
         user.setTheme(Theme.valueOf(theme));
 
