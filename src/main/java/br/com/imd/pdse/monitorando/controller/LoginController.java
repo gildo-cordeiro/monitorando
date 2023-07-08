@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.User;
+import br.com.imd.pdse.monitorando.domain.enums.Theme;
 import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,6 +44,7 @@ public class LoginController {
         var classrooms = service.getClassroomList(foundUser.getUserType(), foundUser.getUuid());
 
         request.getSession().setAttribute("foundUser", foundUser);
+        request.getSession().setAttribute("theme", foundUser.getTheme() == null ? Theme.LIGHT.getCode() : foundUser.getTheme());
 
         model.addAttribute("classrooms", classrooms);
         model.addAttribute("foundUser", foundUser);

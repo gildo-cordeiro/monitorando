@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.*;
+import br.com.imd.pdse.monitorando.domain.enums.Theme;
 import br.com.imd.pdse.monitorando.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
@@ -50,12 +51,24 @@ public class ClassroomController {
         Classroom classroom = new Classroom();
         classroom.setTeacher(teacher);
 
+        request.getSession().setAttribute("theme", foundUser.getTheme().getCode());
+
         model.addAttribute("classroom", classroom);
         model.addAttribute("monitors", monitors);
         model.addAttribute("classrooms", classrooms);
         model.addAttribute("foundUser", foundUser);
         model.addAttribute("teacher", teacher);
         return "classroom";
+    }
+
+    @GetMapping("classroom/theme")
+    public String updateTheme(@RequestParam(name = "theme") String theme, HttpServletRequest request){
+        var user = (User) request.getSession().getAttribute("foundUser");
+        user.setTheme(Theme.valueOf(theme));
+
+        var foundUser = service.update(user);
+        request.getSession().setAttribute("foundUser", foundUser);
+        return "redirect:/classroom";
     }
 
     @GetMapping("classroom/access")

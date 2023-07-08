@@ -1,5 +1,6 @@
 package br.com.imd.pdse.monitorando.domain;
 
+import br.com.imd.pdse.monitorando.domain.enums.Theme;
 import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.domain.generic.AbstractEntity;
 import jakarta.persistence.*;
@@ -35,6 +36,8 @@ public class User extends AbstractEntity implements UserDetails {
     private UserType userType;
     @Column(name = "ENABLE", columnDefinition = "boolean default true")
     private boolean enable;
+    @Column(name = "THEME")
+    private Theme theme;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Submission> submissions;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)

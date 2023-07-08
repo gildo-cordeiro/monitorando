@@ -52,6 +52,10 @@ public class UserService {
         return Optional.of(foundedUser.orElse(savedUser));
     }
 
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
     public List<Classroom> getClassroomList(UserType userType, UUID userId){
         List<Classroom> classrooms = new ArrayList<>();
 
