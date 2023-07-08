@@ -1,12 +1,13 @@
 package br.com.imd.pdse.monitorando.controller;
 
-import br.com.imd.pdse.monitorando.domain.*;
+import br.com.imd.pdse.monitorando.domain.Classroom;
+import br.com.imd.pdse.monitorando.domain.Exercise;
+import br.com.imd.pdse.monitorando.domain.StudentClassroom;
+import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.domain.enums.Theme;
 import br.com.imd.pdse.monitorando.service.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class ClassroomController {
@@ -86,14 +84,6 @@ public class ClassroomController {
         model.addAttribute("classroomFound", classroomFound);
         return "exercise";
     }
-
-//    @GetMapping("classroom/update")
-//    public String update(@RequestParam(name = "id") String id, Model model) throws Exception {
-//        var classroom = classroomService.findById(UUID.fromString(id));
-//        model.addAttribute("classroom", classroom);
-//        return "exercise";
-//    }
-
 
     @GetMapping("classroom/remove")
     public String remove(@RequestParam(name = "id") String id, @ModelAttribute("classroom") Classroom classroom, Model model, HttpServletRequest request) {
