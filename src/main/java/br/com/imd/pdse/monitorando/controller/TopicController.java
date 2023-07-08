@@ -32,6 +32,11 @@ public class TopicController {
         var topics = topicService.getAllTopicsOrderedByLikes();
         var user = (User) request.getSession().getAttribute("foundUser");
 
+        for (Topic topic : topics) {
+            int contributionCount = topicService.countContributionsByTopicId(topic.getUuid());
+            topic.setContributionCount(contributionCount);
+        }
+
         Topic topic = new Topic();
         topic.setUser(user);
 

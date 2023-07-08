@@ -21,9 +21,12 @@ public class TopicService {
 
     private final ContributionRepository contributionRepository;
 
-    public TopicService(TopicRepository topicRepository, ContributionRepository contributionRepository) {
+    private final ContributionService contributionService;
+
+    public TopicService(TopicRepository topicRepository, ContributionRepository contributionRepository, ContributionService contributionService) {
         this.topicRepository = topicRepository;
         this.contributionRepository = contributionRepository;
+        this.contributionService = contributionService;
     }
 
     public List<Topic> getAllTopicsOrderedByLikes(){
@@ -54,5 +57,9 @@ public class TopicService {
 
     public List<Contribution> findAllContributions(){
         return contributionRepository.findAll();
+    }
+
+    public int countContributionsByTopicId(UUID topicId) {
+        return contributionService.countContributionsByTopicId(topicId);
     }
 }

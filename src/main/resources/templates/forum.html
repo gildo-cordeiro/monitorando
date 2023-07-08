@@ -120,7 +120,8 @@
                                                    sec:authorize="hasAnyRole('M', 'T')"></a>
                                             </td>
                                             <td th:text="${t.user.name}"></td>
-                                            <td>7</td>
+                                            <td th:text="${t.contributionCount}"></td>
+
                                             <td th:text="${t.likes}" class="like"></td>
                                             <td class="d-flex justify-content-end">
                                                 <ul class="nav">

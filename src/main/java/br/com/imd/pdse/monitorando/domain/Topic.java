@@ -41,6 +41,7 @@ public class Topic extends AbstractEntity {
     private List<Contribution> contributions;
 
     private int count;
+    private int contributionCount; // Adicione essa propriedade
 
     public Topic() {
         super(Instant.now());

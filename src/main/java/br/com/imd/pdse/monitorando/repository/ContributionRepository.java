@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ContributionRepository extends JpaRepository<Contribution, UUID> {
+    int countContributionsByTopicUuid(UUID topicUuid);
 }
+

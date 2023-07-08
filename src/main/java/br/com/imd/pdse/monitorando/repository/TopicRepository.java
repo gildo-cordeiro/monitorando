@@ -21,4 +21,7 @@ public interface TopicRepository extends JpaRepository<Topic, UUID> {
 
     @Query("FROM Topic t WHERE t.active = true ORDER BY t.fixed DESC, t.likes DESC")
     List<Topic> getAllTopicsOrderedByLikes();
+
+    @Query("SELECT COUNT(c) FROM Contribution c WHERE c.topic.uuid = :topicId")
+    long countContributionsByTopicId(UUID topicId);
 }
