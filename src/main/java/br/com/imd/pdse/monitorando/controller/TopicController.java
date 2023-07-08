@@ -93,7 +93,7 @@ public class TopicController {
 
         var foundTopic = topicService.findById(UUID.fromString(id));
         var foundUser = (User) request.getSession().getAttribute("foundUser");
-        var contributions = topicService.findAllContributions();
+        var contributions = topicService.getContributionByTopic(foundTopic);
 
         Topic topic = new Topic();
         Contribution contribution = new Contribution();

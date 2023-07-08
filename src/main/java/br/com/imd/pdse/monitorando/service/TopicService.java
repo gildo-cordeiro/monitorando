@@ -55,8 +55,8 @@ public class TopicService {
         return topicRepository.findTopicsByOpen(LocalDate.now(), Pageable.ofSize(100).withPage(0));
     }
 
-    public List<Contribution> findAllContributions(){
-        return contributionRepository.findAll();
+    public List<Contribution> getContributionByTopic(Topic topic){
+        return contributionRepository.getContributionByTopic(topic);
     }
 
     public int countContributionsByTopicId(UUID topicId) {
