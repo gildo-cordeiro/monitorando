@@ -1,9 +1,6 @@
 package br.com.imd.pdse.monitorando.controller;
 
-import br.com.imd.pdse.monitorando.domain.Classroom;
-import br.com.imd.pdse.monitorando.domain.Exercise;
-import br.com.imd.pdse.monitorando.domain.StudentClassroom;
-import br.com.imd.pdse.monitorando.domain.User;
+import br.com.imd.pdse.monitorando.domain.*;
 import br.com.imd.pdse.monitorando.domain.enums.Theme;
 import br.com.imd.pdse.monitorando.service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,9 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class ClassroomController {
@@ -28,6 +23,7 @@ public class ClassroomController {
     private final TeacherService teacherService;
     private final StudentService studentService;
     private final StudentTeacherService studentTeacherService;
+    Map<UUID, Boolean> mapStudents = new HashMap<>();
 
 
     public ClassroomController(ClassroomService classroomService, MonitorService monitorService, UserService service, TeacherService teacherService, StudentService studentService, StudentTeacherService studentTeacherService) {
@@ -70,7 +66,8 @@ public class ClassroomController {
     }
 
     @GetMapping("classroom/access")
-    public String access(@RequestParam(name = "id") String id, @ModelAttribute("exercise") Exercise exercise, Model model) {
+    public String access(@RequestParam(name = "id") String id, @ModelAttribute("exercise") Exercise exercise,
+                         HttpServletRequest request, Model model) {
         var classroomFound = classroomService.findById(UUID.fromString(id));
         exercise.setClassroom(classroomFound);
         List<Exercise> exerciseList = new ArrayList<>();
@@ -78,6 +75,8 @@ public class ClassroomController {
         classroomFound.getExercise().forEach(exercise1 -> {
             if (!exercise1.isActive()) exerciseList.add(exercise1);
         });
+
+        request.getSession().setAttribute("studentsIds", new ArrayList<>());
 
         classroomFound.getExercise().removeAll(exerciseList);
 
@@ -116,8 +115,8 @@ public class ClassroomController {
     @GetMapping("classroom/student-classroom/access")
     public String accessStudents(@RequestParam(name = "id") String id,
                                  @RequestParam(defaultValue = "1", name = "page") int page,
-                                 @RequestParam(defaultValue = "3", name = "size") int size,
-                                 @RequestParam(defaultValue = "", name = "student.uuid", required = false) List<String> checkBoxValues,
+                                 @RequestParam(defaultValue = "5", name = "size") int size,
+                                 @RequestParam(defaultValue = "", name = "student.uuid", required = false) List<String> studentId,
                                  Model model) {
         try {
             var classFound = classroomService.findById(UUID.fromString(id));
@@ -129,7 +128,17 @@ public class ClassroomController {
 
             var pageStudent = students.getContent();
 
-            model.addAttribute("checkBoxValues", checkBoxValues);
+            for (int i = 0; i < pageStudent.size(); i++) {
+                var key = students.getContent().get(i).getUuid();
+                mapStudents.putIfAbsent(key, false);
+            }
+
+            if (!studentId.isEmpty())
+                mapStudents.forEach((key, value) -> {
+                    studentId.forEach(uuid -> mapStudents.put(UUID.fromString(uuid), true));
+                });
+
+            model.addAttribute("mapStudents", mapStudents);
             model.addAttribute("pageStudent", pageStudent);
             model.addAttribute("currentPage", students.getNumber() + 1);
             model.addAttribute("totalItems", students.getTotalElements());
@@ -140,6 +149,7 @@ public class ClassroomController {
             model.addAttribute("classFound", classFound);
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
+            System.out.println("aqui o erro " + e.getMessage());
         }
 
         return "student";
