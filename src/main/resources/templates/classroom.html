@@ -109,41 +109,16 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="card mb-3" th:each="class, i: ${classrooms}" th:if="${!classrooms.isEmpty()}"
-                             sec:authorize="hasRole('S')">
+                        <div class="card" sec:authorize="hasRole('S')">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless align-middle">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col" class="col-lg-6 col-sm-4"></th>
-                                            <th scope="col" class="col-lg-4 col-sm-8"></th>
-                                            <th scope="col" class="col-lg-2 col-sm-2"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                        <tr>
-                                            <td>
-                                                <h5 class="card-title" th:text="${class.className}"></h5>
-                                            </td>
-                                            <td>
-                                                <p class="card-text" th:text="${class.monitor.user.name}"></p>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex justify-content-end">
-                                                    <a class="btn btn-sm btn-primary"
-                                                       th:href="@{/classroom/access(id=${class.getUuid()})}"><i
-                                                            class="bi bi-box-arrow-in-right me-2"></i>Acessar</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
 
-                        <div class="card" sec:authorize="hasAnyRole('T', 'M')">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-borderless table-hover align-middle">
@@ -160,7 +135,7 @@
                                                 <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                                                    th:text="${class.className}"
                                                    th:href="@{/classroom/access(id=${class.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"></a>
+                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"></a>
                                             </td>
                                             <td class="text-muted" th:text="${class.monitor.user.name}"></td>
                                             <td>

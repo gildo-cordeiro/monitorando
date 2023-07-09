@@ -171,8 +171,7 @@
                                             <td class="fw-bold">
                                                 <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                                                    th:text="${exercise.title}"
-                                                   th:href="@{/exercise/access(id=${exercise.getUuid()})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"></a>
+                                                   th:href="@{/exercise/access(id=${exercise.getUuid()})}"></a>
                                             </td>
                                             <td th:text="${exercise.description}"></td>
                                             <td class="d-flex justify-content-end">

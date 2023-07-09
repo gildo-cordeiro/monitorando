@@ -30,20 +30,25 @@ public class SubmissionService {
         return submissionRepository.save(submission);
     }
 
-    public boolean submissionAccess(Submission submission, HttpServletRequest request){
-        var user = (User) request.getSession().getAttribute("foundUser");
+//    public boolean submissionAccess(List<Submission> submission, HttpServletRequest request) {
+//        var user = (User) request.getSession().getAttribute("foundUser");
+//
+//        submission.stream().map(sub -> {
+//            if (!sub.isActive())
+//                return true;
+//
+//            if (sub.getUser().getUserType() == UserType.STUDENT) {
+//                if (sub.getUser().getUuid().equals(user.getUuid()))
+//                    return true;
+//
+//                return sub.isPrivacy();
+//            }
+//
+//            return sub.getUser().getUuid().equals(user.getUuid()) && (user.getUserType() == UserType.TEACHER || user.getUserType() == UserType.MONITOR);
+//        });
+//    }
 
-        if (!submission.isActive())
-            return true;
-
-        if (submission.getUser().getUserType().equals(UserType.STUDENT) && submission.getUser().equals(user))
-            return true;
-
-        return !submission.getUser().equals(user) && (user.getUserType().equals(UserType.TEACHER) || user.getUserType().equals(UserType.MONITOR));
-
-    }
-
-    public Optional<Submission> findById(UUID id){
+    public Optional<Submission> findById(UUID id) {
         return submissionRepository.findById(id);
     }
 
@@ -51,7 +56,7 @@ public class SubmissionService {
 //        return submissionRepository.findSubmissionByComment(comment);
 //    }
 
-    public Comment save(Comment comment){
+    public Comment save(Comment comment) {
         return commentRepository.save(comment);
     }
 

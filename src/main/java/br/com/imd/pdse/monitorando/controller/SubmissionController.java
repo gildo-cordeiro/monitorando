@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.Comment;
+import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.domain.Submission;
 import br.com.imd.pdse.monitorando.domain.User;
 import br.com.imd.pdse.monitorando.service.ExerciseService;
@@ -10,7 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.UUID;
 
 @Controller
 public class    SubmissionController {
@@ -31,8 +36,8 @@ public class    SubmissionController {
     @PostMapping("submission/save")
     public String save(@ModelAttribute("submission") Submission submission,
                        HttpServletRequest request) throws Exception {
-        var foundExercise = exerciseService.findById(submission.getExercise().getUuid());
-        var foundUser = userService.findById(submission.getUser().getUuid());
+        var foundUser = (User) request.getSession().getAttribute("foundUser");
+        var foundExercise = (Exercise) request.getSession().getAttribute("foundExercise");
 
         submission.setUser(foundUser);
         submission.setExercise(foundExercise);
@@ -44,8 +49,9 @@ public class    SubmissionController {
     }
 
     @PostMapping("submission/comment/save")
-    public String saveComment(@ModelAttribute("comments") Comment comments) throws Exception {
-        var submission = submissionService.findById(comments.getSubmission().getUuid()).get();
+    public String saveComment(@RequestParam(name = "uuid") String id,
+                              @ModelAttribute("comments") Comment comments) {
+        var submission = submissionService.findById(UUID.fromString(id)).get();
         var user = userService.findById(submission.getUser().getUuid());
 
         comments.setSubmission(submission);

@@ -33,29 +33,19 @@ public class ExerciseController {
 
     @GetMapping("exercise/access")
     public String access(@RequestParam(name = "id") String id,
-                         @ModelAttribute("exercise") Exercise exercise,
                          Model model,
                          HttpServletRequest request) {
         var foundExercise = exerciseService.findById(UUID.fromString(id));
         var foundUser = (User) request.getSession().getAttribute("foundUser");
-        var foundSub = submissionService.findByExerciseId(foundExercise.getUuid());
+        request.getSession().setAttribute("foundExercise", foundExercise);
 
         Submission submission = new Submission();
-
-        if (foundSub.isPresent())
-            submission = foundSub.get();
-        else {
-            submission.setExercise(foundExercise);
-            submission.setUser(foundUser);
-        }
+        submission.setExercise(foundExercise);
 
         Comment comments = new Comment();
         comments.setSubmission(submission);
         comments.setUser(foundUser);
 
-        var activeAccess = submissionService.submissionAccess(submission, request);
-
-        model.addAttribute("activeAccess", activeAccess);
         model.addAttribute("exercise", foundExercise);
         model.addAttribute("user", foundUser);
         model.addAttribute("submission", submission);

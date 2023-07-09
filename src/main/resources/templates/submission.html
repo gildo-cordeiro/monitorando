@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -56,82 +56,41 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Submissões</h5>
-
-                        <!-- Button trigger modal -->
-                        <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                           data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button"><small>
-                            Comentários</small>
-                        </a>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Comentários</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="list-group list-group-flush" th:each="c : ${submission.comment}">
-                                            <a href="#" class="list-group-item list-group-item-action"
-                                               aria-current="true">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h5 class="mb-1" th:text="${c.user.name}"></h5>
-                                                    <small th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
-                                                </div>
-                                                <p class="mb-1" th:text="${c.comment}"></p>
-                                            </a>
+                        <div th:if="${!exercise.submissions.isEmpty()}">
+                            <div class="list-group-item list-group-item-action" aria-current="true"
+                                 th:each="sub, i: ${exercise.submissions}">
+                                <div th:if="${sub.isActive()}">
+                                    <div sec:authorize="hasRole('S')">
+                                        <div th:if="${sub.user.uuid != session.foundUser.uuid}">
+                                            <div th:if="${!sub.isPrivacy()}">
+                                                <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                            </div>
+                                        </div>
+                                        <div th:if="${sub.user.uuid == session.foundUser.uuid}">
+                                            <div th:if="${sub.isPrivacy()}">
+                                                <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">
-                                            Fechar
-                                        </button>
+                                    <div sec:authorize="hasAnyRole('T','M')">
+                                        <div th:if="${sub.user.uuid == session.foundUser.uuid}">
+                                            <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="list-group list-group-flush"
-                             th:if="${!submission.exercise.submissions.isEmpty()}">
-                            <div class="list-group-item list-group-item-action" aria-current="true"
-                                 th:each="sub: ${submission.exercise.submissions}" th:if="${activeAccess}">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1" th:text="${sub.user.name}"></h5>
-                                    <small th:text="${#dates.format(sub.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
-                                </div>
-                                <p class="mb-1" th:text="${sub.answer}"></p>
-                                <form th:action="@{/submission/comment/save}" method="post" th:object="${comments}">
-                                    <div class="form-floating my-3">
-                                        <textarea class="form-control" placeholder="Leave a comment here"
-                                                  id="floatingTextarea2" th:field="*{comment}"></textarea>
-                                        <label for="floatingTextarea2">Comentário</label>
-                                    </div>
-                                    <input type="hidden" th:value="${submission.uuid}" th:field="*{submission.uuid}">
-                                    <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-sm btn-outline-primary"><i
-                                                class="bi bi-send me-2"></i>Comentar
-                                        </button>
-                                    </div>
-                                </form>
+                            <div class="list-group list-group-flush"
+                                 th:if="${exercise.submissions.isEmpty()}">
+                                <p class="fw-bold d-flex justify-content-center"><i
+                                        class="bi bi-exclamation-circle me-2"></i>Nenhuma submissão cadastrada</p>
                             </div>
-                        </div>
-                        <div class="list-group list-group-flush"
-                             th:if="${submission.exercise.submissions.isEmpty()}">
-                            <p class="fw-bold d-flex justify-content-center"><i
-                                    class="bi bi-exclamation-circle me-2"></i>Nenhuma submissão cadastrada</p>
                         </div>
                     </div>
                 </div>
+
+                <div th:replace="fragments/footer :: footer"></div>
+
             </div>
-
-            <div th:replace="fragments/footer :: footer"></div>
-
         </div>
     </div>
 </div>
