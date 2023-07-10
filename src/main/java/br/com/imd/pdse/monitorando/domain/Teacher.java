@@ -26,6 +26,9 @@ public class Teacher extends AbstractEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade  = CascadeType.ALL)
     private List<Monitor> monitors;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade  = CascadeType.ALL)
+    private List<Calendar> calendars;
+
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

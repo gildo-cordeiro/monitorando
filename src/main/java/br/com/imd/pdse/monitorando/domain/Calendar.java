@@ -25,6 +25,9 @@ public class Calendar extends AbstractEntity {
     @Column(name = "MESSAGE", nullable = false)
     private String message;
 
+    @ManyToOne
+    private Teacher teacher;
+
     public Calendar(){
         super(Instant.now());
     }
