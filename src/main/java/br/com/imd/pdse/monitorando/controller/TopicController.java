@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.domain.*;
+import br.com.imd.pdse.monitorando.domain.enums.UserType;
 import br.com.imd.pdse.monitorando.service.TopicService;
 import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +46,7 @@ public class TopicController {
     }
 
     @GetMapping("topic/like")
-    public String updateLikes(@RequestParam(name = "id") String id, HttpServletRequest request){
+    public String updateLikes(@RequestParam(name = "id") String id, HttpServletRequest request) {
         var topic = topicService.findById(UUID.fromString(id));
         var user = (User) request.getSession().getAttribute("foundUser");
 
@@ -59,7 +60,7 @@ public class TopicController {
     }
 
     @GetMapping("topic/fixed")
-    public String fixed(@RequestParam(name = "id") String id){
+    public String fixed(@RequestParam(name = "id") String id) {
         var topic = topicService.findById(UUID.fromString(id));
         topic.setFixed(!topic.isFixed());
 
@@ -68,7 +69,7 @@ public class TopicController {
     }
 
     @GetMapping("topic/remove")
-    public String remove(@RequestParam(name = "id") String id){
+    public String remove(@RequestParam(name = "id") String id) {
         var topic = topicService.findById(UUID.fromString(id));
         topic.setActive(false);
 
@@ -77,19 +78,25 @@ public class TopicController {
     }
 
     @GetMapping("topic/close")
-    public String close(@RequestParam(name = "id") String id){
+    public String close(@RequestParam(name = "id") String id, Model model,
+                        HttpServletRequest request) {
         var topic = topicService.findById(UUID.fromString(id));
-        topic.setOpen(!topic.isOpen());
-        topic.setClosedDate(topic.getClosedDate() == null ? LocalDate.now() : null);
+        var foundUser = (User) request.getSession().getAttribute("foundUser");
 
-        topicService.save(topic);
+        if (topic.getUser().getUuid().equals(foundUser) || (foundUser.getUserType() == UserType.TEACHER || foundUser.getUserType() == UserType.MONITOR)) {
+            topic.setOpen(!topic.isOpen());
+            topic.setClosedDate(topic.getClosedDate() == null ? LocalDate.now() : null);
+
+            topicService.save(topic);
+        }
+
         return "redirect:/forum";
     }
 
     @GetMapping("topic/access")
     public String access(@RequestParam(name = "id") String id,
-                               Model model,
-                               HttpServletRequest request) {
+                         Model model,
+                         HttpServletRequest request) {
 
         var foundTopic = topicService.findById(UUID.fromString(id));
         var foundUser = (User) request.getSession().getAttribute("foundUser");

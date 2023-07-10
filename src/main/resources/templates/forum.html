@@ -27,7 +27,7 @@
                         <h3>Fórum</h3>
                     </div>
                 </div>
-                <div class="row" sec:authorize="hasAnyRole('T', 'M')">
+                <div class="row" sec:authorize="hasAnyRole('T', 'M', 'S')">
                     <div class="col-10">
                         <div class="container">
                             <div class="row mb-3">
@@ -117,7 +117,7 @@
                                             <td class="fw-bold">
                                                 <a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                                                    th:text="${t.title}" th:href="@{/topic/access(id=${t.uuid})}"
-                                                   sec:authorize="hasAnyRole('M', 'T')"></a>
+                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"></a>
                                             </td>
                                             <td th:text="${t.user.name}"></td>
                                             <td th:text="${t.contributionCount}"></td>
@@ -160,14 +160,14 @@
                                                             </li>
                                                             <li>
                                                                 <a th:href="@{/topic/like(id=${t.uuid})}"
-                                                                   sec:authorize="hasAnyRole('M', 'T')"
+                                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"
                                                                    th:class="${!t.open ? 'dropdown-item disabled' : 'dropdown-item'}"><i
                                                                         class="bi bi-hand-thumbs-up me-2 like-button"></i>Curtir</a>
                                                             </li>
 
                                                             <li>
                                                                 <a th:href="@{/topic/close(id=${t.uuid})}"
-                                                                   sec:authorize="hasAnyRole('M', 'T')"
+                                                                   sec:authorize="hasAnyRole('M', 'T', 'S')"
                                                                    class="dropdown-item"><i
                                                                         th:class="${t.open ? 'bi bi-x-lg me-2' : 'bi bi-check-lg me-2'}"></i><span
                                                                         th:text="${t.open ? 'Fechar': 'Abrir'}"></span></a>
