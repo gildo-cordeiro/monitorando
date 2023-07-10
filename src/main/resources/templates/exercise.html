@@ -20,8 +20,8 @@
     <div class="row">
         <div th:replace="fragments/nav :: nav"></div>
 
-        <div class="col-lg-10 col-sm-12 px-5 mt-5 vh-100">
-            <div class="container">
+        <div class="col-lg-10 col-sm-12 px-5 mt-5 vh-100 d-flex flex-column">
+            <div class="container flex-grow-1">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
                         <h3 th:text="${classroomFound.getClassName()}"></h3>
@@ -44,7 +44,7 @@
                                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
                                                  data-bs-keyboard="false"
                                                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -65,10 +65,10 @@
                                                                         Exercício</label>
                                                                 </div>
                                                                 <div class="form-floating">
-                                                                    <input type="text" class="form-control"
-                                                                           id="description"
-                                                                           placeholder="name@example.com"
-                                                                           th:field="*{description}">
+                                                                    <textarea class="form-control" id="description"
+                                                                              placeholder="Digite a descrição aqui"
+                                                                              style="height: 300px"
+                                                                              th:field="*{description}"></textarea>
                                                                     <label for="description">Descrição</label>
                                                                 </div>
 
@@ -109,18 +109,16 @@
                                     <table class="table table-borderless align-middle">
                                         <thead>
                                         <tr>
-                                            <th scope="col" class="col-lg-2 col-sm-4"></th>
-                                            <th scope="col" class="col-lg-6 col-sm-4"></th>
-                                            <th scope="col" class="col-lg-4 col-sm-8"></th>
+                                            <th scope="col" class="col-lg-4 col-sm-4"></th>
+                                            <th scope="col" class="col-lg-6 col-sm-6"></th>
+                                            <th scope="col" class="col-lg-2 col-sm-2"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                         <tr>
-                                            <td>
-                                                <h5 class="card-title" th:text="${exercise.title}"></h5>
+                                            <td  class="fw-bold" th:text="${exercise.title}">
                                             </td>
-                                            <td>
-                                                <p class="card-text" th:text="${exercise.description}"></p>
+                                            <td class="text-muted" th:text="${exercise.description}">
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-end">

@@ -20,8 +20,8 @@
     <div class="row">
         <div th:replace="fragments/nav :: nav"></div>
 
-        <div class="col-lg-10 col-sm-12 px-5 mt-5 vh-100">
-            <div class="container">
+        <div class="col-lg-10 col-sm-12 px-5 mt-5 vh-100 d-flex flex-column">
+            <div class="container flex-grow-1">
                 <div class="row mt-5 mb-3">
                     <div class="d-flex justify-content-end">
                         <h3 th:text="${exercise.classroom.className}"></h3>
@@ -29,15 +29,17 @@
                 </div>
 
                 <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${exercise.title}"></h5>
-                        <p class="card-text" th:text="${exercise.description}"></p>
-                        <form th:action="@{/submission/save}" method="post" th:object="${submission}">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="privacy"
-                                       th:field="*{privacy}">
-                                <label class="form-check-label" for="privacy">Privado</label>
+                    <form th:action="@{/submission/save}" method="post" th:object="${submission}">
+                        <div class="card-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="card-title mb-1" th:text="${exercise.title}"></h5>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="privacy"
+                                           th:field="*{privacy}">
+                                    <label class="form-check-label" for="privacy">Privado</label>
+                                </div>
                             </div>
+                            <p class="card-text" th:text="${exercise.description}"></p>
                             <div class="form-floating my-3">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
                                           th:field="*{answer}" style="height: 100px"></textarea>
@@ -50,14 +52,14 @@
                             </div>
                             <input type="hidden" th:value="${exercise.uuid}" th:field="*{exercise.uuid}">
                             <input type="hidden" th:value="${user.uuid}" th:field="*{user.uuid}">
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
                 <div th:each="sub, i: ${exercise.submissions}">
                     <th:block th:replace="fragments/modal :: modal(${'modal'+i.index}, ${sub}, ${comments})">modal
                     </th:block>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Submissões</h5>
                         <div th:if="${!exercise.submissions.isEmpty()}">
@@ -68,8 +70,9 @@
                                         <div th:if="${sub.user.uuid != session.foundUser.uuid}">
                                             <div th:if="${!sub.isPrivacy()}">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                                        th:attr="data-bs-target='#modal' + ${i.index}">Comentários
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#modal' + ${i.index}"><i class="bi bi-chat-left-dots me-2"></i>Comentários
                                                 </button>
                                                 <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                                 <hr>
@@ -79,8 +82,9 @@
                                     <div th:if="${sub.user.uuid == session.foundUser.uuid}">
                                         <div th:if="${sub.isPrivacy()}">
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                                    th:attr="data-bs-target='#modal' + ${i.index}">Comentários
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    data-bs-toggle="modal"
+                                                    th:attr="data-bs-target='#modal' + ${i.index}"><i class="bi bi-chat-left-dots me-2"></i>Comentários
                                             </button>
                                             <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                             <hr>
@@ -90,7 +94,8 @@
                                 <div sec:authorize="hasAnyRole('T','M')">
                                     <div th:if="${sub.user.uuid == session.foundUser.uuid}">
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                                data-bs-toggle="modal"
                                                 th:attr="data-bs-target='#modal' + ${i.index}">Comentários
                                         </button>
                                         <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
