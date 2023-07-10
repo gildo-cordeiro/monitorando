@@ -50,12 +50,20 @@ public class TopicController {
         var topic = topicService.findById(UUID.fromString(id));
         var user = (User) request.getSession().getAttribute("foundUser");
 
-        if (topic.getUser().getUuid() == user.getUuid())
+        if (topic.getUserLiked() == null) {
+            topic.setUserLiked(user.getUuid());
+            topic.setLikes(topic.getLikes() + 1);
+            topicService.save(topic);
+            return "redirect:/forum";
+        }
+
+        if (topic.getUserLiked().equals(user.getUuid())) {
+            topic.setUserLiked(null);
             topic.setLikes(topic.getLikes() - 1);
+            topicService.save(topic);
+            return "redirect:/forum";
+        }
 
-        topic.setLikes(topic.getLikes() + 1);
-
-        topicService.save(topic);
         return "redirect:/forum";
     }
 
@@ -83,7 +91,7 @@ public class TopicController {
         var topic = topicService.findById(UUID.fromString(id));
         var foundUser = (User) request.getSession().getAttribute("foundUser");
 
-        if (topic.getUser().getUuid().equals(foundUser) || (foundUser.getUserType() == UserType.TEACHER || foundUser.getUserType() == UserType.MONITOR)) {
+        if (topic.getUser().getUuid().equals(foundUser.getUuid()) || (foundUser.getUserType() == UserType.TEACHER || foundUser.getUserType() == UserType.MONITOR)) {
             topic.setOpen(!topic.isOpen());
             topic.setClosedDate(topic.getClosedDate() == null ? LocalDate.now() : null);
 

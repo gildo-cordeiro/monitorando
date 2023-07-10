@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -33,6 +34,8 @@ public class Topic extends AbstractEntity {
     private LocalDate closedDate;
     @Column(name = "LIKES")
     private  int likes;
+    @Column(name = "USER_LIKED")
+    private UUID userLiked;
     @ManyToOne
     private User user;
     @ManyToOne
