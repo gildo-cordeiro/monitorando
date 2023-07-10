@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.controller;
 
 import br.com.imd.pdse.monitorando.configuration.PDFGenerator;
+import br.com.imd.pdse.monitorando.domain.Topic;
 import br.com.imd.pdse.monitorando.domain.enums.ReportType;
 import br.com.imd.pdse.monitorando.service.TopicService;
 import com.lowagie.text.DocumentException;
@@ -19,36 +20,41 @@ import java.util.stream.Collectors;
 public class ReportController {
 
     private final TopicService topicService;
+    private final PDFGenerator pdfGenerator;
 
-    public ReportController(TopicService topicService) {
+    public ReportController(TopicService topicService, PDFGenerator pdfGenerator) {
         this.topicService = topicService;
+        this.pdfGenerator = pdfGenerator;
     }
 
-
-    @GetMapping("pdf/topics-closed")
+    @GetMapping("/pdf/topics-closed")
     public void generatePdf(HttpServletResponse response) throws DocumentException, IOException {
-        PDFGenerator generator = new PDFGenerator();
-
         var responseWithHeaders = setHeaders(response);
-        var studentList = topicService.findTopicsByOpen();
-        var headers = List.of("Topicos fechados","Likes", "Ativo", "Data de Fechamento", "Data de Criação");
+        var topicList = topicService.findTopicsByOpen();
+        var headers = List.of("Tópicos Fechados", "Likes", "Ativo", "Data de Fechamento", "Data de Criação", "Contribuições");
 
-        generator.setFontSize(12);
-        generator.setQuantity(studentList.stream().count());
-        generator.setTitle("Relatorio de Topicos Fechados");
-        generator.setNumberOfColumns(headers.size());
-        generator.setHeaders(headers);
-        generator.setRows(studentList.stream().collect(Collectors.toList()));
+        pdfGenerator.setFontSize(12);
+        pdfGenerator.setTitle("Relatório de Tópicos Fechados");
+        pdfGenerator.setNumberOfColumns(headers.size());
+        pdfGenerator.setHeaders(headers);
+        pdfGenerator.setFooter("Total de Tópicos: " + topicList.getTotalElements());
 
-        // Add the header
-        generator.setHeader("MONITORANDO");
+        pdfGenerator.setHeader("MONITORANDO");
 
-        generator.generate(responseWithHeaders, ReportType.QTT_CLOSED_TOPICS);
+        List<Topic> closedTopics = topicList.stream()
+                .filter(Topic::isActive)
+                .collect(Collectors.toList());
+
+        double percentageClosed = (double) closedTopics.size() / topicList.getTotalElements() * 100;
+
+        pdfGenerator.generate(responseWithHeaders, ReportType.QTT_CLOSED_TOPICS);
+
+        pdfGenerator.setFooter("Total de Tópicos: " + topicList.getTotalElements() + " - Porcentagem de Tópicos Fechados: " + String.format("%.2f", percentageClosed) + "%");
     }
 
-    private HttpServletResponse setHeaders(HttpServletResponse response){
+    private HttpServletResponse setHeaders(HttpServletResponse response) {
         response.setContentType("application/pdf");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String currentDateTime = dateFormat.format(new Date());
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";

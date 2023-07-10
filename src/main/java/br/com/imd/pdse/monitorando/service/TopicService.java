@@ -18,9 +18,7 @@ import java.util.UUID;
 public class TopicService {
 
     private final TopicRepository topicRepository;
-
     private final ContributionRepository contributionRepository;
-
     private final ContributionService contributionService;
 
     public TopicService(TopicRepository topicRepository, ContributionRepository contributionRepository, ContributionService contributionService) {
@@ -29,37 +27,40 @@ public class TopicService {
         this.contributionService = contributionService;
     }
 
-    public List<Topic> getAllTopicsOrderedByLikes(){
+    public List<Topic> getAllTopicsOrderedByLikes() {
         return topicRepository.getAllTopicsOrderedByLikes();
     }
 
-    public Optional<Topic> save(Topic topic){
+    public Optional<Topic> save(Topic topic) {
         return Optional.of(topicRepository.save(topic));
     }
-    public Optional<Contribution> save(Contribution contribution){
+
+    public Optional<Contribution> save(Contribution contribution) {
         return Optional.of(contributionRepository.save(contribution));
     }
-
 
     public Topic findById(UUID id) {
         if (Objects.isNull(id))
             return null;
 
-        var classroom = topicRepository.findById(id);
+        var topic = topicRepository.findById(id);
 
-        return classroom.orElse(null);
-
+        return topic.orElse(null);
     }
 
-    public Page<Topic> findTopicsByOpen(){
+    public Page<Topic> findTopicsByOpen() {
         return topicRepository.findTopicsByOpen(LocalDate.now(), Pageable.ofSize(100).withPage(0));
     }
 
-    public List<Contribution> getContributionByTopic(Topic topic){
+    public List<Contribution> getContributionByTopic(Topic topic) {
         return contributionRepository.getContributionByTopic(topic);
     }
 
     public int countContributionsByTopicId(UUID topicId) {
         return contributionService.countContributionsByTopicId(topicId);
+    }
+
+    public long getTotalTopics() {
+        return topicRepository.count();
     }
 }

@@ -29,6 +29,7 @@ public class PDFGenerator {
     private int numberOfColumns;
     private long quantity;
     private String header;
+    private String footer;
 
     public void generate(HttpServletResponse response, ReportType reportType) throws DocumentException, IOException {
 
@@ -103,6 +104,16 @@ public class PDFGenerator {
         });
 
         document.add(table);
+
+        // Add the footer
+        Font fontFooter = FontFactory.getFont(FontFactory.COURIER);
+        fontFooter.setSize(10);
+        fontFooter.setColor(CMYKColor.GRAY);
+
+        Paragraph footerParagraph = new Paragraph(footer, fontFooter);
+        footerParagraph.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(footerParagraph);
+
         document.close();
     }
 
@@ -132,6 +143,10 @@ public class PDFGenerator {
 
     public void setHeader(String header) {
         this.header = header;
+    }
+
+    public void setFooter(String footer) {
+        this.footer = footer;
     }
 
     private int[] getWidths() {
