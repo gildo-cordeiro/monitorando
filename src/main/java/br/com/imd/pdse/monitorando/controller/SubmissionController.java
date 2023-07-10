@@ -47,9 +47,10 @@ public class    SubmissionController {
 
     @PostMapping("submission/comment/save")
     public String saveComment(@RequestParam(name = "uuid") String id,
-                              @ModelAttribute("comments") Comment comments) {
+                              @ModelAttribute("comments") Comment comments,
+                              HttpServletRequest request) {
         var submission = submissionService.findById(UUID.fromString(id)).get();
-        var user = userService.findById(submission.getUser().getUuid());
+        var user = (User) request.getSession().getAttribute("foundUser");
 
         comments.setSubmission(submission);
         comments.setUser(user);

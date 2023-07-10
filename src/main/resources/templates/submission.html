@@ -67,33 +67,33 @@
                                     <div sec:authorize="hasRole('S')">
                                         <div th:if="${sub.user.uuid != session.foundUser.uuid}">
                                             <div th:if="${!sub.isPrivacy()}">
-                                                <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                                         th:attr="data-bs-target='#modal' + ${i.index}">Comentários
                                                 </button>
+                                                <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                                 <hr>
                                             </div>
                                         </div>
                                     </div>
                                     <div th:if="${sub.user.uuid == session.foundUser.uuid}">
                                         <div th:if="${sub.isPrivacy()}">
-                                            <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                                     th:attr="data-bs-target='#modal' + ${i.index}">Comentários
                                             </button>
+                                            <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                             <hr>
                                         </div>
                                     </div>
                                 </div>
                                 <div sec:authorize="hasAnyRole('T','M')">
                                     <div th:if="${sub.user.uuid == session.foundUser.uuid}">
-                                        <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                                 th:attr="data-bs-target='#modal' + ${i.index}">Comentários
                                         </button>
+                                        <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
                                         <hr>
                                     </div>
                                 </div>
