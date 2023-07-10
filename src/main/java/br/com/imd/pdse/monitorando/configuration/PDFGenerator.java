@@ -113,7 +113,6 @@ public class PDFGenerator {
         Paragraph footerParagraph = new Paragraph(footer, fontFooter);
         footerParagraph.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(footerParagraph);
-        document.add(paragraph.get());
 
         if (table1.get() != null)
             document.add(table1.get());

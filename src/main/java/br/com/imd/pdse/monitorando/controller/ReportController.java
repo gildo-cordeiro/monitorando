@@ -48,7 +48,10 @@ public class ReportController {
                 .toList();
 
         double percentageClosed = (double) closedTopics.size() / topicList.getTotalElements() * 100;
-        pdfGenerator.setFooter("Total de Tópicos: " + topicList.getTotalElements() + " - Porcentagem de Tópicos Fechados: " + String.format("%.2f", percentageClosed) + "%");
+        if(topicList.getTotalElements() > 0)
+            pdfGenerator.setFooter("Total de Tópicos: " + topicList.getTotalElements() + " - Porcentagem de Tópicos Fechados: " + String.format("%.2f", percentageClosed) + "%");
+        else
+            pdfGenerator.setFooter("Total de Tópicos: " + topicList.getTotalElements());
 
         pdfGenerator.generate(getHeaders(response, title), ReportType.QTT_CLOSED_TOPICS);
     }
@@ -65,6 +68,7 @@ public class ReportController {
 
         // Add the header
         pdfGenerator.setHeader(MONITORANDO);
+        pdfGenerator.setFooter("");
 
         pdfGenerator.generate(getHeaders(response, title), ReportType.QTT_ASSISTED_STUDENTS);
     }
@@ -81,6 +85,8 @@ public class ReportController {
 
         // Add the header
         pdfGenerator.setHeader(MONITORANDO);
+        pdfGenerator.setFooter("");
+
 
         pdfGenerator.generate(getHeaders(response, title), ReportType.REPORT_EXERCISE);
     }
