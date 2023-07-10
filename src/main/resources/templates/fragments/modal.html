@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Modal -->
+<div th:fragment="modal(id, sub, coments)" class="modal fade" th:id="${id}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Comentários</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group list-group-flush" th:each="c : ${sub.comment}">
+                    <a href="#" class="list-group-item list-group-item-action"
+                       aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1" th:text="${c.user.name}"></h5>
+                            <small th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy HH:mm')}"></small>
+                        </div>
+                        <p class="mb-1" th:text="${c.comment}"></p>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

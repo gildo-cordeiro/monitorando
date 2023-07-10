@@ -53,6 +53,10 @@
                         </form>
                     </div>
                 </div>
+                <div th:each="sub, i: ${exercise.submissions}">
+                    <th:block th:replace="fragments/modal :: modal(${'modal'+i.index}, ${sub}, ${comments})">modal
+                    </th:block>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Submissões</h5>
@@ -64,35 +68,52 @@
                                         <div th:if="${sub.user.uuid != session.foundUser.uuid}">
                                             <div th:if="${!sub.isPrivacy()}">
                                                 <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
-                                            </div>
-                                        </div>
-                                        <div th:if="${sub.user.uuid == session.foundUser.uuid}">
-                                            <div th:if="${sub.isPrivacy()}">
-                                                <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#modal' + ${i.index}">Comentários
+                                                </button>
+                                                <hr>
                                             </div>
                                         </div>
                                     </div>
-                                    <div sec:authorize="hasAnyRole('T','M')">
-                                        <div th:if="${sub.user.uuid == session.foundUser.uuid}">
+                                    <div th:if="${sub.user.uuid == session.foundUser.uuid}">
+                                        <div th:if="${sub.isPrivacy()}">
                                             <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    th:attr="data-bs-target='#modal' + ${i.index}">Comentários
+                                            </button>
+                                            <hr>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="list-group list-group-flush"
-                                 th:if="${exercise.submissions.isEmpty()}">
-                                <p class="fw-bold d-flex justify-content-center"><i
-                                        class="bi bi-exclamation-circle me-2"></i>Nenhuma submissão cadastrada</p>
+                                <div sec:authorize="hasAnyRole('T','M')">
+                                    <div th:if="${sub.user.uuid == session.foundUser.uuid}">
+                                        <div th:replace="fragments/subs :: paging(${i.index}, ${sub}, ${comments})"></div>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                th:attr="data-bs-target='#modal' + ${i.index}">Comentários
+                                        </button>
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="list-group list-group-flush"
+                         th:if="${exercise.submissions.isEmpty()}">
+                        <p class="fw-bold d-flex justify-content-center"><i
+                                class="bi bi-exclamation-circle me-2"></i>Nenhuma submissão cadastrada</p>
+                    </div>
                 </div>
-
-                <div th:replace="fragments/footer :: footer"></div>
-
             </div>
         </div>
+
+        <div th:replace="fragments/footer :: footer"></div>
+
     </div>
+</div>
+</div>
 </div>
 </body>
 </html>

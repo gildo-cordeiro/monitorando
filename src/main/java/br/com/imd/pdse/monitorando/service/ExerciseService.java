@@ -3,6 +3,8 @@ package br.com.imd.pdse.monitorando.service;
 import br.com.imd.pdse.monitorando.domain.Classroom;
 import br.com.imd.pdse.monitorando.domain.Exercise;
 import br.com.imd.pdse.monitorando.repository.ExerciseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -36,5 +38,9 @@ public class ExerciseService {
 
     public Optional<Exercise> save(Exercise exercise){
         return Optional.of(repository.save(exercise));
+    }
+
+    public Page<Exercise> findExerciseByActive(){
+        return repository.findExerciseByActive(false, Pageable.ofSize(100).withPage(0));
     }
 }

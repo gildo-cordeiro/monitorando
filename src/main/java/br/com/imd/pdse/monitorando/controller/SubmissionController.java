@@ -10,10 +10,7 @@ import br.com.imd.pdse.monitorando.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -58,6 +55,15 @@ public class    SubmissionController {
         comments.setUser(user);
 
         submissionService.save(comments);
+        return "redirect:/exercise/access?id=" + submission.getExercise().getUuid();
+    }
+
+    @GetMapping("submission/close")
+    public String closeSubmission(@RequestParam(name = "id") String id){
+        var submission = submissionService.findById(UUID.fromString(id)).get();
+        submission.setActive(!submission.isActive());
+
+        submissionService.save(submission);
         return "redirect:/exercise/access?id=" + submission.getExercise().getUuid();
     }
 }

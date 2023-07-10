@@ -1,6 +1,7 @@
 package br.com.imd.pdse.monitorando.service;
 
 import br.com.imd.pdse.monitorando.domain.Contribution;
+import br.com.imd.pdse.monitorando.domain.Submission;
 import br.com.imd.pdse.monitorando.domain.Topic;
 import br.com.imd.pdse.monitorando.repository.ContributionRepository;
 import br.com.imd.pdse.monitorando.repository.TopicRepository;
@@ -52,7 +53,11 @@ public class TopicService {
         return topicRepository.findTopicsByOpen(LocalDate.now(), Pageable.ofSize(100).withPage(0));
     }
 
-    public List<Contribution> getContributionByTopic(Topic topic) {
+    public Page<Submission> findStudentsHelped(){
+        return topicRepository.findStudentsHelped(Pageable.ofSize(100).withPage(0));
+    }
+
+    public List<Contribution> getContributionByTopic(Topic topic){
         return contributionRepository.getContributionByTopic(topic);
     }
 
